@@ -1,0 +1,34 @@
+{
+  "id": "interrupts",
+  "title": "Hardware Interrupts & NAPI",
+  "shortName": "Interrupts",
+  "type": "concept",
+  "category": "network_hardware",
+  "description": "How the NIC signals the CPU that packets have arrived, and how NAPI polling reduces interrupt overhead.",
+  "fullExplanation": "When a NIC receives a packet, it needs to notify the CPU. The traditional method is a hardware interrupt (IRQ) — the NIC raises an interrupt line, the CPU stops what it's doing and runs the interrupt handler. At low packet rates this is fine. At high rates (millions of packets/second), the CPU spends all its time handling interrupts — interrupt livelock. NAPI (New API) solves this: after the first interrupt, the NIC is told to stop interrupting and the kernel polls the ring buffer in a loop until it's empty, then re-enables interrupts.",
+  "interruptTypes": [
+    { "type": "MSI (Message Signaled Interrupts)", "description": "NIC writes to a special memory address to signal interrupt — more scalable than legacy IRQ lines" },
+    { "type": "MSI-X",                             "description": "Multiple MSI vectors — one per RX/TX queue. Enables multi-queue NICs to use multiple CPU cores." },
+    { "type": "Legacy IRQ",                        "description": "Shared interrupt line — all devices on same IRQ compete. Legacy, avoid on modern hardware." }
+  ],
+  "napiFlow": [
+    { "step": 1, "description": "Packet arrives — NIC raises interrupt" },
+    { "step": 2, "description": "Interrupt handler runs — disables NIC interrupts, schedules NAPI poll" },
+    { "step": 3, "description": "NAPI poll runs — processes up to budget packets from ring buffer" },
+    { "step": 4, "description": "If ring empty: re-enable interrupts, exit poll" },
+    { "step": 5, "description": "If budget exhausted: yield CPU, reschedule poll (prevents starvation)" }
+  ],
+  "keyFacts": [
+    "NAPI budget: default 64 packets per poll cycle (net.core.netdev_budget)",
+    "Interrupt coalescing: delay interrupt until N packets or T microseconds — reduces interrupt rate",
+    "ethtool -c eth0: show interrupt coalescing settings",
+    "ethtool -C eth0 rx-usecs 50: coalesce interrupts up to 50µs — reduces CPU at cost of latency",
+    "RSS (Receive Side Scaling): MSI-X + multiple queues — spread interrupts across CPU cores",
+    "RPS (Receive Packet Steering): software RSS for NICs without hardware multi-queue",
+    "/proc/interrupts: show interrupt counts per CPU per device"
+  ],
+  "children": [],
+  "parent": "nic",
+  "relatedConcepts": ["nic", "dma", "ring-buffer", "pcie"],
+  "visualization": { "color": "#ffcc00", "icon": "⚡", "nodeType": "leaf" }
+}

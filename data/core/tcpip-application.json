@@ -1,0 +1,35 @@
+{
+  "id": "tcpip-application",
+  "title": "TCP/IP Application Layer",
+  "shortName": "Application",
+  "type": "concept",
+  "category": "tcpip_layer",
+  "description": "Combines OSI layers 5, 6, and 7 — handles all application protocols, encryption, and session management.",
+  "fullExplanation": "The TCP/IP Application layer is the topmost layer and combines what OSI splits into three separate layers: Session (L5), Presentation (L6), and Application (L7). In practice, most protocols handle their own session management and data formatting internally. This layer is where all user-facing protocols live — HTTP/HTTPS for web, DNS for name resolution, SMTP/IMAP for email, SSH for remote access, DHCP for IP configuration, SNMP for network management, and many more.",
+  "osiEquivalent": "OSI Layers 5 (Session) + 6 (Presentation) + 7 (Application)",
+  "protocols": [
+    { "name": "HTTP/HTTPS", "port": "80/443", "transport": "TCP", "description": "Web browsing" },
+    { "name": "DNS",        "port": "53",     "transport": "UDP/TCP", "description": "Domain name resolution" },
+    { "name": "SMTP",       "port": "25/587", "transport": "TCP", "description": "Email sending" },
+    { "name": "IMAP",       "port": "993",    "transport": "TCP", "description": "Email retrieval" },
+    { "name": "FTP",        "port": "21",     "transport": "TCP", "description": "File transfer" },
+    { "name": "SSH",        "port": "22",     "transport": "TCP", "description": "Secure remote access" },
+    { "name": "DHCP",       "port": "67/68",  "transport": "UDP", "description": "IP address assignment" },
+    { "name": "SNMP",       "port": "161",    "transport": "UDP", "description": "Network management" },
+    { "name": "NTP",        "port": "123",    "transport": "UDP", "description": "Time synchronization" },
+    { "name": "TLS/SSL",    "port": "N/A",    "transport": "TCP", "description": "Encryption (Presentation layer function)" },
+    { "name": "NetBIOS/SMB","port": "139/445","transport": "TCP", "description": "Windows file sharing (Session layer function)" }
+  ],
+  "keyFacts": [
+    "Combines OSI Session + Presentation + Application into one layer",
+    "Each protocol handles its own session management internally",
+    "TLS provides the Presentation layer encryption function",
+    "DNS is the foundation — almost every other protocol depends on it",
+    "Application layer PDU is called 'Data' or 'Message'",
+    "Protocols communicate with Transport layer via sockets (port numbers)"
+  ],
+  "children": ["http", "https", "dns", "ssh", "dhcp", "smtp", "ftp", "snmp", "ntp", "tls", "netbios", "smb"],
+  "parent": "tcp-ip-model",
+  "relatedConcepts": ["layer7-application", "layer6-presentation", "layer5-session"],
+  "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "expandable" }
+}

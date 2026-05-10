@@ -1,0 +1,35 @@
+{
+  "id": "ztna",
+  "title": "Zero Trust Network Access (ZTNA)",
+  "shortName": "ZTNA",
+  "type": "defense",
+  "category": "security_architecture",
+  "description": "Identity-based access to specific applications — replaces VPN with granular, context-aware access control.",
+  "fullExplanation": "ZTNA (Zero Trust Network Access) provides secure remote access to specific applications based on user identity, device health, and context — without granting access to the entire network. Unlike VPN which creates a network tunnel giving access to everything on the network, ZTNA grants access only to the specific application the user needs. The user never touches the network — they connect to an application proxy that enforces policy.",
+  "ztnaVsVpn": [
+    { "aspect": "Access scope",      "vpn": "Full network access after authentication",    "ztna": "Access only to specific authorized applications" },
+    { "aspect": "Trust model",       "vpn": "Trust network location (inside = trusted)",   "ztna": "Never trust, always verify — identity + device + context" },
+    { "aspect": "Lateral movement",  "vpn": "Possible — attacker can reach all network",   "ztna": "Prevented — no network access, only app access" },
+    { "aspect": "User experience",   "vpn": "Slow, all traffic tunneled",                  "ztna": "Fast, only app traffic proxied" },
+    { "aspect": "Device visibility", "vpn": "Limited",                                     "ztna": "Full device posture check before access" }
+  ],
+  "vendors": [
+    { "vendor": "Cloudflare Access",  "description": "ZTNA as part of Cloudflare Zero Trust platform" },
+    { "vendor": "Zscaler Private Access (ZPA)", "description": "Market leader in cloud-delivered ZTNA" },
+    { "vendor": "Palo Alto Prisma Access", "description": "ZTNA + CASB + SWG in one platform" },
+    { "vendor": "Google BeyondCorp",  "description": "Google's internal ZTNA — first large-scale implementation" },
+    { "vendor": "Tailscale",          "description": "WireGuard-based mesh VPN with ZTNA-like access controls" }
+  ],
+  "keyFacts": [
+    "ZTNA replaces VPN for application access — not for site-to-site connectivity",
+    "Device posture: check OS version, patch level, EDR status before granting access",
+    "Continuous verification: re-evaluate access on each request, not just at login",
+    "Application connector: lightweight agent in DMZ/cloud connects app to ZTNA broker",
+    "No inbound firewall rules needed — app connector initiates outbound connection to broker",
+    "SASE (Secure Access Service Edge): ZTNA + SWG + CASB + SD-WAN in cloud-delivered platform"
+  ],
+  "children": [],
+  "parent": "zero-trust",
+  "relatedConcepts": ["zero-trust", "vpn", "microsegmentation", "firewall"],
+  "visualization": { "color": "#ff3366", "icon": "🚪", "nodeType": "leaf" }
+}

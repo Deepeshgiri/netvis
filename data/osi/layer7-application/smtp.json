@@ -1,0 +1,71 @@
+{
+  "id": "smtp",
+  "title": "Simple Mail Transfer Protocol",
+  "shortName": "SMTP",
+  "type": "protocol",
+  "osiLayer": 7,
+  "tcpIpLayer": "Application",
+  "category": "application_protocol",
+  "port": 25,
+  "transport": "TCP",
+  "description": "The standard protocol for sending email between mail servers and from clients to servers.",
+  "fullExplanation": "SMTP is a push protocol — it sends mail from client to server or between servers. It uses a simple text-based command/response model. Port 25 is for server-to-server relay. Port 587 (STARTTLS) is for client submission. Port 465 is for SMTPS (implicit TLS). SMTP only sends mail — receiving uses IMAP (port 993) or POP3 (port 995). Modern SMTP requires authentication (SMTP AUTH) and encryption (STARTTLS or TLS).",
+  "ports": {
+    "usedBy": [
+      { "port": 25,  "protocol": "SMTP (server-to-server relay)" },
+      { "port": 587, "protocol": "SMTP Submission (client → server, STARTTLS)" },
+      { "port": 465, "protocol": "SMTPS (implicit TLS, legacy)" },
+      { "port": 993, "protocol": "IMAPS (receive mail, TLS)" },
+      { "port": 995, "protocol": "POP3S (receive mail, TLS)" }
+    ]
+  },
+  "commands": [
+    { "command": "EHLO",     "description": "Extended HELO — identify client, get server capabilities" },
+    { "command": "MAIL FROM","description": "Specify sender email address (envelope from)" },
+    { "command": "RCPT TO",  "description": "Specify recipient email address" },
+    { "command": "DATA",     "description": "Begin message body (headers + body, end with single dot)" },
+    { "command": "STARTTLS", "description": "Upgrade connection to TLS encryption" },
+    { "command": "AUTH",     "description": "Authenticate with username/password (PLAIN, LOGIN, CRAM-MD5)" },
+    { "command": "QUIT",     "description": "Close the SMTP session" },
+    { "command": "RSET",     "description": "Reset current mail transaction" }
+  ],
+  "statusCodes": [
+    { "code": "220", "meaning": "Service ready" },
+    { "code": "250", "meaning": "Requested action completed (OK)" },
+    { "code": "354", "meaning": "Start mail input, end with <CRLF>.<CRLF>" },
+    { "code": "421", "meaning": "Service not available, closing connection" },
+    { "code": "450", "meaning": "Mailbox unavailable (try again later)" },
+    { "code": "550", "meaning": "Mailbox unavailable (no such user)" },
+    { "code": "553", "meaning": "Mailbox name not allowed" }
+  ],
+  "emailAuthentication": [
+    { "standard": "SPF",   "description": "Sender Policy Framework — DNS TXT record listing authorized sending IPs" },
+    { "standard": "DKIM",  "description": "DomainKeys Identified Mail — cryptographic signature in email header" },
+    { "standard": "DMARC", "description": "Domain-based Message Authentication — policy for SPF/DKIM failures (reject/quarantine)" },
+    { "standard": "ARC",   "description": "Authenticated Received Chain — preserves auth results through forwarding" }
+  ],
+  "keyFacts": [
+    "SMTP is push-only — use IMAP/POP3 to receive mail",
+    "Port 25 blocked by most ISPs to prevent spam",
+    "Port 587 + STARTTLS is the standard for client submission",
+    "SPF, DKIM, DMARC prevent email spoofing and phishing",
+    "Open relay: SMTP server that forwards mail for anyone — major spam source",
+    "SMTP AUTH required for client authentication",
+    "Greylisting: temporarily reject unknown senders (spam reduction)",
+    "MX records in DNS point to mail servers for a domain"
+  ],
+  "versions": [
+    { "version": "SMTP (RFC 821)",  "year": 1982, "feature": "Original specification" },
+    { "version": "ESMTP (RFC 1869)","year": 1995, "feature": "Extended SMTP — EHLO, AUTH, SIZE, STARTTLS" },
+    { "version": "RFC 5321",        "year": 2008, "feature": "Current SMTP standard, replaces RFC 2821" }
+  ],
+  "children": [],
+  "parent": "layer7-application",
+  "dependsOn": ["tcp", "dns", "tls"],
+  "relatedConcepts": ["dns", "tls", "imap", "pop3", "spf", "dkim"],
+  "cybersecurity": {
+    "attacks": ["email-spoofing", "phishing", "smtp-relay-abuse", "email-header-injection"],
+    "defenses": ["spf", "dkim", "dmarc", "tls-smtp", "smtp-auth"]
+  },
+  "visualization": { "color": "#00ff88", "icon": "📧", "nodeType": "leaf" }
+}

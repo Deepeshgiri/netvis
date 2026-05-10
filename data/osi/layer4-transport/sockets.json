@@ -1,0 +1,39 @@
+{
+  "id": "sockets",
+  "title": "Sockets & Ports",
+  "shortName": "Sockets",
+  "type": "concept",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "description": "The programming interface for network communication — a socket is an endpoint identified by IP address + port number.",
+  "fullExplanation": "A socket is an endpoint for network communication, identified by a 5-tuple: (protocol, source IP, source port, destination IP, destination port). Applications use the socket API (BSD sockets) to create connections, send, and receive data. The OS manages the socket and the underlying TCP/UDP connection. Port numbers identify which application should receive incoming data — well-known ports (0-1023) are reserved for standard services.",
+  "portRanges": [
+    { "range": "0-1023",       "name": "Well-Known Ports",  "description": "Reserved for standard services. Require root/admin to bind. HTTP=80, HTTPS=443, SSH=22." },
+    { "range": "1024-49151",   "name": "Registered Ports",  "description": "Assigned by IANA for specific applications. MySQL=3306, PostgreSQL=5432, RDP=3389." },
+    { "range": "49152-65535",  "name": "Dynamic/Ephemeral", "description": "Assigned by OS for client-side connections. Randomly chosen per connection." }
+  ],
+  "socketStates": [
+    { "state": "LISTEN",       "description": "Server waiting for incoming connections" },
+    { "state": "SYN_SENT",     "description": "Client sent SYN, waiting for SYN-ACK" },
+    { "state": "SYN_RECEIVED", "description": "Server received SYN, sent SYN-ACK, waiting for ACK" },
+    { "state": "ESTABLISHED",  "description": "Connection active — data can flow" },
+    { "state": "FIN_WAIT_1",   "description": "Sent FIN, waiting for ACK" },
+    { "state": "FIN_WAIT_2",   "description": "Received ACK for FIN, waiting for remote FIN" },
+    { "state": "TIME_WAIT",    "description": "Both FINs exchanged. Wait 2×MSL before closing (prevents stale packets)." },
+    { "state": "CLOSE_WAIT",   "description": "Received FIN, waiting for application to close" },
+    { "state": "CLOSED",       "description": "No connection" }
+  ],
+  "keyFacts": [
+    "Socket = IP address + port number (e.g. 192.168.1.1:443)",
+    "5-tuple uniquely identifies a connection: proto+srcIP+srcPort+dstIP+dstPort",
+    "Ephemeral port range (Linux): 32768-60999 (configurable via /proc/sys/net/ipv4/ip_local_port_range)",
+    "TIME_WAIT: 2×MSL = 2×60s = 120s — prevents old packets from corrupting new connections",
+    "SO_REUSEADDR: socket option to reuse port in TIME_WAIT — needed for fast server restarts",
+    "netstat -an / ss -tn: list all sockets and their states",
+    "File descriptor: each socket is a file descriptor in Unix — 'everything is a file'"
+  ],
+  "children": [],
+  "parent": "tcp",
+  "relatedConcepts": ["tcp", "udp", "tcp-handshake", "tcp-flags"],
+  "visualization": { "color": "#00ff88", "icon": "🔌", "nodeType": "leaf" }
+}

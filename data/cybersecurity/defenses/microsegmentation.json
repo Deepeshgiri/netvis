@@ -1,0 +1,28 @@
+{
+  "id": "microsegmentation",
+  "title": "Microsegmentation",
+  "shortName": "Microsegmentation",
+  "type": "defense",
+  "category": "security_architecture",
+  "description": "Dividing a network into small isolated segments with granular access controls to limit lateral movement after a breach.",
+  "fullExplanation": "Traditional network segmentation uses VLANs and firewalls to create large zones. Microsegmentation goes further — applying fine-grained policies at the workload level (individual VMs, containers, or processes). Even within the same VLAN, workloads can only communicate if explicitly permitted. This limits blast radius: if an attacker compromises one workload, they cannot move laterally to others. Implemented via software-defined networking (SDN), hypervisor-based firewalls, or service mesh.",
+  "approaches": [
+    { "approach": "Network-based",    "description": "VLANs, ACLs, and firewall rules at network level. Traditional but coarse-grained." },
+    { "approach": "Hypervisor-based", "description": "Firewall rules enforced at vSwitch level — per-VM policies. VMware NSX, AWS Security Groups." },
+    { "approach": "Host-based",       "description": "Agent on each workload enforces policy. Works across any network. Illumio, Guardicore." },
+    { "approach": "Service Mesh",     "description": "mTLS between microservices — Istio, Linkerd. Identity-based, not IP-based." }
+  ],
+  "keyFacts": [
+    "East-west traffic: lateral movement between workloads — microsegmentation controls this",
+    "North-south traffic: in/out of data center — traditional firewalls handle this",
+    "Zero Trust principle: default deny between all workloads, allow only what's needed",
+    "VMware NSX: distributed firewall in hypervisor — policy follows VM regardless of location",
+    "AWS Security Groups: stateful per-instance firewall — microsegmentation in cloud",
+    "Kubernetes Network Policies: restrict pod-to-pod communication",
+    "Blast radius reduction: compromised workload cannot reach other workloads"
+  ],
+  "children": [],
+  "parent": "zero-trust",
+  "relatedConcepts": ["zero-trust", "firewall", "vlans", "ids-ips"],
+  "visualization": { "color": "#ff3366", "icon": "🔲", "nodeType": "leaf" }
+}

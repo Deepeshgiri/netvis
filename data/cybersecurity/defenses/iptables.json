@@ -1,0 +1,36 @@
+{
+  "id": "iptables",
+  "title": "iptables / nftables",
+  "shortName": "iptables",
+  "type": "defense",
+  "category": "network_defense",
+  "description": "Linux kernel firewall framework — filters, NATs, and mangles network packets using rule chains.",
+  "fullExplanation": "iptables is the userspace tool for configuring the Linux kernel's netfilter packet filtering framework. Rules are organized into tables (filter, nat, mangle, raw) and chains (INPUT, OUTPUT, FORWARD, PREROUTING, POSTROUTING). Each packet traverses the relevant chains and is matched against rules in order — the first matching rule's target (ACCEPT, DROP, REJECT, LOG) is applied. nftables is the modern replacement for iptables, with a cleaner syntax and better performance.",
+  "tables": [
+    { "table": "filter",    "chains": ["INPUT", "OUTPUT", "FORWARD"],                    "description": "Default table — packet filtering (allow/deny)" },
+    { "table": "nat",       "chains": ["PREROUTING", "OUTPUT", "POSTROUTING"],           "description": "Network Address Translation — DNAT, SNAT, MASQUERADE" },
+    { "table": "mangle",    "chains": ["PREROUTING", "INPUT", "FORWARD", "OUTPUT", "POSTROUTING"], "description": "Packet modification — TTL, TOS, mark" },
+    { "table": "raw",       "chains": ["PREROUTING", "OUTPUT"],                          "description": "Connection tracking bypass — for high-performance rules" }
+  ],
+  "commonRules": [
+    { "rule": "iptables -A INPUT -p tcp --dport 22 -j ACCEPT",           "description": "Allow SSH inbound" },
+    { "rule": "iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT", "description": "Allow return traffic for established connections" },
+    { "rule": "iptables -A INPUT -j DROP",                               "description": "Default deny — drop all other inbound traffic" },
+    { "rule": "iptables -A INPUT -p tcp --dport 80 -j ACCEPT",           "description": "Allow HTTP inbound" },
+    { "rule": "iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE",    "description": "NAT masquerade — share internet connection" },
+    { "rule": "iptables -A INPUT -p icmp -j DROP",                       "description": "Block ping" }
+  ],
+  "keyFacts": [
+    "Rules processed in order — first match wins",
+    "Default policy: ACCEPT (permissive) or DROP (restrictive)",
+    "Stateful tracking: -m state --state ESTABLISHED,RELATED allows return traffic",
+    "nftables: modern replacement — better performance, atomic rule updates, cleaner syntax",
+    "ufw (Uncomplicated Firewall): simplified iptables frontend for Ubuntu",
+    "firewalld: zone-based firewall management for RHEL/CentOS",
+    "iptables-save / iptables-restore: persist rules across reboots"
+  ],
+  "children": [],
+  "parent": "firewall",
+  "relatedConcepts": ["firewall", "ngfw", "ids-ips"],
+  "visualization": { "color": "#ff6b35", "icon": "🐧", "nodeType": "leaf" }
+}

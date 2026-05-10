@@ -1,0 +1,35 @@
+{
+  "id": "hubs",
+  "title": "Network Hubs",
+  "shortName": "Hubs",
+  "type": "hardware",
+  "osiLayer": 1,
+  "category": "network_device",
+  "description": "Legacy Layer 1 devices that broadcast all incoming traffic to every port — replaced by switches.",
+  "fullExplanation": "A hub is a multiport repeater. When a frame arrives on any port, the hub broadcasts it out all other ports. Every device receives every frame — devices must check the destination MAC themselves and discard frames not addressed to them. All ports share a single collision domain — only one device can transmit at a time (CSMA/CD). Hubs are obsolete — switches replaced them because switches forward frames only to the correct port, eliminating collisions and dramatically improving performance.",
+  "hubVsSwitch": [
+    { "aspect": "OSI Layer",         "hub": "Layer 1 (Physical)",          "switch": "Layer 2 (Data Link)" },
+    { "aspect": "Forwarding",        "hub": "Broadcasts to all ports",     "switch": "Forwards to specific port via MAC table" },
+    { "aspect": "Collision domain",  "hub": "All ports share one domain",  "switch": "Each port is its own collision domain" },
+    { "aspect": "Bandwidth",         "hub": "Shared among all ports",      "switch": "Dedicated per port" },
+    { "aspect": "Security",          "hub": "All traffic visible to all",  "switch": "Traffic isolated per port" },
+    { "aspect": "Duplex",            "hub": "Half-duplex only",            "switch": "Full-duplex per port" }
+  ],
+  "keyFacts": [
+    "Hubs create a single collision domain — only one device can transmit at a time",
+    "CSMA/CD: devices listen before transmitting, back off on collision",
+    "All devices on a hub share total bandwidth (e.g. 10Mbps shared among 8 ports)",
+    "Promiscuous mode NIC on a hub sees ALL traffic — easy to sniff",
+    "Hubs are obsolete — last manufactured in early 2000s",
+    "Managed switches can mirror ports (SPAN) to replicate hub behavior for analysis",
+    "Passive hub: just wires. Active hub: regenerates signal (repeater)."
+  ],
+  "children": [],
+  "parent": "layer1-physical",
+  "relatedConcepts": ["repeaters", "switching", "ethernet", "csma-cd"],
+  "cybersecurity": {
+    "attacks": ["passive-sniffing"],
+    "defenses": ["replace-with-switches"]
+  },
+  "visualization": { "color": "#ff6b35", "icon": "🔀", "nodeType": "leaf" }
+}

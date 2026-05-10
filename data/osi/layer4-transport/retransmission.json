@@ -1,0 +1,36 @@
+{
+  "id": "retransmission",
+  "title": "TCP Retransmission",
+  "shortName": "Retransmission",
+  "type": "concept",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "description": "TCP's mechanism for recovering lost segments by retransmitting unacknowledged data.",
+  "fullExplanation": "TCP guarantees delivery by retransmitting any segment that isn't acknowledged within a timeout period. The RTO (Retransmission Timeout) is calculated dynamically based on measured RTT (Round Trip Time) using Karn's algorithm. TCP also uses fast retransmit — if 3 duplicate ACKs are received, the lost segment is retransmitted immediately without waiting for the RTO. SACK (Selective Acknowledgement) allows the receiver to acknowledge non-contiguous blocks, enabling the sender to retransmit only the missing segments.",
+  "mechanisms": [
+    { "mechanism": "RTO (Retransmission Timeout)", "description": "Timer started when segment sent. If ACK not received before RTO, segment retransmitted. RTO doubles on each timeout (exponential backoff)." },
+    { "mechanism": "Fast Retransmit",              "description": "3 duplicate ACKs indicate a gap in received data. Retransmit immediately without waiting for RTO." },
+    { "mechanism": "SACK (Selective ACK)",         "description": "Receiver reports which blocks were received. Sender retransmits only missing segments, not everything after the gap." },
+    { "mechanism": "DSACK (Duplicate SACK)",       "description": "Receiver reports duplicate segments received — helps sender detect spurious retransmissions." }
+  ],
+  "rtoCalculation": {
+    "description": "RTO calculated from smoothed RTT (SRTT) and RTT variance (RTTVAR)",
+    "formula": "RTO = SRTT + 4 × RTTVAR",
+    "minRTO": "1 second (RFC 6298)",
+    "maxRTO": "60 seconds (typical)",
+    "backoff": "RTO doubles on each consecutive timeout (exponential backoff, max ~64s)"
+  },
+  "keyFacts": [
+    "RTO minimum: 1 second (RFC 6298) — prevents spurious retransmissions",
+    "Karn's algorithm: don't update RTT estimate using retransmitted segments",
+    "SACK option: negotiated in SYN/SYN-ACK — most modern stacks support it",
+    "Spurious retransmission: segment retransmitted unnecessarily (RTO too aggressive)",
+    "TCP Timestamp option: enables more accurate RTT measurement",
+    "Retransmission storm: many simultaneous timeouts → network collapse (TCP meltdown)",
+    "Wireshark: 'TCP Retransmission' and 'TCP Fast Retransmission' annotations"
+  ],
+  "children": [],
+  "parent": "tcp",
+  "relatedConcepts": ["tcp", "tcp-flow-control", "tcp-congestion-control", "tcp-flags"],
+  "visualization": { "color": "#00ff88", "icon": "🔁", "nodeType": "leaf" }
+}

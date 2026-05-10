@@ -1,0 +1,46 @@
+{
+  "id": "nmap-nse",
+  "title": "Nmap Scripting Engine (NSE)",
+  "shortName": "NSE",
+  "type": "concept",
+  "category": "network_scanning",
+  "description": "Lua-based scripting engine that extends Nmap with vulnerability detection, exploitation, and advanced enumeration.",
+  "fullExplanation": "The Nmap Scripting Engine (NSE) allows users to write and run Lua scripts that interact with target hosts. NSE scripts can detect vulnerabilities, enumerate services, brute-force credentials, and even exploit weaknesses. Scripts are organized into categories. The --script flag runs specific scripts or categories. NSE has over 600 built-in scripts.",
+  "scriptCategories": [
+    { "category": "auth",       "description": "Authentication bypass and credential testing" },
+    { "category": "broadcast",  "description": "Discover hosts via broadcast (DHCP, mDNS, etc.)" },
+    { "category": "brute",      "description": "Brute-force credential attacks on services" },
+    { "category": "default",    "description": "Safe, useful scripts run with -sC flag" },
+    { "category": "discovery",  "description": "Service and host enumeration" },
+    { "category": "dos",        "description": "Denial of service tests (use carefully)" },
+    { "category": "exploit",    "description": "Exploit known vulnerabilities" },
+    { "category": "fuzzer",     "description": "Send malformed data to detect crashes" },
+    { "category": "intrusive",  "description": "Aggressive scripts that may crash services" },
+    { "category": "malware",    "description": "Detect malware backdoors and infections" },
+    { "category": "safe",       "description": "Non-intrusive scripts unlikely to cause harm" },
+    { "category": "version",    "description": "Enhanced version detection" },
+    { "category": "vuln",       "description": "Detect known vulnerabilities (CVEs)" }
+  ],
+  "usefulScripts": [
+    { "script": "nmap -sV --script=banner",              "description": "Grab service banners" },
+    { "script": "nmap --script=http-title",              "description": "Get HTTP page titles" },
+    { "script": "nmap --script=ssl-cert",                "description": "Show TLS certificate details" },
+    { "script": "nmap --script=vuln",                    "description": "Run all vulnerability detection scripts" },
+    { "script": "nmap --script=smb-vuln-ms17-010",       "description": "Check for EternalBlue (WannaCry) vulnerability" },
+    { "script": "nmap --script=http-sql-injection",      "description": "Test for SQL injection in web forms" },
+    { "script": "nmap --script=dns-brute",               "description": "Brute-force DNS subdomains" },
+    { "script": "nmap --script=ssh-brute",               "description": "Brute-force SSH credentials" }
+  ],
+  "keyFacts": [
+    "NSE scripts written in Lua — easy to write custom scripts",
+    "Scripts located in /usr/share/nmap/scripts/",
+    "nmap --script-help=<script>: show script documentation",
+    "nmap --script-updatedb: update script database after adding new scripts",
+    "Safe category: run with -sC (equivalent to --script=default)",
+    "Always get written permission before running intrusive or exploit scripts"
+  ],
+  "children": [],
+  "parent": "nmap",
+  "relatedConcepts": ["nmap", "wireshark", "vulnerability-scanning"],
+  "visualization": { "color": "#ffcc00", "icon": "📜", "nodeType": "leaf" }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "ssh-hardening",
+  "title": "SSH Server Hardening",
+  "shortName": "SSH Hardening",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Best practices for securing SSH servers against brute force, unauthorized access, and exploitation.",
+  "fullExplanation": "SSH servers are constantly targeted by automated brute-force attacks. Port 22 receives thousands of login attempts per day on any internet-facing server. Hardening SSH involves disabling weak authentication methods, restricting access, and monitoring for suspicious activity. A properly hardened SSH server with key-only authentication and fail2ban is extremely difficult to compromise.",
+  "hardeningSteps": [
+    { "setting": "PasswordAuthentication no",    "file": "/etc/ssh/sshd_config", "description": "Disable password login — require key authentication only" },
+    { "setting": "PermitRootLogin no",           "file": "/etc/ssh/sshd_config", "description": "Disable direct root login — use sudo after logging in as regular user" },
+    { "setting": "Port 2222",                    "file": "/etc/ssh/sshd_config", "description": "Change from default port 22 — reduces automated scan noise (security through obscurity)" },
+    { "setting": "AllowUsers alice bob",         "file": "/etc/ssh/sshd_config", "description": "Whitelist specific users — deny all others" },
+    { "setting": "MaxAuthTries 3",               "file": "/etc/ssh/sshd_config", "description": "Limit authentication attempts per connection" },
+    { "setting": "LoginGraceTime 30",            "file": "/etc/ssh/sshd_config", "description": "Disconnect if not authenticated within 30 seconds" },
+    { "setting": "X11Forwarding no",             "file": "/etc/ssh/sshd_config", "description": "Disable X11 forwarding if not needed" },
+    { "setting": "AllowTcpForwarding no",        "file": "/etc/ssh/sshd_config", "description": "Disable port forwarding on restricted servers" }
+  ],
+  "tools": [
+    { "tool": "fail2ban",    "description": "Monitors auth logs, bans IPs after N failed attempts. Configurable ban time and threshold." },
+    { "tool": "Port Knocking","description": "Send packets to specific ports in sequence to unlock SSH port. Obscures SSH from scanners." },
+    { "tool": "2FA / MFA",   "description": "Google Authenticator PAM module adds TOTP to SSH login." },
+    { "tool": "Bastion Host","description": "Single hardened SSH gateway — all access goes through it. Audit all SSH sessions." },
+    { "tool": "SSH CA",      "description": "Certificate authority signs user/host keys — centralized access control without managing authorized_keys files." }
+  ],
+  "keyFacts": [
+    "Port 22 receives ~1000+ brute-force attempts per day on internet-facing servers",
+    "Key-only auth + fail2ban: effectively eliminates brute-force risk",
+    "SSH-1 is broken — ensure Protocol 2 only (default in modern OpenSSH)",
+    "Audit SSH access: /var/log/auth.log (Debian) or /var/log/secure (RHEL)",
+    "SSH certificate authority: sign user keys with CA — revoke access by removing CA trust",
+    "Idle timeout: ClientAliveInterval 300 + ClientAliveCountMax 2 = disconnect after 10 min idle"
+  ],
+  "children": [],
+  "parent": "ssh",
+  "relatedConcepts": ["ssh", "ssh-key-auth", "firewall", "ids-ips"],
+  "visualization": { "color": "#00ff88", "icon": "🔒", "nodeType": "leaf" }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "dns-security",
+  "title": "DNS Security",
+  "shortName": "DNS Security",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Threats to DNS infrastructure and defenses including DNSSEC, DoH, DoT, and monitoring.",
+  "fullExplanation": "DNS is a critical but historically insecure protocol. Queries are sent in plaintext UDP — anyone on the network can see what sites you're visiting and potentially intercept or modify responses. DNS attacks range from cache poisoning (injecting fake records) to DNS tunneling (exfiltrating data through DNS queries) to DDoS amplification (using DNS servers as amplifiers). Modern defenses include DNSSEC (integrity), DoH/DoT (privacy), and DNS monitoring (threat detection).",
+  "attacks": [
+    { "attack": "Cache Poisoning",    "description": "Inject fake DNS records into resolver cache — redirect users to attacker's server" },
+    { "attack": "DNS Amplification",  "description": "Send small queries with spoofed source IP — large responses flood victim (up to 100x amplification)" },
+    { "attack": "DNS Tunneling",      "description": "Encode data in DNS queries/responses to exfiltrate data or bypass firewalls" },
+    { "attack": "DNS Hijacking",      "description": "Compromise DNS server or registrar to change authoritative records" },
+    { "attack": "NXDOMAIN Attack",    "description": "Flood resolver with queries for non-existent domains — exhaust resolver resources" },
+    { "attack": "Subdomain Takeover", "description": "Dangling CNAME points to unclaimed cloud resource — attacker claims it" }
+  ],
+  "defenses": [
+    { "defense": "DNSSEC",           "description": "Cryptographic signatures on DNS records — prevents cache poisoning" },
+    { "defense": "DNS over HTTPS (DoH)", "description": "Encrypts DNS in HTTPS on port 443 — prevents eavesdropping and interception" },
+    { "defense": "DNS over TLS (DoT)", "description": "Encrypts DNS with TLS on port 853 — privacy without HTTPS overhead" },
+    { "defense": "RPZ (Response Policy Zone)", "description": "DNS firewall — block malicious domains at resolver level" },
+    { "defense": "Rate Limiting",    "description": "Limit DNS responses per source IP — mitigates amplification attacks" },
+    { "defense": "DNS Monitoring",   "description": "Detect DNS tunneling, DGA domains, unusual query patterns" }
+  ],
+  "keyFacts": [
+    "DNS queries are plaintext UDP — ISPs and attackers can see every domain you visit",
+    "DoH (port 443): encrypted DNS — looks like HTTPS traffic, hard to block",
+    "DoT (port 853): encrypted DNS — easy to block/monitor by network admins",
+    "DNS tunneling tools: iodine, dnscat2 — encode TCP/data in DNS TXT/CNAME records",
+    "DGA (Domain Generation Algorithm): malware generates random domains for C2 — hard to block",
+    "Quad9 (9.9.9.9): DNS resolver that blocks malicious domains",
+    "1.1.1.1 (Cloudflare): privacy-focused resolver with DoH/DoT support"
+  ],
+  "children": [],
+  "parent": "dns",
+  "relatedConcepts": ["dns", "dnssec", "dns-resolution-flow", "firewall"],
+  "visualization": { "color": "#00ddff", "icon": "🛡️", "nodeType": "leaf" }
+}

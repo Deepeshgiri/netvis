@@ -1,0 +1,39 @@
+{
+  "id": "modulation",
+  "title": "Modulation Techniques",
+  "shortName": "Modulation",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "physical_layer_concept",
+  "description": "Methods of encoding digital data onto carrier waves for transmission over wireless or analog media.",
+  "fullExplanation": "Modulation encodes digital data onto a carrier wave by varying its amplitude, frequency, or phase. More complex modulation schemes (higher QAM orders) pack more bits per symbol but require a cleaner signal. WiFi and cellular networks use OFDM (Orthogonal Frequency Division Multiplexing) which splits the channel into hundreds of narrow subcarriers, each independently modulated — this makes the signal robust against multipath interference.",
+  "techniques": [
+    { "name": "ASK (Amplitude Shift Keying)",   "description": "Vary amplitude to represent bits. Simple but noise-sensitive. Used in optical fiber (on/off)." },
+    { "name": "FSK (Frequency Shift Keying)",   "description": "Vary frequency. More noise-resistant than ASK. Used in old modems." },
+    { "name": "PSK (Phase Shift Keying)",        "description": "Vary phase. BPSK=1 bit/symbol, QPSK=2 bits/symbol. Used in satellite, WiFi." },
+    { "name": "QAM (Quadrature Amplitude Modulation)", "description": "Vary both amplitude and phase. 16-QAM=4 bits, 64-QAM=6 bits, 1024-QAM=10 bits per symbol." },
+    { "name": "OFDM (Orthogonal Frequency Division Multiplexing)", "description": "Splits channel into many narrow subcarriers. Each uses QAM. Robust against multipath. Used in WiFi, LTE, 5G, DSL." },
+    { "name": "OFDMA",                           "description": "OFDM + multiple access — different users get different subcarriers simultaneously. WiFi 6, LTE." }
+  ],
+  "qamComparison": [
+    { "scheme": "BPSK",    "bitsPerSymbol": 1,  "snrRequired": "Low",  "use": "Long-range, noisy links" },
+    { "scheme": "QPSK",    "bitsPerSymbol": 2,  "snrRequired": "Low",  "use": "Satellite, cellular" },
+    { "scheme": "16-QAM",  "bitsPerSymbol": 4,  "snrRequired": "Medium","use": "WiFi, LTE" },
+    { "scheme": "64-QAM",  "bitsPerSymbol": 6,  "snrRequired": "Medium","use": "WiFi 5, cable TV" },
+    { "scheme": "256-QAM", "bitsPerSymbol": 8,  "snrRequired": "High", "use": "WiFi 5/6, DOCSIS 3.1" },
+    { "scheme": "1024-QAM","bitsPerSymbol": 10, "snrRequired": "Very High","use": "WiFi 6" },
+    { "scheme": "4096-QAM","bitsPerSymbol": 12, "snrRequired": "Extremely High","use": "WiFi 7" }
+  ],
+  "keyFacts": [
+    "Higher QAM = more bits per symbol but needs better SNR",
+    "OFDM uses cyclic prefix to handle multipath reflections",
+    "WiFi adapts modulation dynamically based on signal quality (MCS index)",
+    "Shannon limit: theoretical maximum bits/s = B × log2(1 + SNR)",
+    "Guard intervals in OFDM prevent inter-symbol interference",
+    "MIMO + OFDM = massive throughput gains in modern WiFi and 5G"
+  ],
+  "children": [],
+  "parent": "layer1-physical",
+  "relatedConcepts": ["wireless", "signals", "wifi-channels"],
+  "visualization": { "color": "#ff6b35", "icon": "〰️", "nodeType": "leaf" }
+}

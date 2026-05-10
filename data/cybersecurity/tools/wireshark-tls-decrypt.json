@@ -1,0 +1,44 @@
+{
+  "id": "wireshark-tls-decrypt",
+  "title": "Wireshark TLS Decryption",
+  "shortName": "TLS Decrypt",
+  "type": "concept",
+  "category": "network_analysis",
+  "description": "Decrypting TLS traffic in Wireshark using session keys or RSA private keys.",
+  "fullExplanation": "Wireshark can decrypt TLS traffic if you provide the session keys. The most reliable method is the SSLKEYLOGFILE — browsers (Chrome, Firefox) can log TLS session keys to a file when this environment variable is set. Wireshark reads this file and decrypts the traffic. For older TLS 1.2 with RSA key exchange (no forward secrecy), you can provide the server's RSA private key. TLS 1.3 and TLS 1.2 with ECDHE cannot be decrypted with just the private key — you need the session keys.",
+  "methods": [
+    {
+      "method": "SSLKEYLOGFILE (Recommended)",
+      "steps": [
+        "Set environment variable: SSLKEYLOGFILE=/tmp/keys.log",
+        "Launch browser from terminal (inherits env var)",
+        "Browse to target site — keys logged automatically",
+        "In Wireshark: Edit → Preferences → Protocols → TLS → (Pre)-Master-Secret log filename → select keys.log",
+        "Wireshark decrypts all captured TLS sessions"
+      ],
+      "works_with": "TLS 1.2 and 1.3, any cipher suite including ECDHE"
+    },
+    {
+      "method": "RSA Private Key (Legacy)",
+      "steps": [
+        "Obtain server's RSA private key (only works if you own the server)",
+        "In Wireshark: Edit → Preferences → Protocols → TLS → RSA Keys → Add",
+        "Enter IP, port, protocol, and path to private key file"
+      ],
+      "works_with": "TLS 1.2 with RSA key exchange ONLY. Does NOT work with ECDHE (forward secrecy)."
+    }
+  ],
+  "keyFacts": [
+    "SSLKEYLOGFILE works with Chrome, Firefox, curl, and many other TLS clients",
+    "TLS 1.3 always uses ECDHE — RSA private key method never works",
+    "Forward secrecy: even with private key, past sessions cannot be decrypted",
+    "SSLKEYLOGFILE is a security risk — protect the key log file carefully",
+    "Wireshark shows decrypted data in 'Decrypted TLS' tab in packet details",
+    "Follow TLS Stream: right-click → Follow → TLS Stream — see plaintext HTTP",
+    "Corporate proxies: SSL inspection uses MITM — they have session keys"
+  ],
+  "children": [],
+  "parent": "wireshark",
+  "relatedConcepts": ["wireshark", "tls", "tls-handshake", "https"],
+  "visualization": { "color": "#00d4ff", "icon": "🔓", "nodeType": "leaf" }
+}

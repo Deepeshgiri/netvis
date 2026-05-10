@@ -1,0 +1,33 @@
+{
+  "id": "tshark",
+  "title": "tshark (Command-Line Wireshark)",
+  "shortName": "tshark",
+  "type": "tool",
+  "category": "network_analysis",
+  "description": "Command-line packet analyzer — the terminal version of Wireshark for scripting and remote capture.",
+  "fullExplanation": "tshark is the command-line version of Wireshark. It can capture packets from a live interface or read pcap files, applying the same display filters and protocol dissectors as Wireshark. tshark is essential for remote packet capture (SSH into server, capture, analyze), automated analysis scripts, and CI/CD pipeline network testing. It outputs to terminal, JSON, CSV, or pcap files.",
+  "commonCommands": [
+    { "command": "tshark -i eth0",                              "description": "Capture on interface eth0" },
+    { "command": "tshark -i eth0 -w capture.pcap",             "description": "Capture and save to file" },
+    { "command": "tshark -r capture.pcap",                     "description": "Read and display pcap file" },
+    { "command": "tshark -r capture.pcap -Y 'http'",           "description": "Filter: show only HTTP traffic" },
+    { "command": "tshark -r capture.pcap -T json",             "description": "Output as JSON for scripting" },
+    { "command": "tshark -r capture.pcap -T fields -e ip.src -e ip.dst -e tcp.dstport", "description": "Extract specific fields" },
+    { "command": "tshark -i eth0 -f 'port 443'",               "description": "Capture filter: only port 443" },
+    { "command": "tshark -r capture.pcap -z io,stat,1",        "description": "Traffic statistics per second" },
+    { "command": "tshark -r capture.pcap -z conv,tcp",         "description": "TCP conversation statistics" }
+  ],
+  "keyFacts": [
+    "tshark uses same display filters as Wireshark — fully compatible",
+    "Requires root/admin for live capture (raw socket access)",
+    "Remote capture: ssh user@server 'tshark -i eth0 -w -' | wireshark -k -i -",
+    "editcap: trim, split, or convert pcap files",
+    "mergecap: merge multiple pcap files into one",
+    "capinfos: show statistics about a pcap file",
+    "dumpcap: lightweight capture tool (used by Wireshark internally)"
+  ],
+  "children": [],
+  "parent": "wireshark",
+  "relatedConcepts": ["wireshark", "nmap", "tcp", "dns"],
+  "visualization": { "color": "#00d4ff", "icon": "💻", "nodeType": "leaf" }
+}

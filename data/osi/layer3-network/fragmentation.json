@@ -1,0 +1,42 @@
+{
+  "id": "fragmentation",
+  "title": "IP Fragmentation",
+  "shortName": "Fragmentation",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "network_protocol",
+  "description": "Splitting IP packets that exceed the MTU of a network link into smaller fragments for transmission.",
+  "fullExplanation": "Every network link has an MTU (Maximum Transmission Unit) — the largest packet it can carry. Ethernet MTU is 1500 bytes. If an IP packet is larger than the MTU, IPv4 routers fragment it into smaller pieces. Each fragment has the same IP ID, a fragment offset, and the MF (More Fragments) flag set (except the last fragment). The destination host reassembles fragments. IPv6 does NOT allow router fragmentation — only the source host can fragment, and Path MTU Discovery (PMTUD) is used to find the minimum MTU along the path.",
+  "fragmentationFields": [
+    { "field": "Identification", "description": "16-bit ID shared by all fragments of the same original packet" },
+    { "field": "Flags - DF",     "description": "Don't Fragment — if set, router drops packet and sends ICMP 'Fragmentation Needed'" },
+    { "field": "Flags - MF",     "description": "More Fragments — set on all fragments except the last" },
+    { "field": "Fragment Offset","description": "Position of this fragment in the original packet (in 8-byte units)" }
+  ],
+  "pmtud": {
+    "description": "Path MTU Discovery — finds minimum MTU along path to avoid fragmentation",
+    "steps": [
+      "Source sends packet with DF (Don't Fragment) bit set",
+      "If router can't forward without fragmenting, it drops packet and sends ICMP Type 3 Code 4 (Fragmentation Needed) with next-hop MTU",
+      "Source reduces packet size and retries",
+      "Process repeats until packet reaches destination"
+    ]
+  },
+  "keyFacts": [
+    "Ethernet MTU: 1500 bytes. Jumbo frames: 9000 bytes (data centers).",
+    "IPv4 fragmentation done by routers. IPv6 fragmentation only by source host.",
+    "Reassembly only at destination — intermediate routers don't reassemble",
+    "Fragment timeout: if all fragments don't arrive within 60s, packet discarded",
+    "PMTUD Black Hole: firewalls blocking ICMP break PMTUD — TCP connections hang",
+    "TCP MSS (Maximum Segment Size): negotiated in SYN to avoid IP fragmentation",
+    "IP fragmentation attacks: overlapping fragments can confuse IDS/firewalls"
+  ],
+  "children": [],
+  "parent": "ipv4",
+  "relatedConcepts": ["ipv4", "icmp", "tcp", "mtu"],
+  "cybersecurity": {
+    "attacks": ["ip-fragmentation-attack", "teardrop-attack", "overlapping-fragments"],
+    "defenses": ["firewall", "ids-ips", "fragment-reassembly"]
+  },
+  "visualization": { "color": "#00d4ff", "icon": "✂️", "nodeType": "leaf" }
+}

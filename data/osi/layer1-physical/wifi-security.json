@@ -1,0 +1,39 @@
+{
+  "id": "wifi-security",
+  "title": "WiFi Security Protocols",
+  "shortName": "WiFi Security",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "wireless_security",
+  "description": "Authentication and encryption standards that protect wireless networks from unauthorized access.",
+  "fullExplanation": "WiFi security has evolved from the broken WEP (1997) through WPA and WPA2 to the current WPA3 standard. WEP used RC4 with static keys and was cracked in minutes. WPA introduced TKIP as a stopgap. WPA2 with AES-CCMP became the standard for over a decade. WPA3 (2018) introduced SAE (Simultaneous Authentication of Equals) replacing the vulnerable PSK handshake, and mandates 192-bit encryption for enterprise networks.",
+  "protocols": [
+    { "name": "WEP",  "year": 1997, "status": "Broken — never use", "encryption": "RC4 (40/104-bit)", "auth": "Shared key", "weakness": "IV reuse, weak RC4 — cracked in <60 seconds" },
+    { "name": "WPA",  "year": 2003, "status": "Deprecated",         "encryption": "TKIP (RC4)",        "auth": "PSK / 802.1X", "weakness": "TKIP vulnerable to TKIP-MIC attack" },
+    { "name": "WPA2", "year": 2004, "status": "Still widely used",  "encryption": "AES-CCMP (128-bit)","auth": "PSK / 802.1X", "weakness": "KRACK attack, offline dictionary attacks on PSK" },
+    { "name": "WPA3", "year": 2018, "status": "Current standard",   "encryption": "AES-GCMP (128/256-bit)","auth": "SAE / 802.1X-192", "weakness": "Dragonblood side-channel (patched)" }
+  ],
+  "modes": [
+    { "mode": "Personal (PSK)", "description": "Pre-Shared Key — single password for all users. Home/small office use." },
+    { "mode": "Enterprise (802.1X)", "description": "Each user authenticates with individual credentials via RADIUS server. Corporate use." },
+    { "mode": "WPA3-SAE", "description": "Simultaneous Authentication of Equals — replaces PSK. Resistant to offline dictionary attacks." },
+    { "mode": "OWE (Enhanced Open)", "description": "Opportunistic Wireless Encryption — encrypts open networks without password." }
+  ],
+  "keyFacts": [
+    "WEP: cracked in under 60 seconds with aircrack-ng — never use",
+    "WPA2-PSK: vulnerable to offline dictionary attacks if weak password",
+    "KRACK (2017): WPA2 key reinstallation attack — patched in most devices",
+    "WPA3-SAE: forward secrecy — past traffic safe even if password later compromised",
+    "802.1X: each user gets unique session key — compromise of one user doesn't affect others",
+    "PMKID attack: crack WPA2 without capturing 4-way handshake",
+    "Hidden SSID: no security benefit — easily discovered with passive scanning"
+  ],
+  "children": [],
+  "parent": "wireless",
+  "relatedConcepts": ["wireless", "tls", "radius", "802.1x"],
+  "cybersecurity": {
+    "attacks": ["evil-twin", "deauth-attack", "wpa2-cracking", "krack", "pmkid-attack"],
+    "defenses": ["wpa3", "802.1x", "strong-passphrase", "wireless-ids"]
+  },
+  "visualization": { "color": "#ff5533", "icon": "🔐", "nodeType": "leaf" }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "rtp",
+  "title": "RTP / RTCP",
+  "shortName": "RTP",
+  "type": "protocol",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "port": null,
+  "transport": "UDP",
+  "description": "Real-time Transport Protocol — delivers audio and video over UDP for VoIP, video conferencing, and streaming.",
+  "fullExplanation": "RTP (Real-time Transport Protocol) provides end-to-end delivery of real-time data (audio, video) over UDP. It adds sequence numbers (for reordering), timestamps (for synchronization and jitter calculation), and payload type identification. RTCP (RTP Control Protocol) runs alongside RTP — it carries QoS statistics (packet loss, jitter, RTT) between participants. SIP (Session Initiation Protocol) or WebRTC use RTP for the actual media stream after signaling.",
+  "header": {
+    "size": "12 bytes minimum",
+    "fields": [
+      { "name": "Version",        "bits": 2,  "description": "RTP version (always 2)",                          "example": "2" },
+      { "name": "Padding (P)",    "bits": 1,  "description": "Padding bytes at end of packet",                  "example": "0" },
+      { "name": "Extension (X)",  "bits": 1,  "description": "Header extension present",                        "example": "0" },
+      { "name": "CC",             "bits": 4,  "description": "CSRC count — number of contributing sources",     "example": "0" },
+      { "name": "Marker (M)",     "bits": 1,  "description": "Application-specific (e.g. end of video frame)",  "example": "0" },
+      { "name": "Payload Type",   "bits": 7,  "description": "Codec: 0=PCMU, 8=PCMA, 96-127=dynamic (Opus, H.264)", "example": "111 (Opus)" },
+      { "name": "Sequence Number","bits": 16, "description": "Increments per packet — detect loss and reorder", "example": "12345" },
+      { "name": "Timestamp",      "bits": 32, "description": "Sampling instant — used for playout timing and jitter", "example": "160 per 20ms @ 8kHz" },
+      { "name": "SSRC",           "bits": 32, "description": "Synchronization Source — unique ID for this stream", "example": "0xA1B2C3D4" }
+    ]
+  },
+  "keyFacts": [
+    "RTP uses even UDP ports, RTCP uses the next odd port (e.g. RTP=5004, RTCP=5005)",
+    "RTP does NOT guarantee delivery or ordering — application handles jitter buffer",
+    "Jitter buffer: absorbs timing variations — typically 50-200ms for VoIP",
+    "RTCP SR (Sender Report): statistics from sender — packets sent, bytes sent, NTP timestamp",
+    "RTCP RR (Receiver Report): statistics from receiver — fraction lost, jitter, last SR",
+    "SRTP (Secure RTP): adds AES encryption and HMAC authentication to RTP",
+    "WebRTC uses SRTP mandatorily — all browser-based video/audio is encrypted",
+    "Codecs: G.711 (PSTN quality), G.729 (compressed), Opus (modern, adaptive)"
+  ],
+  "children": [],
+  "parent": "udp",
+  "relatedConcepts": ["udp", "sip", "webrtc", "voip"],
+  "visualization": { "color": "#00ddaa", "icon": "🎙️", "nodeType": "leaf" }
+}

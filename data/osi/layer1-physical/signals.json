@@ -1,0 +1,36 @@
+{
+  "id": "signals",
+  "title": "Electrical & Optical Signals",
+  "shortName": "Signals",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "physical_media",
+  "description": "How binary data is represented as electrical voltages, light pulses, or radio waves on physical media.",
+  "fullExplanation": "At the physical layer, bits (0s and 1s) must be converted into physical signals. Copper cables use voltage levels (e.g. +5V = 1, 0V = 0 in NRZ encoding). Fiber optic cables use light pulses (light on = 1, off = 0). Wireless uses radio wave modulation. The encoding scheme determines how bits map to signal states. More complex encodings (like 4B/5B, 8B/10B, PAM4) improve efficiency and clock recovery.",
+  "encodingSchemes": [
+    { "name": "NRZ (Non-Return to Zero)",    "description": "High voltage = 1, low = 0. Simple but no clock sync." },
+    { "name": "NRZI",                         "description": "Transition on 1, no transition on 0. Used in USB." },
+    { "name": "Manchester Encoding",          "description": "Transition in middle of bit period. Self-clocking. Used in 10BASE-T." },
+    { "name": "4B/5B",                        "description": "4 data bits encoded as 5 bits — ensures enough transitions for clock recovery. Used in 100BASE-TX." },
+    { "name": "8B/10B",                       "description": "8 data bits → 10 bits. DC balance + clock recovery. Used in Gigabit Ethernet, Fibre Channel." },
+    { "name": "PAM4 (Pulse Amplitude Modulation 4)", "description": "4 voltage levels encode 2 bits per symbol. Used in 25G/100G+ Ethernet." }
+  ],
+  "signalTypes": [
+    { "type": "Electrical",  "medium": "Copper (UTP, coax)", "speed": "Up to 40 Gbps (Cat8)", "attenuation": "High — needs repeaters every 100m" },
+    { "type": "Optical",     "medium": "Fiber optic",        "speed": "Up to 400 Gbps+",      "attenuation": "Very low — single-mode up to 80km" },
+    { "type": "Radio (RF)",  "medium": "Air / vacuum",       "speed": "Up to 46 Gbps (WiFi 7)","attenuation": "Varies with frequency and obstacles" }
+  ],
+  "keyFacts": [
+    "Signal travels at ~2/3 speed of light in copper (~200,000 km/s)",
+    "Attenuation: signal weakens with distance — repeaters regenerate it",
+    "Noise: EMI, crosstalk, thermal noise degrade signal quality",
+    "SNR (Signal-to-Noise Ratio): higher = better signal quality",
+    "Bandwidth: maximum frequency range the medium can carry",
+    "Shannon's theorem: max data rate = B × log2(1 + SNR)",
+    "PAM4 doubles throughput vs NRZ at same symbol rate"
+  ],
+  "children": [],
+  "parent": "layer1-physical",
+  "relatedConcepts": ["cables", "fiber", "modulation", "wireless"],
+  "visualization": { "color": "#ff6b35", "icon": "⚡", "nodeType": "leaf" }
+}

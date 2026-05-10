@@ -1,0 +1,44 @@
+{
+  "id": "tcp-flags",
+  "title": "TCP Flags",
+  "shortName": "TCP Flags",
+  "type": "concept",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "description": "9 control bits in the TCP header that signal connection state and control data flow.",
+  "fullExplanation": "TCP flags are 1-bit fields in the TCP header that control the state of a connection. Each flag has a specific meaning and is used in different phases of the TCP lifecycle. Nmap and other tools craft packets with specific flag combinations to probe firewalls and detect OS fingerprints. Unusual flag combinations (NULL, FIN, Xmas) are used in stealth scans.",
+  "flags": [
+    { "flag": "SYN", "bit": "Bit 1", "description": "Synchronize — initiates connection. Used in 3-way handshake (step 1 and 2)." },
+    { "flag": "ACK", "bit": "Bit 2", "description": "Acknowledgement — confirms receipt of data. Set in all packets after initial SYN." },
+    { "flag": "FIN", "bit": "Bit 3", "description": "Finish — gracefully closes connection. Initiates 4-way teardown." },
+    { "flag": "RST", "bit": "Bit 4", "description": "Reset — abruptly terminates connection. Sent on error or to reject connection." },
+    { "flag": "PSH", "bit": "Bit 5", "description": "Push — tells receiver to pass data to application immediately, don't buffer." },
+    { "flag": "URG", "bit": "Bit 6", "description": "Urgent — urgent pointer field is valid. Rarely used in modern protocols." },
+    { "flag": "ECE", "bit": "Bit 7", "description": "ECN Echo — signals congestion detected (used with CWR for ECN)." },
+    { "flag": "CWR", "bit": "Bit 8", "description": "Congestion Window Reduced — sender reduced congestion window in response to ECE." },
+    { "flag": "NS",  "bit": "Bit 9", "description": "Nonce Sum — experimental ECN nonce (RFC 3540). Rarely used." }
+  ],
+  "commonCombinations": [
+    { "flags": "SYN",         "meaning": "Connection initiation (step 1 of handshake)" },
+    { "flags": "SYN+ACK",     "meaning": "Connection acceptance (step 2 of handshake)" },
+    { "flags": "ACK",         "meaning": "Data acknowledgement or connection established (step 3)" },
+    { "flags": "FIN+ACK",     "meaning": "Graceful connection close" },
+    { "flags": "RST",         "meaning": "Abrupt connection reset — port closed or error" },
+    { "flags": "PSH+ACK",     "meaning": "Data segment — push to application immediately" },
+    { "flags": "None (NULL)", "meaning": "No flags — used in Nmap NULL scan to probe firewalls" },
+    { "flags": "FIN+PSH+URG", "meaning": "Xmas scan — all 'lit up' flags, used in Nmap Xmas scan" }
+  ],
+  "keyFacts": [
+    "RST vs FIN: RST abruptly kills connection, FIN gracefully closes it",
+    "RST sent when: port is closed, connection is invalid, or firewall rejects",
+    "SYN flood: send thousands of SYNs without completing handshake",
+    "TCP RST attack: inject RST packet to kill existing connection",
+    "Nmap NULL scan: no flags — RFC says closed port sends RST, open port ignores",
+    "Nmap Xmas scan: FIN+PSH+URG — same behavior as NULL scan",
+    "ECN (Explicit Congestion Notification): ECE+CWR flags signal congestion without packet loss"
+  ],
+  "children": [],
+  "parent": "tcp",
+  "relatedConcepts": ["tcp", "tcp-handshake", "tcp-flow-control", "syn-flood"],
+  "visualization": { "color": "#00ff88", "icon": "🚩", "nodeType": "leaf" }
+}

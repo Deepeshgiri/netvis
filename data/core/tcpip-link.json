@@ -1,0 +1,32 @@
+{
+  "id": "tcpip-link",
+  "title": "TCP/IP Network Access Layer",
+  "shortName": "Network Access",
+  "type": "concept",
+  "category": "tcpip_layer",
+  "description": "Combines OSI layers 1 and 2 — handles physical transmission and local network framing.",
+  "fullExplanation": "The TCP/IP Network Access layer (also called the Link layer) combines what OSI separates into Physical (L1) and Data Link (L2) layers. It handles everything needed to transmit data over a single physical link — from the electrical signals on copper wire to the Ethernet frame format and MAC addressing. This layer is network-technology specific: Ethernet, WiFi, PPP, and DSL all operate here but have different frame formats and addressing schemes.",
+  "osiEquivalent": "OSI Layer 1 (Physical) + OSI Layer 2 (Data Link)",
+  "protocols": [
+    { "name": "Ethernet (802.3)", "description": "Dominant wired LAN — MAC addresses, CRC, CSMA/CD" },
+    { "name": "WiFi (802.11)",    "description": "Wireless LAN — 2.4/5/6 GHz, WPA3 security" },
+    { "name": "ARP",              "description": "Address Resolution Protocol — maps IP to MAC address" },
+    { "name": "PPP",              "description": "Point-to-Point Protocol — WAN links, dial-up, DSL" },
+    { "name": "DSL",              "description": "Digital Subscriber Line — broadband over phone lines" },
+    { "name": "SONET/SDH",        "description": "Synchronous optical networking — carrier backbone" },
+    { "name": "802.1Q (VLAN)",    "description": "Virtual LAN tagging on Ethernet frames" }
+  ],
+  "keyFacts": [
+    "MAC addresses (48-bit) used for local delivery within a single network segment",
+    "ARP bridges Internet layer (IP) and Network Access layer (MAC)",
+    "Ethernet MTU: 1500 bytes — IP fragmentation occurs if packet exceeds this",
+    "Network Access layer PDU is called a 'Frame'",
+    "NIC operates at this layer — hardware address burned into EEPROM",
+    "Switches operate at this layer — forward frames based on MAC table",
+    "Unlike OSI, TCP/IP doesn't specify what goes here — any link technology works"
+  ],
+  "children": ["ethernet", "arp", "wireless", "cables"],
+  "parent": "tcp-ip-model",
+  "relatedConcepts": ["layer2-datalink", "layer1-physical", "mac-addresses", "switching"],
+  "visualization": { "color": "#ffcc00", "icon": "🔗", "nodeType": "expandable" }
+}

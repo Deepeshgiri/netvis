@@ -1,0 +1,37 @@
+{
+  "id": "device-trust",
+  "title": "Device Trust & Posture",
+  "shortName": "Device Trust",
+  "type": "defense",
+  "category": "security_architecture",
+  "description": "Verifying device health and compliance before granting network or application access.",
+  "fullExplanation": "Zero Trust requires verifying not just who is connecting, but what device they're using. Device posture checks verify that the device meets security requirements: OS is up to date, disk is encrypted, EDR agent is running, no jailbreak/root. Only compliant devices are granted access. Non-compliant devices are quarantined or given limited access. This prevents compromised or unmanaged devices from accessing sensitive resources.",
+  "posturChecks": [
+    { "check": "OS Version",          "description": "Ensure OS is current — block outdated Windows/macOS/iOS/Android" },
+    { "check": "Patch Level",         "description": "Verify critical patches applied — no known unpatched CVEs" },
+    { "check": "Disk Encryption",     "description": "BitLocker (Windows), FileVault (Mac), LUKS (Linux) enabled" },
+    { "check": "EDR Agent",           "description": "Endpoint Detection & Response agent running and up to date" },
+    { "check": "Screen Lock",         "description": "Auto-lock enabled with PIN/password/biometric" },
+    { "check": "Jailbreak/Root",      "description": "Detect rooted Android or jailbroken iOS — block access" },
+    { "check": "Certificate",         "description": "Device has valid certificate issued by corporate CA" },
+    { "check": "Firewall Enabled",    "description": "Host-based firewall active" }
+  ],
+  "technologies": [
+    { "tech": "MDM (Mobile Device Management)", "description": "Manage and enforce policy on mobile devices. Examples: Jamf, Intune, VMware Workspace ONE." },
+    { "tech": "EDR (Endpoint Detection & Response)", "description": "Monitor endpoint for threats. Examples: CrowdStrike Falcon, SentinelOne, Microsoft Defender." },
+    { "tech": "NAC (Network Access Control)", "description": "Check device posture before allowing network access. Examples: Cisco ISE, Aruba ClearPass." },
+    { "tech": "TPM (Trusted Platform Module)", "description": "Hardware chip that stores cryptographic keys — proves device identity." }
+  ],
+  "keyFacts": [
+    "BYOD risk: personal devices may not meet corporate security standards",
+    "Certificate-based device identity: device cert issued by corporate CA — proves managed device",
+    "Conditional Access: grant/deny access based on device compliance score",
+    "Continuous monitoring: re-evaluate device posture throughout session, not just at login",
+    "Quarantine VLAN: non-compliant devices get limited access to remediation resources only",
+    "Zero Trust Device: device must be known, managed, and compliant — not just any device"
+  ],
+  "children": [],
+  "parent": "zero-trust",
+  "relatedConcepts": ["zero-trust", "identity-verification", "ztna", "ids-ips"],
+  "visualization": { "color": "#ff3366", "icon": "💻", "nodeType": "leaf" }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "identity-verification",
+  "title": "Identity Verification & MFA",
+  "shortName": "Identity & MFA",
+  "type": "defense",
+  "category": "security_architecture",
+  "description": "Verifying user identity through multiple factors before granting access — the foundation of Zero Trust.",
+  "fullExplanation": "Identity is the new perimeter in Zero Trust. Every access request must be authenticated and authorized regardless of network location. Multi-Factor Authentication (MFA) requires something you know (password), something you have (phone/token), and/or something you are (biometric). Modern identity platforms use risk-based adaptive authentication — requiring stronger verification when risk signals are elevated (new device, unusual location, sensitive resource).",
+  "mfaTypes": [
+    { "type": "TOTP (Time-based OTP)",    "example": "Google Authenticator, Authy",    "security": "High",    "phishable": "Yes — can be phished in real-time" },
+    { "type": "FIDO2 / WebAuthn",         "example": "YubiKey, Windows Hello, Touch ID","security": "Highest", "phishable": "No — bound to origin domain" },
+    { "type": "Push Notification",        "example": "Duo Security, Microsoft Authenticator","security": "High","phishable": "MFA fatigue attacks possible" },
+    { "type": "SMS OTP",                  "example": "Text message code",               "security": "Low",     "phishable": "Yes — SIM swap, SS7 attacks" },
+    { "type": "Hardware Token (HOTP)",    "example": "RSA SecurID",                     "security": "High",    "phishable": "Yes — real-time phishing" },
+    { "type": "Certificate (mTLS)",       "example": "Smart card, device certificate",  "security": "Highest", "phishable": "No — cryptographic binding" }
+  ],
+  "keyFacts": [
+    "FIDO2/WebAuthn: phishing-resistant MFA — key bound to specific domain, can't be replayed",
+    "MFA fatigue attack: flood user with push notifications until they approve — use number matching",
+    "Conditional Access: require MFA only when risk is elevated (new device, unusual location)",
+    "SSO (Single Sign-On): authenticate once, access many apps — reduces password fatigue",
+    "PAM (Privileged Access Management): extra controls for admin accounts — session recording, JIT access",
+    "Passwordless: FIDO2 + biometric replaces password entirely",
+    "NIST SP 800-63B: US government MFA guidelines — recommends against SMS OTP"
+  ],
+  "children": [],
+  "parent": "zero-trust",
+  "relatedConcepts": ["zero-trust", "ztna", "vpn", "certificates"],
+  "visualization": { "color": "#ff3366", "icon": "🪪", "nodeType": "leaf" }
+}

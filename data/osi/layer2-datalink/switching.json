@@ -1,0 +1,38 @@
+{
+  "id": "switching",
+  "title": "Ethernet Switching",
+  "shortName": "Switching",
+  "type": "concept",
+  "osiLayer": 2,
+  "category": "data_link_concept",
+  "description": "How switches forward Ethernet frames using MAC address tables to deliver traffic only to the correct port.",
+  "fullExplanation": "A switch maintains a CAM (Content Addressable Memory) table — also called MAC address table — that maps MAC addresses to switch ports. When a frame arrives, the switch learns the source MAC → port mapping. It then looks up the destination MAC: if found, it forwards only to that port (unicast); if not found, it floods to all ports except the source (unknown unicast). Broadcast and multicast frames are also flooded. This eliminates collisions and provides dedicated bandwidth per port.",
+  "forwardingModes": [
+    { "mode": "Store-and-Forward", "description": "Receives entire frame, checks CRC, then forwards. Eliminates corrupt frames. Adds latency (~10µs)." },
+    { "mode": "Cut-Through",       "description": "Starts forwarding after reading destination MAC (first 6 bytes). Lower latency but forwards corrupt frames." },
+    { "mode": "Fragment-Free",     "description": "Reads first 64 bytes (collision window) before forwarding. Compromise between above two." }
+  ],
+  "camTableBehavior": [
+    { "scenario": "Known unicast",   "action": "Forward only to the port mapped to destination MAC" },
+    { "scenario": "Unknown unicast", "action": "Flood to all ports except source (until MAC learned)" },
+    { "scenario": "Broadcast",       "action": "Flood to all ports except source" },
+    { "scenario": "Multicast",       "action": "Flood to all ports (unless IGMP snooping configured)" }
+  ],
+  "keyFacts": [
+    "CAM table size: typically 8K-128K entries on enterprise switches",
+    "MAC aging timer: entries expire after ~300 seconds of inactivity",
+    "MAC flooding attack: overflow CAM table → switch behaves like hub → sniff all traffic",
+    "Port security: limit MAC addresses per port to prevent flooding attacks",
+    "IGMP snooping: forward multicast only to ports with interested receivers",
+    "Spanning Tree Protocol (STP) prevents Layer 2 loops in redundant topologies",
+    "Layer 3 switch: performs routing between VLANs at wire speed using ASICs"
+  ],
+  "children": [],
+  "parent": "ethernet",
+  "relatedConcepts": ["ethernet", "mac-addresses", "vlans", "stp"],
+  "cybersecurity": {
+    "attacks": ["mac-flooding", "cam-table-overflow"],
+    "defenses": ["port-security", "802.1x", "private-vlan"]
+  },
+  "visualization": { "color": "#ffcc00", "icon": "🔀", "nodeType": "leaf" }
+}

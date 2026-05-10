@@ -1,0 +1,35 @@
+{
+  "id": "ospf-areas",
+  "title": "OSPF Areas",
+  "shortName": "OSPF Areas",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "routing_protocol",
+  "description": "Hierarchical groupings of OSPF routers that limit LSA flooding and reduce SPF computation overhead.",
+  "fullExplanation": "OSPF uses a two-level hierarchy: the backbone (Area 0) and non-backbone areas. All areas must connect to Area 0 (directly or via virtual links). Within an area, all routers have identical LSDBs. Between areas, only summary routes are exchanged — this dramatically reduces the size of the LSDB and the frequency of SPF recalculations. ABRs (Area Border Routers) connect non-backbone areas to Area 0. ASBRs (AS Boundary Routers) redistribute external routes into OSPF.",
+  "areaTypes": [
+    { "type": "Backbone (Area 0)",  "description": "All areas must connect here. Carries inter-area traffic. Cannot be stub." },
+    { "type": "Standard Area",      "description": "Receives all LSA types including external routes (Type 5 LSAs)." },
+    { "type": "Stub Area",          "description": "No external LSAs (Type 5). Uses default route for external destinations. Reduces LSDB." },
+    { "type": "Totally Stubby",     "description": "Cisco extension. No external or inter-area LSAs. Only default route. Smallest LSDB." },
+    { "type": "NSSA (Not-So-Stubby Area)", "description": "Allows limited external route redistribution via Type 7 LSAs. Converted to Type 5 at ABR." }
+  ],
+  "routerRoles": [
+    { "role": "Internal Router",  "description": "All interfaces in one area. Only knows that area's topology." },
+    { "role": "ABR (Area Border Router)", "description": "Connects two or more areas. Maintains separate LSDB per area. Summarizes routes between areas." },
+    { "role": "ASBR (AS Boundary Router)", "description": "Redistributes external routes (from BGP, static, EIGRP) into OSPF as Type 5 LSAs." },
+    { "role": "Backbone Router",  "description": "Has at least one interface in Area 0." }
+  ],
+  "keyFacts": [
+    "Area 0 is mandatory — all other areas connect to it",
+    "Virtual link: connect non-backbone area to Area 0 through another area (workaround)",
+    "ABR summarizes routes between areas — reduces routing table size",
+    "Stub area: replace all Type 5 LSAs with a single default route",
+    "OSPF areas reduce SPF computation — topology change in one area doesn't affect others",
+    "Maximum recommended area size: ~50-100 routers for stability"
+  ],
+  "children": [],
+  "parent": "ospf",
+  "relatedConcepts": ["ospf", "ospf-adjacency", "ospf-lsa", "bgp"],
+  "visualization": { "color": "#00d4ff", "icon": "🗺️", "nodeType": "leaf" }
+}

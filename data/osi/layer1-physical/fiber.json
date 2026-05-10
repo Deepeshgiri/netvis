@@ -1,0 +1,35 @@
+{
+  "id": "fiber",
+  "title": "Fiber Optic Cables",
+  "shortName": "Fiber",
+  "type": "hardware",
+  "osiLayer": 1,
+  "category": "physical_media",
+  "description": "Glass or plastic cables that transmit data as pulses of light — immune to EMI and capable of very long distances.",
+  "fullExplanation": "Fiber optic cables transmit data as light pulses through a glass or plastic core. Total internal reflection keeps light inside the core. Single-mode fiber (SMF) has a tiny 9µm core — only one light path, minimal dispersion, used for long distances (up to 80km without amplification). Multi-mode fiber (MMF) has a larger 50/62.5µm core — multiple light paths, more dispersion, used for short distances (up to 550m). Fiber is immune to electromagnetic interference and supports much higher bandwidth than copper.",
+  "types": [
+    { "name": "Single-Mode (SMF)", "core": "9µm",     "distance": "Up to 80km (unamplified), 1000km+ with EDFA", "speed": "100G–400G+", "use": "WAN, metro, data center interconnect" },
+    { "name": "Multi-Mode OM3",    "core": "50µm",    "distance": "Up to 300m @ 10G",                            "speed": "10G",        "use": "Data center, campus" },
+    { "name": "Multi-Mode OM4",    "core": "50µm",    "distance": "Up to 400m @ 10G, 150m @ 40G",               "speed": "40G",        "use": "Data center" },
+    { "name": "Multi-Mode OM5",    "core": "50µm",    "distance": "Up to 400m @ 100G (SWDM4)",                  "speed": "100G",       "use": "Short-reach 100G" }
+  ],
+  "connectors": [
+    { "name": "LC",   "description": "Small form factor, most common in data centers" },
+    { "name": "SC",   "description": "Square connector, common in telecom" },
+    { "name": "MPO/MTP", "description": "Multi-fiber connector (12 or 24 fibers) for high-density 40G/100G" },
+    { "name": "ST",   "description": "Bayonet-style, older installations" }
+  ],
+  "keyFacts": [
+    "Light travels at ~200,000 km/s in fiber (2/3 speed of light in vacuum)",
+    "Immune to electromagnetic interference (EMI) — ideal near power equipment",
+    "No electrical signal — cannot be tapped with inductive probes",
+    "EDFA (Erbium-Doped Fiber Amplifier) boosts signal without converting to electrical",
+    "DWDM (Dense Wavelength Division Multiplexing): 80+ wavelengths on one fiber",
+    "Bend radius: fiber breaks if bent too sharply (typically >30mm radius)",
+    "Cleanliness critical — dust on connector causes 3dB+ loss"
+  ],
+  "children": [],
+  "parent": "layer1-physical",
+  "relatedConcepts": ["cables", "signals", "ethernet"],
+  "visualization": { "color": "#ff6b35", "icon": "💡", "nodeType": "leaf" }
+}

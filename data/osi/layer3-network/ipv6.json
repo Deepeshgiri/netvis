@@ -1,0 +1,64 @@
+{
+  "id": "ipv6",
+  "title": "Internet Protocol version 6",
+  "shortName": "IPv6",
+  "type": "protocol",
+  "osiLayer": 3,
+  "tcpIpLayer": "Internet",
+  "category": "network_protocol",
+  "description": "128-bit addressing scheme designed to replace IPv4 with virtually unlimited address space.",
+  "fullExplanation": "IPv6 uses 128-bit addresses written as eight groups of four hex digits (e.g. 2001:0db8:85a3::8a2e:0370:7334). This provides 340 undecillion (3.4×10³⁸) addresses — enough for every atom on Earth. IPv6 eliminates NAT (every device gets a public IP), simplifies the header (fixed 40 bytes, no checksum, no fragmentation by routers), and adds built-in features like stateless address autoconfiguration (SLAAC) and mandatory IPsec support.",
+  "header": {
+    "size": "40 bytes (fixed)",
+    "fields": [
+      { "name": "Version",       "bits": 4,   "description": "IP version (6)",                                    "example": "6" },
+      { "name": "Traffic Class", "bits": 8,   "description": "QoS / DSCP marking (same as IPv4 DSCP+ECN)",       "example": "0x00" },
+      { "name": "Flow Label",    "bits": 20,  "description": "Identifies packet flow for QoS (new in IPv6)",     "example": "0x00000" },
+      { "name": "Payload Length","bits": 16,  "description": "Length of data after the 40-byte header",          "example": "1460" },
+      { "name": "Next Header",   "bits": 8,   "description": "Type of next header (6=TCP, 17=UDP, 58=ICMPv6)",   "example": "6" },
+      { "name": "Hop Limit",     "bits": 8,   "description": "Same as IPv4 TTL — decremented at each router",    "example": "64" },
+      { "name": "Source IP",     "bits": 128, "description": "Sender's 128-bit IPv6 address",                    "example": "2001:db8::1" },
+      { "name": "Destination IP","bits": 128, "description": "Receiver's 128-bit IPv6 address",                  "example": "2001:db8::2" }
+    ]
+  },
+  "addressTypes": [
+    { "type": "Global Unicast",   "prefix": "2000::/3",   "description": "Publicly routable addresses (like IPv4 public IPs)" },
+    { "type": "Link-Local",       "prefix": "fe80::/10",  "description": "Auto-configured, only valid on local link (not routed)" },
+    { "type": "Loopback",         "prefix": "::1/128",    "description": "Equivalent to 127.0.0.1 in IPv4" },
+    { "type": "Multicast",        "prefix": "ff00::/8",   "description": "One-to-many (replaces IPv4 broadcast)" },
+    { "type": "Unique Local",     "prefix": "fc00::/7",   "description": "Private addresses (like 192.168.x.x in IPv4)" },
+    { "type": "Unspecified",      "prefix": "::/128",     "description": "Equivalent to 0.0.0.0 — used before address assigned" }
+  ],
+  "vsIPv4": [
+    { "aspect": "Address size",       "ipv4": "32 bits (4 bytes)",       "ipv6": "128 bits (16 bytes)" },
+    { "aspect": "Address space",      "ipv4": "4.3 billion",             "ipv6": "340 undecillion" },
+    { "aspect": "Header size",        "ipv4": "20-60 bytes (variable)",  "ipv6": "40 bytes (fixed)" },
+    { "aspect": "Header checksum",    "ipv4": "Yes (recalculated at each hop)", "ipv6": "No (removed for speed)" },
+    { "aspect": "Fragmentation",      "ipv4": "Routers can fragment",    "ipv6": "Only source host fragments" },
+    { "aspect": "NAT required",       "ipv4": "Yes (address exhaustion)","ipv6": "No (every device gets public IP)" },
+    { "aspect": "Address config",     "ipv4": "DHCP or manual",          "ipv6": "SLAAC (auto) or DHCPv6" },
+    { "aspect": "Broadcast",          "ipv4": "Yes",                     "ipv6": "No — uses multicast instead" },
+    { "aspect": "IPsec",              "ipv4": "Optional",                "ipv6": "Mandatory (built-in)" }
+  ],
+  "keyFacts": [
+    "128-bit address = 340 undecillion (3.4×10³⁸) addresses",
+    "Fixed 40-byte header — faster router processing",
+    "No header checksum — upper layers handle error detection",
+    "SLAAC: device auto-configures address from router prefix + MAC (EUI-64)",
+    "NDP (Neighbor Discovery Protocol) replaces ARP",
+    "ICMPv6 is mandatory and handles neighbor discovery, router discovery",
+    "Dual-stack: run IPv4 and IPv6 simultaneously during transition",
+    "6to4, Teredo, ISATAP: IPv6 tunneling over IPv4 networks",
+    "As of 2024, ~45% of Google traffic is IPv6"
+  ],
+  "children": [],
+  "parent": "layer3-network",
+  "dependsOn": ["ethernet"],
+  "usedBy": ["tcp", "udp", "icmpv6"],
+  "relatedConcepts": ["ipv4", "icmp", "subnetting", "nat"],
+  "cybersecurity": {
+    "attacks": ["ipv6-rogue-ra", "ndp-spoofing", "ipv6-extension-header-abuse"],
+    "defenses": ["ra-guard", "dhcpv6-shield", "send"]
+  },
+  "visualization": { "color": "#00d4ff", "icon": "6️⃣", "nodeType": "leaf" }
+}

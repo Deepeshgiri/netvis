@@ -1,0 +1,46 @@
+{
+  "id": "stp",
+  "title": "Spanning Tree Protocol (STP)",
+  "shortName": "STP",
+  "type": "protocol",
+  "osiLayer": 2,
+  "category": "data_link_protocol",
+  "description": "Prevents Layer 2 loops in redundant switch topologies by blocking redundant paths.",
+  "fullExplanation": "Without STP, redundant switch links create broadcast storms — a broadcast frame loops forever, consuming all bandwidth. STP (IEEE 802.1D) prevents this by electing a Root Bridge and blocking all redundant paths. Only one active path exists between any two switches. If the active path fails, STP unblocks a redundant path (convergence takes 30-50 seconds in classic STP). RSTP (802.1w) converges in 1-2 seconds. MSTP (802.1s) runs multiple STP instances for different VLANs.",
+  "portStates": [
+    { "state": "Blocking",    "description": "Receives BPDUs but doesn't forward frames. Prevents loops." },
+    { "state": "Listening",   "description": "Processes BPDUs, participates in election. 15 seconds." },
+    { "state": "Learning",    "description": "Builds MAC table but doesn't forward frames. 15 seconds." },
+    { "state": "Forwarding",  "description": "Fully operational — forwards frames and learns MACs." },
+    { "state": "Disabled",    "description": "Administratively shut down." }
+  ],
+  "portRoles": [
+    { "role": "Root Port",       "description": "Best path toward Root Bridge. One per non-root switch." },
+    { "role": "Designated Port", "description": "Best port on each segment toward Root Bridge. Forwards traffic." },
+    { "role": "Blocked Port",    "description": "Redundant port — blocked to prevent loops." }
+  ],
+  "versions": [
+    { "version": "STP (802.1D)",  "year": 1990, "convergence": "30-50 seconds", "feature": "Original. Slow convergence." },
+    { "version": "RSTP (802.1w)", "year": 2001, "convergence": "1-2 seconds",   "feature": "Rapid convergence. Backward compatible." },
+    { "version": "MSTP (802.1s)", "year": 2002, "convergence": "1-2 seconds",   "feature": "Multiple instances — different topology per VLAN group." },
+    { "version": "PVST+ (Cisco)", "year": 1996, "convergence": "30-50 seconds", "feature": "Per-VLAN STP. Cisco proprietary." },
+    { "version": "Rapid PVST+",   "year": 2004, "convergence": "1-2 seconds",   "feature": "Per-VLAN RSTP. Cisco proprietary." }
+  ],
+  "keyFacts": [
+    "Root Bridge elected by lowest Bridge ID (priority + MAC address)",
+    "Default bridge priority: 32768 — lower wins",
+    "PortFast: skip Listening/Learning for access ports (hosts, not switches)",
+    "BPDU Guard: disable port if BPDU received on PortFast port (prevents rogue switches)",
+    "Root Guard: prevent port from becoming root port (protect root bridge position)",
+    "Loop Guard: prevent port from transitioning to forwarding if BPDUs stop",
+    "STP manipulation attack: attacker sends superior BPDUs to become root bridge"
+  ],
+  "children": [],
+  "parent": "ethernet",
+  "relatedConcepts": ["ethernet", "switching", "vlans"],
+  "cybersecurity": {
+    "attacks": ["stp-manipulation", "bpdu-spoofing"],
+    "defenses": ["bpdu-guard", "root-guard", "loop-guard"]
+  },
+  "visualization": { "color": "#ffcc00", "icon": "🌳", "nodeType": "leaf" }
+}

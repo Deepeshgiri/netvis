@@ -1,0 +1,32 @@
+{
+  "id": "tcp-flow-control",
+  "title": "TCP Flow Control",
+  "shortName": "Flow Control",
+  "type": "concept",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "description": "Mechanism that prevents a fast sender from overwhelming a slow receiver using a sliding window.",
+  "fullExplanation": "TCP flow control uses a sliding window to match the sender's transmission rate to the receiver's processing capacity. The receiver advertises its available buffer space (receive window) in every ACK. The sender may not have more than one window's worth of unacknowledged data in flight. If the receiver's buffer fills up, it advertises a window of 0 — the sender stops and waits for a window update. The window size field is 16 bits (max 65535 bytes), but the Window Scale option (RFC 1323) extends this to 1GB.",
+  "slidingWindow": {
+    "description": "The sender maintains a window of bytes it can send without waiting for ACK",
+    "states": [
+      { "state": "Sent and ACKed",       "description": "Left edge of window — can be freed from buffer" },
+      { "state": "Sent but not ACKed",   "description": "In-flight data — waiting for acknowledgement" },
+      { "state": "Can send (window)",    "description": "Receiver has buffer space — can send immediately" },
+      { "state": "Cannot send yet",      "description": "Beyond window — must wait for ACKs to advance window" }
+    ]
+  },
+  "keyFacts": [
+    "Receive window (rwnd): advertised by receiver in every ACK — available buffer space",
+    "Window size field: 16 bits = max 65535 bytes without scaling",
+    "Window Scale option (RFC 1323): multiplier up to 2^14 — allows windows up to 1GB",
+    "Zero window: receiver buffer full — sender stops. Sender probes with 1-byte segments.",
+    "Window update: receiver sends ACK with larger window when buffer drains",
+    "Silly window syndrome: avoid sending tiny segments — Nagle algorithm batches small writes",
+    "Flow control ≠ congestion control: flow control is end-to-end, congestion control is network-wide"
+  ],
+  "children": [],
+  "parent": "tcp",
+  "relatedConcepts": ["tcp", "tcp-congestion-control", "tcp-flags"],
+  "visualization": { "color": "#00ff88", "icon": "🪟", "nodeType": "leaf" }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "vlans",
+  "title": "VLANs (Virtual LANs)",
+  "shortName": "VLANs",
+  "type": "concept",
+  "osiLayer": 2,
+  "category": "data_link_concept",
+  "description": "Logical segmentation of a physical network into multiple isolated broadcast domains.",
+  "fullExplanation": "A VLAN (Virtual LAN) partitions a physical switch into multiple logical switches. Devices in different VLANs cannot communicate at Layer 2 — they need a router (or Layer 3 switch) to communicate. VLANs are identified by a 12-bit VLAN ID (1-4094) in the 802.1Q tag added to Ethernet frames. Access ports carry traffic for one VLAN (untagged). Trunk ports carry traffic for multiple VLANs (tagged with 802.1Q).",
+  "header": {
+    "size": "4 bytes (802.1Q tag inserted into Ethernet frame)",
+    "fields": [
+      { "name": "TPID", "bits": 16, "description": "Tag Protocol Identifier — always 0x8100 for 802.1Q", "example": "0x8100" },
+      { "name": "PCP",  "bits": 3,  "description": "Priority Code Point — 802.1p QoS priority (0-7)",    "example": "0 (best effort)" },
+      { "name": "DEI",  "bits": 1,  "description": "Drop Eligible Indicator — mark frame for dropping under congestion", "example": "0" },
+      { "name": "VID",  "bits": 12, "description": "VLAN Identifier — 0-4095 (0 and 4095 reserved, 1 is default)", "example": "10" }
+    ]
+  },
+  "portTypes": [
+    { "type": "Access Port",  "description": "Carries one VLAN. Frames untagged. Used for end devices (PCs, phones)." },
+    { "type": "Trunk Port",   "description": "Carries multiple VLANs. Frames tagged with 802.1Q. Used between switches and routers." },
+    { "type": "Native VLAN",  "description": "Untagged VLAN on a trunk port. Default is VLAN 1 — change for security." },
+    { "type": "Voice VLAN",   "description": "Separate VLAN for VoIP traffic — enables QoS prioritization." }
+  ],
+  "keyFacts": [
+    "VLANs reduce broadcast domains — less broadcast traffic per segment",
+    "Inter-VLAN routing requires a router or Layer 3 switch",
+    "Router-on-a-stick: single trunk link to router with subinterfaces per VLAN",
+    "Native VLAN mismatch: security risk — change native VLAN from default VLAN 1",
+    "VLAN 1 is the default — all ports start in VLAN 1 — segregate management traffic",
+    "802.1Q double-tagging (VLAN hopping): attacker adds extra tag to jump VLANs",
+    "Private VLAN (PVLAN): isolate ports within same VLAN — used in hosting environments"
+  ],
+  "children": [],
+  "parent": "ethernet",
+  "relatedConcepts": ["ethernet", "switching", "stp", "mac-addresses"],
+  "cybersecurity": {
+    "attacks": ["vlan-hopping", "double-tagging"],
+    "defenses": ["change-native-vlan", "disable-dtp", "private-vlan"]
+  },
+  "visualization": { "color": "#ffcc00", "icon": "🗂️", "nodeType": "leaf" }
+}

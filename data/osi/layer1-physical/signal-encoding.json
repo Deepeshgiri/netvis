@@ -1,0 +1,29 @@
+{
+  "id": "signal-encoding",
+  "title": "Signal Encoding on Copper",
+  "shortName": "Encoding",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "physical_layer_concept",
+  "description": "How digital bits are encoded into electrical signals on copper cables for reliable transmission.",
+  "fullExplanation": "Copper Ethernet cables carry electrical signals representing bits. The encoding scheme determines how 0s and 1s map to voltage levels and transitions. Good encoding ensures clock recovery (receiver can sync its clock from the signal), DC balance (no net DC component that would saturate transformers), and error detection. Different Ethernet speeds use different encoding: 10BASE-T uses Manchester, 100BASE-TX uses MLT-3 with 4B/5B, Gigabit uses PAM5, and 10G+ uses PAM4.",
+  "encodingBySpeed": [
+    { "speed": "10 Mbps (10BASE-T)",    "encoding": "Manchester",        "description": "Transition in middle of each bit. Self-clocking. 20 Mbaud for 10 Mbps." },
+    { "speed": "100 Mbps (100BASE-TX)", "encoding": "4B/5B + MLT-3",    "description": "4B/5B maps 4 bits to 5-bit codes. MLT-3 uses 3 voltage levels to reduce EMI." },
+    { "speed": "1 Gbps (1000BASE-T)",   "encoding": "PAM5 (4D-PAM5)",   "description": "5 voltage levels on all 4 pairs simultaneously. 250 Mbaud per pair × 4 pairs." },
+    { "speed": "10 Gbps (10GBASE-T)",   "encoding": "PAM16 + LDPC",     "description": "16 voltage levels with LDPC error correction. Complex DSP required." },
+    { "speed": "25G+ (25GBASE-T)",      "encoding": "PAM4",             "description": "4 voltage levels, 2 bits per symbol. Used in 25G/40G/100G+ Ethernet." }
+  ],
+  "keyFacts": [
+    "Manchester encoding: guaranteed transition per bit — easy clock recovery but 2× bandwidth",
+    "4B/5B: 80% efficiency (4 data bits per 5 transmitted) — ensures enough transitions",
+    "8B/10B: 80% efficiency, better DC balance — used in Gigabit Ethernet over fiber",
+    "PAM4: 4 levels encode 2 bits/symbol — doubles throughput at same baud rate",
+    "Scrambling: randomizes data to ensure transitions even for long runs of 0s or 1s",
+    "Forward Error Correction (FEC): adds redundancy to correct errors at high speeds"
+  ],
+  "children": [],
+  "parent": "cables",
+  "relatedConcepts": ["signals", "modulation", "cables"],
+  "visualization": { "color": "#ff6b35", "icon": "📶", "nodeType": "leaf" }
+}

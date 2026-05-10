@@ -1,0 +1,43 @@
+{
+  "id": "dmz",
+  "title": "DMZ (Demilitarized Zone)",
+  "shortName": "DMZ",
+  "type": "defense",
+  "category": "network_defense",
+  "description": "A network segment that sits between the internet and internal network, hosting public-facing servers with limited internal access.",
+  "fullExplanation": "A DMZ is a network zone that provides an additional layer of security between the internet and the internal corporate network. Public-facing servers (web, email, DNS) are placed in the DMZ — they can be reached from the internet but have restricted access to the internal network. If a DMZ server is compromised, the attacker cannot directly reach internal systems. Implemented using two firewalls (true DMZ) or a three-legged firewall with a dedicated DMZ interface.",
+  "architecture": [
+    { "zone": "Internet",         "trust": "Untrusted",  "description": "External network — all traffic considered hostile" },
+    { "zone": "DMZ",              "trust": "Semi-trusted","description": "Public-facing servers — web, email, DNS, VPN gateway" },
+    { "zone": "Internal Network", "trust": "Trusted",    "description": "Corporate LAN — workstations, internal servers, databases" }
+  ],
+  "trafficRules": [
+    { "from": "Internet",  "to": "DMZ",      "rule": "Allow specific ports (80, 443, 25, 53)" },
+    { "from": "Internet",  "to": "Internal", "rule": "DENY ALL" },
+    { "from": "DMZ",       "to": "Internet", "rule": "Allow outbound (HTTP, DNS, NTP)" },
+    { "from": "DMZ",       "to": "Internal", "rule": "Allow only specific needed connections (e.g. DB queries)" },
+    { "from": "Internal",  "to": "DMZ",      "rule": "Allow management traffic (SSH, RDP)" },
+    { "from": "Internal",  "to": "Internet", "rule": "Allow via proxy/NAT" }
+  ],
+  "serversInDMZ": [
+    "Web servers (HTTP/HTTPS)",
+    "Email servers (SMTP relay)",
+    "DNS servers (authoritative)",
+    "VPN gateway / remote access",
+    "Reverse proxy / load balancer",
+    "FTP server (if needed)",
+    "Bastion / jump host"
+  ],
+  "keyFacts": [
+    "Two-firewall DMZ: separate firewall between internet-DMZ and DMZ-internal — most secure",
+    "Three-legged firewall: single firewall with 3 interfaces (internet, DMZ, internal) — cheaper",
+    "Compromise of DMZ server should NOT give access to internal network",
+    "DMZ servers should not initiate connections to internal servers (except specific allowed ports)",
+    "Honeypot: place decoy systems in DMZ to detect and study attackers",
+    "Cloud DMZ: security groups and NACLs in AWS/Azure replicate DMZ concept"
+  ],
+  "children": [],
+  "parent": "firewall",
+  "relatedConcepts": ["firewall", "ngfw", "zero-trust", "ids-ips"],
+  "visualization": { "color": "#ff6b35", "icon": "🏰", "nodeType": "leaf" }
+}

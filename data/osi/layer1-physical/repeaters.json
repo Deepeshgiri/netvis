@@ -1,0 +1,29 @@
+{
+  "id": "repeaters",
+  "title": "Repeaters & Signal Regeneration",
+  "shortName": "Repeaters",
+  "type": "hardware",
+  "osiLayer": 1,
+  "category": "network_device",
+  "description": "Layer 1 devices that regenerate degraded signals to extend network reach beyond cable distance limits.",
+  "fullExplanation": "As signals travel through cables, they attenuate (weaken) and accumulate noise. A repeater receives the degraded signal, cleans it up, and retransmits it at full strength. Repeaters operate purely at Layer 1 — they have no concept of MAC addresses, IP addresses, or protocols. They simply amplify or regenerate the physical signal. Modern networks rarely use standalone repeaters — switches (Layer 2) effectively repeat signals on each port.",
+  "types": [
+    { "name": "Analog Repeater (Amplifier)", "description": "Amplifies the signal including any noise. Used in older coax networks and cable TV." },
+    { "name": "Digital Repeater (Regenerator)", "description": "Samples the signal, decides 0 or 1, retransmits clean. Eliminates accumulated noise. Used in fiber and modern copper." },
+    { "name": "Optical Amplifier (EDFA)", "description": "Amplifies light signal directly without converting to electrical. Used in long-haul fiber (every 80-100km)." },
+    { "name": "WiFi Range Extender", "description": "Receives WiFi signal and retransmits. Effectively a wireless repeater. Halves throughput (receive + retransmit on same channel)." }
+  ],
+  "keyFacts": [
+    "Repeaters extend cable segments beyond 100m limit",
+    "Operate at Layer 1 only — no MAC/IP awareness",
+    "Digital repeaters eliminate noise accumulation (unlike analog amplifiers)",
+    "5-4-3 rule (10BASE-T): max 5 segments, 4 repeaters, 3 populated segments",
+    "Switches replaced hubs/repeaters in modern networks",
+    "EDFA (Erbium-Doped Fiber Amplifier): optical amplifier for long-haul fiber",
+    "WiFi mesh systems use wireless backhaul instead of repeaters to avoid throughput loss"
+  ],
+  "children": [],
+  "parent": "layer1-physical",
+  "relatedConcepts": ["hubs", "signals", "cables", "fiber"],
+  "visualization": { "color": "#ff6b35", "icon": "🔁", "nodeType": "leaf" }
+}

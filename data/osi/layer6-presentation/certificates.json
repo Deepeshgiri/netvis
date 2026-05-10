@@ -1,0 +1,45 @@
+{
+  "id": "certificates",
+  "title": "X.509 Certificates & PKI",
+  "shortName": "Certificates",
+  "type": "concept",
+  "osiLayer": 6,
+  "category": "security_protocol",
+  "description": "Digital certificates that bind a public key to an identity, verified by a chain of trusted Certificate Authorities.",
+  "fullExplanation": "An X.509 certificate is a digitally signed document that binds a public key to an identity (domain name, organization). The Certificate Authority (CA) signs the certificate, vouching for the identity. Browsers ship with ~150 trusted root CAs. A certificate chain goes: Root CA → Intermediate CA → End-entity certificate. TLS uses certificates to authenticate servers (and optionally clients). Certificate Transparency (CT) requires all publicly trusted certificates to be logged in public append-only logs.",
+  "certificateFields": [
+    { "field": "Subject",          "description": "Who the certificate is issued to (CN=example.com, O=Example Corp)" },
+    { "field": "Issuer",           "description": "Who signed the certificate (CA name)" },
+    { "field": "Public Key",       "description": "Subject's public key (RSA 2048+, ECDSA P-256, Ed25519)" },
+    { "field": "Validity Period",  "description": "Not Before / Not After dates. Max 398 days for public certs." },
+    { "field": "Subject Alt Names","description": "Additional domains/IPs covered (SAN extension — replaces CN)" },
+    { "field": "Key Usage",        "description": "What the key can be used for (Digital Signature, Key Encipherment)" },
+    { "field": "CA Signature",     "description": "CA's digital signature over all fields — proves authenticity" },
+    { "field": "Serial Number",    "description": "Unique identifier assigned by CA" }
+  ],
+  "certTypes": [
+    { "type": "DV (Domain Validated)",       "description": "Proves control of domain only. Automated (Let's Encrypt). Minutes to issue." },
+    { "type": "OV (Organization Validated)", "description": "Proves domain + organization identity. Manual verification. Days to issue." },
+    { "type": "EV (Extended Validation)",    "description": "Strict identity verification. Green bar in old browsers. Weeks to issue." },
+    { "type": "Wildcard",                    "description": "Covers *.example.com — all subdomains. Cannot cover sub-subdomains." },
+    { "type": "SAN / Multi-domain",          "description": "Covers multiple specific domains in one certificate." },
+    { "type": "Client Certificate",          "description": "Authenticates a user or device to a server (mutual TLS)." }
+  ],
+  "keyFacts": [
+    "Let's Encrypt: free, automated DV certificates — revolutionized HTTPS adoption",
+    "Certificate max validity: 398 days (Apple/Google policy since 2020)",
+    "OCSP (Online Certificate Status Protocol): check if cert is revoked in real-time",
+    "CRL (Certificate Revocation List): list of revoked serial numbers — downloaded periodically",
+    "OCSP Stapling: server includes OCSP response in TLS handshake — faster, more private",
+    "Certificate Transparency: all public certs must be logged — enables detection of misissued certs",
+    "CAA DNS record: specifies which CAs are allowed to issue certs for your domain"
+  ],
+  "children": [],
+  "parent": "tls",
+  "relatedConcepts": ["tls", "https", "hsts", "cipher-suites"],
+  "cybersecurity": {
+    "attacks": ["certificate-spoofing", "ca-compromise", "ssl-stripping"],
+    "defenses": ["certificate-pinning", "hsts", "caa-records", "certificate-transparency"]
+  },
+  "visualization": { "color": "#ff3366", "icon": "📜", "nodeType": "leaf" }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "poe",
+  "title": "Power over Ethernet (PoE)",
+  "shortName": "PoE",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "physical_layer_concept",
+  "description": "Delivers electrical power alongside data over standard Ethernet cables — eliminates separate power supplies.",
+  "fullExplanation": "PoE allows network switches and injectors to deliver DC power to devices over the same Cat5e/Cat6 cable used for data. The Power Sourcing Equipment (PSE — usually a switch) detects a Powered Device (PD — IP camera, VoIP phone, WAP) using a signature resistance, negotiates power level, and delivers power. This eliminates the need for separate power outlets and adapters for network devices.",
+  "standards": [
+    { "standard": "IEEE 802.3af (PoE)",    "year": 2003, "maxPower": "15.4W at PSE / 12.95W at PD", "use": "VoIP phones, basic IP cameras" },
+    { "standard": "IEEE 802.3at (PoE+)",   "year": 2009, "maxPower": "30W at PSE / 25.5W at PD",   "use": "PTZ cameras, dual-band WAPs" },
+    { "standard": "IEEE 802.3bt (PoE++)",  "year": 2018, "maxPower": "Type 3: 60W / Type 4: 90W",  "use": "Laptops, video conferencing, LED lighting" },
+    { "standard": "Cisco UPOE",            "year": 2011, "maxPower": "60W (proprietary)",           "use": "Cisco IP phones with accessories" }
+  ],
+  "howItWorks": [
+    { "step": 1, "description": "PSE applies low voltage to detect PD signature resistance (25kΩ)" },
+    { "step": 2, "description": "PSE classifies PD power requirement (Class 0-8)" },
+    { "step": 3, "description": "PSE enables power delivery (48V DC nominal)" },
+    { "step": 4, "description": "PD converts 48V to required voltage (5V, 12V, etc.)" },
+    { "step": 5, "description": "PSE monitors current — disconnects if PD removed or fault detected" }
+  ],
+  "keyFacts": [
+    "PoE uses 48V DC — safe for humans, efficient for transmission",
+    "Power delivered on data pairs (Alternative A) or spare pairs (Alternative B)",
+    "802.3bt uses all 4 pairs for power delivery",
+    "PoE budget: total switch PoE capacity (e.g. 370W for 24-port switch)",
+    "Midspan injector: adds PoE to non-PoE switch",
+    "PoE splitter: extracts power from PoE for non-PoE device",
+    "Cable quality matters: Cat5e minimum, Cat6 recommended for high-power PoE"
+  ],
+  "children": [],
+  "parent": "cables",
+  "relatedConcepts": ["cables", "rj45-connector", "switching"],
+  "visualization": { "color": "#ff6b35", "icon": "⚡", "nodeType": "leaf" }
+}
