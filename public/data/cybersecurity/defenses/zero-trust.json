@@ -33,6 +33,6 @@
   ],
   "children": ["microsegmentation", "ztna", "identity-verification", "device-trust"],
   "parent": "defenses",
-  "relatedConcepts": ["firewall","vpn-security","segmentation","ids","siem"],
+  "relatedConcepts": ["firewall", "vpn", "ids-ips", "microsegmentation", "ztna"],
   "visualization": { "color": "#ff3366", "icon": "🚫", "nodeType": "expandable" }
 }

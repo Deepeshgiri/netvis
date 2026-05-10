@@ -23,6 +23,6 @@
     "TCP/IP model collapses OSI into 4 layers"
   ],
   "children": ["layer1-physical","layer2-datalink","layer3-network","layer4-transport","layer5-session","layer6-presentation","layer7-application"],
-  "relatedConcepts": ["tcp-ip-model","encapsulation","protocol-stack"],
+  "relatedConcepts": ["tcp-ip-model", "ethernet", "tcp", "ipv4"],
   "visualization": { "color": "#00d4ff", "icon": "📚", "nodeType": "expandable" }
 }

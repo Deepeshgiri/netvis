@@ -35,10 +35,10 @@
   "parent": "layer7-application",
   "dependsOn": ["tcp", "tls", "dns"],
   "usedBy": [],
-  "relatedConcepts": ["dns", "tls"],
+  "relatedConcepts": ["https", "dns", "tls", "tcp", "quic"],
   "cybersecurity": {
-    "attacks": ["xss", "csrf"],
-    "defenses": ["firewall"]
+    "attacks": ["xss", "csrf", "mitm"],
+    "defenses": ["firewall", "hsts", "waf"]
   },
   "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "leaf" }
 }

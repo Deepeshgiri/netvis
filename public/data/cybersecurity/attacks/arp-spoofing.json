@@ -32,6 +32,6 @@
     { "name": "Encrypted Protocols",         "description": "HTTPS, SSH, TLS protect data even if MITM succeeds." }
   ],
   "parent": "attacks",
-  "relatedConcepts": ["arp","mitm","mac-addresses","switching","dhcp-snooping"],
+  "relatedConcepts": ["arp", "mitm", "mac-addresses", "switching", "ethernet"],
   "visualization": { "color": "#ff3366", "icon": "☠️", "nodeType": "expandable" }
 }

@@ -43,10 +43,10 @@
   "parent": "layer2-datalink",
   "dependsOn": ["ethernet","mac-addresses"],
   "usedBy": ["ipv4","switching"],
-  "relatedConcepts": ["mac-addresses","switching","cam-table","ipv4"],
+  "relatedConcepts": ["mac-addresses", "switching", "ipv4", "ethernet", "vlans"],
   "cybersecurity": {
-    "attacks": ["arp-spoofing","arp-poisoning","mitm"],
-    "defenses": ["dynamic-arp-inspection","dhcp-snooping","static-arp","802.1x"]
+    "attacks": ["arp-spoofing", "mitm"],
+    "defenses": ["firewall", "ids-ips", "vlans"]
   },
   "visualization": { "color": "#ffee44", "icon": "📡", "nodeType": "expandable" }
 }

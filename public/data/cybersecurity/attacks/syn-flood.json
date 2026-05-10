@@ -32,6 +32,6 @@
     { "name": "Increase Backlog",  "description": "sysctl net.ipv4.tcp_max_syn_backlog=65536 (temporary mitigation)." }
   ],
   "parent": "attacks",
-  "relatedConcepts": ["tcp","tcp-handshake","ddos","firewall","rate-limiting"],
+  "relatedConcepts": ["tcp", "tcp-handshake", "firewall", "ids-ips"],
   "visualization": { "color": "#ff3366", "icon": "💥", "nodeType": "expandable" }
 }

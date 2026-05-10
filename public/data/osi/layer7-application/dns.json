@@ -43,10 +43,10 @@
   "parent": "layer7-application",
   "dependsOn": ["udp","tcp","ip"],
   "usedBy": ["browser","email","cdn","load-balancer"],
-  "relatedConcepts": ["http","dhcp","cdn-routing"],
+  "relatedConcepts": ["http", "dhcp", "dnssec", "doh-dot"],
   "cybersecurity": {
-    "attacks": ["dns-poisoning","dns-amplification","dns-tunneling","dns-hijacking","nxdomain-attack"],
-    "defenses": ["dnssec","doh","dot","dns-monitoring","rpz"]
+    "attacks": ["dns-poisoning"],
+    "defenses": ["dnssec", "firewall"]
   },
   "visualization": { "color": "#00ddff", "icon": "📖", "nodeType": "expandable" }
 }

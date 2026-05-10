@@ -50,10 +50,10 @@
   "parent": "layer4-transport",
   "usedBy": ["http","https","smtp","ftp","ssh","rdp"],
   "dependsOn": ["ip","ethernet"],
-  "relatedConcepts": ["udp","quic","ports","sockets"],
+  "relatedConcepts": ["udp", "quic", "sockets", "tcp-handshake", "tcp-flags"],
   "cybersecurity": {
-    "attacks": ["syn-flood","session-hijacking","tcp-reset","tcp-sequence-prediction"],
-    "defenses": ["syn-cookies","firewall","rate-limiting","tcp-timestamps"]
+    "attacks": ["syn-flood", "mitm"],
+    "defenses": ["firewall", "ids-ips"]
   },
   "animations": ["tcp-animation","packet-travel"],
   "simulationHooks": ["tcp-handshake-simulation","packet-loss-simulation"],

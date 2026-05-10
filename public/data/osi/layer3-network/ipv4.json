@@ -51,10 +51,10 @@
   "parent": "layer3-network",
   "dependsOn": ["ethernet","arp"],
   "usedBy": ["tcp","udp","icmp","ospf","bgp"],
-  "relatedConcepts": ["ipv6","subnetting","nat","routing","cidr"],
+  "relatedConcepts": ["ipv6", "subnetting", "nat", "icmp", "bgp", "ospf"],
   "cybersecurity": {
-    "attacks": ["ip-spoofing","ip-fragmentation-attack","smurf-attack"],
-    "defenses": ["ingress-filtering","bcp38","urpf"]
+    "attacks": ["syn-flood", "arp-spoofing"],
+    "defenses": ["firewall", "ids-ips"]
   },
   "visualization": { "color": "#00d4ff", "icon": "4️⃣", "nodeType": "expandable" }
 }

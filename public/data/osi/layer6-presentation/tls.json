@@ -42,10 +42,10 @@
   "parent": "layer6-presentation",
   "dependsOn": ["tcp","x509-certificates","aes","ecdhe"],
   "usedBy": ["https","smtp-tls","imap-tls","ftps","wss"],
-  "relatedConcepts": ["certificates","aes","rsa","diffie-hellman","hashing"],
+  "relatedConcepts": ["certificates", "cipher-suites", "tls-handshake", "https", "hsts"],
   "cybersecurity": {
-    "attacks": ["tls-stripping","beast","poodle","heartbleed","downgrade-attack","certificate-spoofing"],
-    "defenses": ["hsts","certificate-pinning","hsts-preload","ocsp-stapling","caa-records"]
+    "attacks": ["ssl-stripping", "mitm"],
+    "defenses": ["hsts", "certificates", "firewall"]
   },
   "visualization": { "color": "#ff3366", "icon": "🔒", "nodeType": "expandable" }
 }

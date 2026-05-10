@@ -43,10 +43,10 @@
   "parent": "layer4-transport",
   "usedBy": ["dns","dhcp","ntp","snmp","voip","gaming","quic"],
   "dependsOn": ["ip"],
-  "relatedConcepts": ["tcp","quic","ports"],
+  "relatedConcepts": ["tcp", "quic", "dns", "dhcp", "ntp"],
   "cybersecurity": {
-    "attacks": ["udp-flood","dns-amplification","ntp-amplification","udp-port-scan"],
-    "defenses": ["rate-limiting","ingress-filtering","firewall"]
+    "attacks": ["syn-flood", "dns-poisoning"],
+    "defenses": ["firewall", "ids-ips"]
   },
   "visualization": { "color": "#00ddaa", "icon": "💨", "nodeType": "expandable" }
 }

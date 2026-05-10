@@ -43,10 +43,10 @@
   ],
   "children": ["iptables", "ngfw", "waf", "firewall-rules", "dmz"],
   "parent": "defenses",
-  "relatedConcepts": ["ids","ips","zero-trust","segmentation","vpn-security"],
+  "relatedConcepts": ["ids-ips", "zero-trust", "vpn", "ngfw", "waf"],
   "cybersecurity": {
-    "attacks": ["firewall-bypass","port-knocking","protocol-tunneling","fragmentation-evasion"],
-    "defenses": ["default-deny","egress-filtering","application-layer-inspection"]
+    "attacks": ["syn-flood", "mitm"],
+    "defenses": ["ids-ips", "zero-trust"]
   },
   "visualization": { "color": "#ff6b35", "icon": "🔥", "nodeType": "expandable" }
 }

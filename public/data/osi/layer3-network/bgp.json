@@ -41,10 +41,10 @@
   "children": ["bgp-routing", "bgp-security"],
   "parent": "layer3-network",
   "dependsOn": ["tcp","ip"],
-  "relatedConcepts": ["ospf","routing","internet-backbone","isp-architecture"],
+  "relatedConcepts": ["ospf", "ipv4", "tcp", "internet"],
   "cybersecurity": {
-    "attacks": ["bgp-hijacking","bgp-route-leak","bgp-session-reset"],
-    "defenses": ["rpki","bgp-communities","prefix-filtering","ttl-security"]
+    "attacks": ["mitm"],
+    "defenses": ["firewall", "ids-ips"]
   },
   "visualization": { "color": "#0088cc", "icon": "🌍", "nodeType": "expandable" }
 }
