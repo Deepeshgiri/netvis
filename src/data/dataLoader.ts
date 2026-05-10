@@ -90,6 +90,11 @@ const FILE_MAP: Record<string, string> = {
   'tcp':                '/data/osi/layer4-transport/tcp.json',
   'tcp-handshake':      '/data/osi/layer4-transport/tcp-handshake.json',
   'udp':                '/data/osi/layer4-transport/udp.json',
+  // layer 5
+  'netbios':            '/data/osi/layer5-session/netbios.json',
+  'smb':                '/data/osi/layer5-session/smb.json',
+  'pptp':               '/data/osi/layer5-session/pptp.json',
+  'rpc':                '/data/osi/layer5-session/rpc.json',
   // layer 6
   'tls':                '/data/osi/layer6-presentation/tls.json',
   // layer 7

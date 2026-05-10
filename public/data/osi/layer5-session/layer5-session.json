@@ -67,8 +67,8 @@
     }
   ],
   "devices": ["Gateway", "Proxy Server"],
-  "children": [],
+  "children": ["netbios", "smb", "pptp", "rpc"],
   "parent": "osi-model",
   "relatedConcepts": ["layer4-transport", "layer6-presentation", "session-management"],
-  "visualization": { "color": "#8b5cf6", "icon": "🔗", "nodeType": "leaf" }
+  "visualization": { "color": "#8b5cf6", "icon": "🔗", "nodeType": "expandable" }
 }

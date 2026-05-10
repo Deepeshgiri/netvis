@@ -19,7 +19,7 @@ body {
   background: #020408;
   color: #e0f0ff;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  overflow: hidden;
+  overflow: auto;
 }
 
 ::-webkit-scrollbar { width: 4px; }

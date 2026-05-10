@@ -1,0 +1,35 @@
+{
+  "id": "pptp",
+  "title": "PPTP",
+  "shortName": "PPTP",
+  "type": "protocol",
+  "osiLayer": 5,
+  "category": "osi_layer",
+  "port": 1723,
+  "transport": "TCP",
+  "description": "Point-to-Point Tunneling Protocol — creates VPN tunnels for secure remote access.",
+  "fullExplanation": "PPTP (Point-to-Point Tunneling Protocol) is a method for implementing VPNs. It encapsulates PPP frames in IP datagrams for transmission over IP networks. PPTP uses TCP port 1723 for the control connection and GRE (Generic Routing Encapsulation, IP protocol 47) for the data tunnel. While widely supported and easy to configure, PPTP has known security vulnerabilities and has been largely replaced by L2TP/IPsec, OpenVPN, and WireGuard.",
+  "keyFacts": [
+    "Port 1723 TCP: control channel",
+    "GRE (IP protocol 47): data encapsulation",
+    "Developed by Microsoft, 3Com, Ascend in 1996",
+    "Built into Windows since Windows 95 OSR2",
+    "MS-CHAPv2 authentication is cryptographically broken",
+    "NSA can decrypt PPTP traffic — avoid for sensitive use",
+    "Replaced by L2TP/IPsec, OpenVPN, WireGuard",
+    "Still used in legacy corporate VPN environments"
+  ],
+  "versions": [
+    { "version": "PPTP (RFC 2637)", "year": 1999, "feature": "Original standard, MS-CHAPv2 auth" },
+    { "version": "L2TP/IPsec", "year": 2000, "feature": "Successor — stronger encryption via IPsec" },
+    { "version": "OpenVPN", "year": 2001, "feature": "Open-source, TLS-based, highly configurable" },
+    { "version": "WireGuard", "year": 2018, "feature": "Modern, fast, minimal codebase VPN" }
+  ],
+  "cybersecurity": {
+    "attacks": ["mitm", "ssl-stripping"],
+    "defenses": ["vpn", "ids-ips"]
+  },
+  "relatedConcepts": ["vpn", "L2TP", "IPsec", "layer5-session"],
+  "dependsOn": ["tcp", "ipv4"],
+  "visualization": { "color": "#8b5cf6", "icon": "🔒", "nodeType": "leaf" }
+}

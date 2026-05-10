@@ -1,0 +1,36 @@
+{
+  "id": "rpc",
+  "title": "RPC",
+  "shortName": "RPC",
+  "type": "protocol",
+  "osiLayer": 5,
+  "category": "osi_layer",
+  "port": 135,
+  "transport": "TCP/UDP",
+  "description": "Remote Procedure Call — allows a program to execute a procedure on a remote server as if it were local.",
+  "fullExplanation": "RPC (Remote Procedure Call) is a protocol that allows a program to request a service from a program located on another computer in a network. The calling program doesn't need to understand the network details — it calls the procedure as if it were local. The RPC runtime handles marshalling (serializing) arguments, sending them over the network, and returning results. Microsoft's MSRPC (port 135) is used extensively in Windows for services like Active Directory, DCOM, and WMI.",
+  "keyFacts": [
+    "Port 135: Microsoft RPC Endpoint Mapper",
+    "Abstracts network communication as local function calls",
+    "Marshalling converts data types for network transmission",
+    "Stub code generated from IDL (Interface Definition Language)",
+    "Used by Active Directory, DCOM, WMI, Exchange",
+    "Sun RPC (ONC RPC) used in NFS — port 111",
+    "gRPC (Google) is a modern RPC framework over HTTP/2",
+    "Dynamic port allocation makes firewall rules complex"
+  ],
+  "versions": [
+    { "version": "Sun RPC / ONC RPC", "year": 1984, "feature": "Original RPC for Unix/NFS, port 111" },
+    { "version": "DCE RPC", "year": 1990, "feature": "Distributed Computing Environment standard" },
+    { "version": "MSRPC", "year": 1993, "feature": "Microsoft's DCE RPC implementation, port 135" },
+    { "version": "XML-RPC", "year": 1998, "feature": "RPC over HTTP using XML encoding" },
+    { "version": "gRPC", "year": 2015, "feature": "Google's RPC over HTTP/2 with Protocol Buffers" }
+  ],
+  "cybersecurity": {
+    "attacks": ["mitm"],
+    "defenses": ["firewall", "ids-ips"]
+  },
+  "relatedConcepts": ["DCOM", "WMI", "NFS", "layer5-session"],
+  "dependsOn": ["tcp", "udp", "ipv4"],
+  "visualization": { "color": "#8b5cf6", "icon": "⚙️", "nodeType": "leaf" }
+}

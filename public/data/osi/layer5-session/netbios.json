@@ -1,0 +1,34 @@
+{
+  "id": "netbios",
+  "title": "NetBIOS",
+  "shortName": "NetBIOS",
+  "type": "protocol",
+  "osiLayer": 5,
+  "category": "osi_layer",
+  "port": 139,
+  "transport": "TCP/UDP",
+  "description": "Network Basic Input/Output System — provides session services for Windows networks.",
+  "fullExplanation": "NetBIOS (Network Basic Input/Output System) is an API that provides session-layer services for Windows-based networks. It allows applications on different computers to communicate over a LAN. NetBIOS operates over TCP/IP (NBT) using ports 137 (UDP name service), 138 (UDP datagram), and 139 (TCP session). It provides three services: Name Service (resolving NetBIOS names to IPs), Datagram Service (connectionless messaging), and Session Service (connection-oriented communication).",
+  "keyFacts": [
+    "Port 137: NetBIOS Name Service (UDP)",
+    "Port 138: NetBIOS Datagram Service (UDP)",
+    "Port 139: NetBIOS Session Service (TCP)",
+    "Resolves NetBIOS names (up to 15 chars) to IP addresses",
+    "Predecessor to DNS for Windows name resolution",
+    "NetBIOS over TCP/IP (NBT) defined in RFC 1001/1002",
+    "Largely replaced by DNS and Direct Hosting (port 445)",
+    "Still used in legacy Windows environments"
+  ],
+  "versions": [
+    { "version": "NetBIOS (original)", "year": 1983, "feature": "IBM PC Network, LAN-only, no routing" },
+    { "version": "NetBEUI", "year": 1985, "feature": "Extended UI, still non-routable" },
+    { "version": "NBT (NetBIOS over TCP/IP)", "year": 1987, "feature": "RFC 1001/1002, routable over IP" }
+  ],
+  "cybersecurity": {
+    "attacks": ["mitm", "arp-spoofing"],
+    "defenses": ["firewall", "ids-ips"]
+  },
+  "relatedConcepts": ["SMB", "DNS", "WINS", "layer5-session"],
+  "dependsOn": ["tcp", "udp", "ipv4"],
+  "visualization": { "color": "#8b5cf6", "icon": "🔗", "nodeType": "leaf" }
+}
