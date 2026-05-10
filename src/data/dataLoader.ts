@@ -251,6 +251,10 @@ export function getIcon(node: DataNode): string {
   return icons[node.type] || '📄'
 }
 
+export function getAllIds(): string[] {
+  return Object.keys(FILE_MAP)
+}
+
 export function hasChildren(node: DataNode): boolean {
   return Array.isArray(node.children) && node.children.length > 0
 }
