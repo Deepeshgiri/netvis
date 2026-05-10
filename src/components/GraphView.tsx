@@ -313,6 +313,7 @@ export default function GraphView({
             .attr('fill', d.color + '14').attr('stroke-width', d.r > 20 ? 1.5 : 1)
       })
       .on('click', (_e, d) => {
+        setTooltip(null)
         fetchNode(d.id).then(raw => {
           if (!raw) return
           // Only expand if this node has children not yet on the board

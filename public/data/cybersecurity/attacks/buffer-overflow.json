@@ -1,0 +1,42 @@
+{
+  "id": "buffer-overflow",
+  "title": "Buffer Overflow",
+  "shortName": "Buffer Overflow",
+  "type": "attack",
+  "category": "memory_attack",
+  "severity": "critical",
+  "description": "Writing data beyond a buffer's boundary to overwrite adjacent memory and hijack program execution.",
+  "fullExplanation": "A buffer overflow occurs when a program writes more data to a buffer than it can hold, overwriting adjacent memory. On the stack, this can overwrite the return address, redirecting execution to attacker-controlled shellcode. Stack overflows are the classic form; heap overflows corrupt heap metadata or function pointers. Modern mitigations (ASLR, DEP/NX, stack canaries) make exploitation harder but not impossible.",
+  "types": [
+    { "name": "Stack Buffer Overflow", "description": "Overwrite return address on the stack — redirect execution to shellcode or ROP chain" },
+    { "name": "Heap Buffer Overflow", "description": "Corrupt heap metadata, function pointers, or adjacent objects" },
+    { "name": "Integer Overflow", "description": "Arithmetic overflow causes incorrect buffer size calculation → buffer overflow" },
+    { "name": "Format String", "description": "printf(user_input) — attacker controls format string, reads/writes arbitrary memory" }
+  ],
+  "exploitTechniques": [
+    { "technique": "Return-to-libc", "description": "Overwrite return address with libc function (system('/bin/sh')) — no shellcode needed" },
+    { "technique": "ROP (Return-Oriented Programming)", "description": "Chain existing code gadgets to bypass NX/DEP — no injected code" },
+    { "technique": "Heap Spray", "description": "Fill heap with shellcode + NOP sleds to increase hit probability" },
+    { "technique": "Use-After-Free", "description": "Access freed memory that's been reallocated with attacker data" }
+  ],
+  "mitigations": [
+    { "name": "ASLR", "description": "Address Space Layout Randomization — randomize memory addresses each run" },
+    { "name": "DEP / NX bit", "description": "Data Execution Prevention — mark stack/heap as non-executable" },
+    { "name": "Stack Canaries", "description": "Place random value before return address — detect overwrite before return" },
+    { "name": "Safe Languages", "description": "Rust, Go, Java have bounds checking — no buffer overflows by design" },
+    { "name": "Compiler Flags", "description": "-fstack-protector, -D_FORTIFY_SOURCE, SafeSEH, SEHOP" }
+  ],
+  "keyFacts": [
+    "Morris Worm (1988) used buffer overflow — first major internet worm",
+    "Heartbleed (2014): OpenSSL buffer over-read — leaked private keys",
+    "EternalBlue (2017): SMB buffer overflow — used in WannaCry ransomware",
+    "C/C++ most vulnerable — no bounds checking by default",
+    "gets(), strcpy(), sprintf() are dangerous — use fgets(), strncpy(), snprintf()",
+    "ASLR + DEP + canaries together make exploitation very difficult",
+    "ROP chains bypass DEP by reusing existing executable code"
+  ],
+  "tools": ["GDB", "pwndbg", "pwntools", "ROPgadget", "checksec", "Immunity Debugger"],
+  "parent": "attacks",
+  "relatedConcepts": ["mitm", "ids-ips", "firewall"],
+  "visualization": { "color": "#ff3366", "icon": "💥", "nodeType": "leaf" }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "ssrf",
+  "title": "Server-Side Request Forgery (SSRF)",
+  "shortName": "SSRF",
+  "type": "attack",
+  "osiLayer": 7,
+  "category": "web_attack",
+  "severity": "critical",
+  "description": "Tricking a server into making HTTP requests to internal resources on behalf of the attacker.",
+  "fullExplanation": "SSRF occurs when an attacker can control the URL that a server fetches. The server makes requests from its own network context — bypassing firewalls that block external access to internal services. In cloud environments, SSRF can access the metadata service (169.254.169.254) to steal IAM credentials. Capital One breach (2019) used SSRF to steal AWS credentials from EC2 metadata service — 100M records exposed.",
+  "attackScenarios": [
+    { "scenario": "Cloud Metadata Theft", "description": "http://169.254.169.254/latest/meta-data/iam/security-credentials/ — steal AWS/GCP/Azure IAM keys" },
+    { "scenario": "Internal Port Scan", "description": "http://internal-server:6379/ — probe internal Redis, Elasticsearch, admin panels" },
+    { "scenario": "File Read", "description": "file:///etc/passwd — read local files via file:// scheme" },
+    { "scenario": "Bypass IP Allowlists", "description": "Server is trusted internally — access services blocked to external IPs" },
+    { "scenario": "Blind SSRF", "description": "No response returned — use DNS/HTTP callbacks (Burp Collaborator) to detect" }
+  ],
+  "keyFacts": [
+    "OWASP Top 10 #10 (2021) — new entry reflecting cloud importance",
+    "Capital One breach (2019): SSRF → AWS metadata → IAM credentials → S3 data",
+    "AWS IMDSv2 requires PUT request first — mitigates simple SSRF",
+    "Bypass filters: http://127.0.0.1, http://[::1], http://0x7f000001, http://2130706433",
+    "DNS rebinding: domain resolves to external IP first, then internal IP",
+    "Blind SSRF detected via out-of-band DNS/HTTP callbacks",
+    "gopher:// and dict:// protocols can interact with non-HTTP services"
+  ],
+  "defenses": [
+    { "name": "Input Validation", "description": "Whitelist allowed domains/IPs — reject private IP ranges" },
+    { "name": "Block Internal IPs", "description": "Firewall rules prevent server from reaching 169.254.x.x, 10.x.x.x, 172.16.x.x, 192.168.x.x" },
+    { "name": "IMDSv2 (AWS)", "description": "Require session-oriented metadata requests — PUT first, then GET" },
+    { "name": "Disable Unused URL Schemes", "description": "Block file://, gopher://, dict:// — allow only http/https" },
+    { "name": "Network Segmentation", "description": "Web servers shouldn't have direct access to internal services" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["xss", "sql-injection", "firewall", "zero-trust"],
+  "visualization": { "color": "#ff3366", "icon": "🔀", "nodeType": "leaf" }
+}

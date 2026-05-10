@@ -176,6 +176,16 @@ const FILE_MAP: Record<string, string> = {
   'csrf':               '/data/cybersecurity/attacks/csrf.json',
   'mitm':               '/data/cybersecurity/attacks/mitm.json',
   'ssl-stripping':      '/data/cybersecurity/attacks/ssl-stripping.json',
+  'phishing':           '/data/cybersecurity/attacks/phishing.json',
+  'buffer-overflow':    '/data/cybersecurity/attacks/buffer-overflow.json',
+  'ransomware':         '/data/cybersecurity/attacks/ransomware.json',
+  'brute-force':        '/data/cybersecurity/attacks/brute-force.json',
+  'ssrf':               '/data/cybersecurity/attacks/ssrf.json',
+  'ddos':               '/data/cybersecurity/attacks/ddos.json',
+  'sql-injection':      '/data/cybersecurity/attacks/sql-injection.json',
+  'session-hijacking':  '/data/cybersecurity/attacks/session-hijacking.json',
+  'supply-chain-attack':'/data/cybersecurity/attacks/supply-chain-attack.json',
+  'path-traversal':     '/data/cybersecurity/attacks/path-traversal.json',
   // defenses
   'firewall':           '/data/cybersecurity/defenses/firewall.json',
   'zero-trust':         '/data/cybersecurity/defenses/zero-trust.json',
@@ -200,6 +210,14 @@ const FILE_MAP: Record<string, string> = {
   'nmap-nse':           '/data/cybersecurity/tools/nmap-nse.json',
   'nmap-os-detection':  '/data/cybersecurity/tools/nmap-os-detection.json',
   'nmap-firewall-evasion': '/data/cybersecurity/tools/nmap-firewall-evasion.json',
+  'sqlmap':             '/data/cybersecurity/tools/sqlmap.json',
+  'hashcat':            '/data/cybersecurity/tools/hashcat.json',
+  'netcat':             '/data/cybersecurity/tools/netcat.json',
+  'tcpdump':            '/data/cybersecurity/tools/tcpdump.json',
+  'aircrack-ng':        '/data/cybersecurity/tools/aircrack-ng.json',
+  'burpsuite':          '/data/cybersecurity/tools/burpsuite.json',
+  'metasploit':         '/data/cybersecurity/tools/metasploit.json',
+  'hydra':              '/data/cybersecurity/tools/hydra.json',
 }
 
 const cache = new Map<string, DataNode>()

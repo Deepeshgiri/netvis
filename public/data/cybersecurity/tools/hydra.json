@@ -1,0 +1,30 @@
+{
+  "id": "hydra",
+  "title": "Hydra",
+  "shortName": "Hydra",
+  "type": "tool",
+  "category": "password_cracking",
+  "description": "Fast online password brute-forcing tool supporting 50+ protocols.",
+  "fullExplanation": "Hydra (THC-Hydra) is a fast and flexible online password brute-forcing tool. Unlike Hashcat which cracks offline hashes, Hydra attacks live services over the network. It supports 50+ protocols including SSH, FTP, HTTP, HTTPS, SMB, RDP, MySQL, PostgreSQL, SMTP, and more. Parallelized attacks with configurable threads make it very fast.",
+  "commonCommands": [
+    { "command": "hydra -l admin -P rockyou.txt ssh://192.168.1.1", "description": "SSH brute force with username 'admin'" },
+    { "command": "hydra -L users.txt -P passwords.txt ftp://192.168.1.1", "description": "FTP with username and password lists" },
+    { "command": "hydra -l admin -P rockyou.txt 192.168.1.1 http-post-form '/login:user=^USER^&pass=^PASS^:Invalid'", "description": "HTTP form brute force" },
+    { "command": "hydra -l admin -P rockyou.txt rdp://192.168.1.1", "description": "RDP brute force" },
+    { "command": "hydra -l root -P rockyou.txt mysql://192.168.1.1", "description": "MySQL brute force" },
+    { "command": "hydra -t 4 -l admin -P rockyou.txt ssh://192.168.1.1", "description": "Limit to 4 threads (avoid lockout)" }
+  ],
+  "keyFacts": [
+    "50+ supported protocols: SSH, FTP, HTTP, HTTPS, SMB, RDP, MySQL, SMTP...",
+    "Parallel attacks: default 16 threads — configurable with -t",
+    "Use -t 1-4 for services with lockout policies to avoid detection",
+    "Medusa: similar tool, sometimes faster for certain protocols",
+    "Patator: more flexible, module-based brute forcer",
+    "Always get written authorization before running Hydra",
+    "Account lockout policies will block Hydra — use password spraying instead"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["brute-force", "nmap", "metasploit", "ids-ips"],
+  "visualization": { "color": "#ffcc00", "icon": "🐉", "nodeType": "leaf" }
+}

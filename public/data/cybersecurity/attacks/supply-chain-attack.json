@@ -1,0 +1,44 @@
+{
+  "id": "supply-chain-attack",
+  "title": "Supply Chain Attack",
+  "shortName": "Supply Chain",
+  "type": "attack",
+  "category": "advanced_attack",
+  "severity": "critical",
+  "description": "Compromising software or hardware in the supply chain to attack downstream users at scale.",
+  "fullExplanation": "Supply chain attacks target the less-secure elements in the software/hardware supply chain rather than attacking the final target directly. By compromising a trusted vendor, library, or build system, attackers can reach thousands of organizations simultaneously. The SolarWinds attack (2020) compromised the build pipeline of a network monitoring tool used by 18,000 organizations including US government agencies.",
+  "notableExamples": [
+    { "name": "SolarWinds (2020)", "description": "Compromised Orion build pipeline — malicious DLL in signed update — 18,000 victims including US Treasury, DoD" },
+    { "name": "XZ Utils (2024)", "description": "2-year social engineering campaign to backdoor SSH via liblzma in Linux distros" },
+    { "name": "event-stream (2018)", "description": "npm package maintainer transferred ownership — malicious code added targeting Bitcoin wallets" },
+    { "name": "Kaseya VSA (2021)", "description": "REvil exploited MSP software — ransomware deployed to 1,500 businesses via trusted management tool" },
+    { "name": "CCleaner (2017)", "description": "Legitimate software update contained backdoor — 2.27 million downloads" }
+  ],
+  "attackVectors": [
+    { "vector": "Build System Compromise", "description": "Inject malicious code into CI/CD pipeline — signed legitimate binary contains backdoor" },
+    { "vector": "Dependency Confusion", "description": "Upload malicious package with same name as internal package to public registry" },
+    { "vector": "Typosquatting", "description": "Publish malicious package with similar name (reqeusts vs requests)" },
+    { "vector": "Maintainer Takeover", "description": "Social engineer or compromise legitimate package maintainer" },
+    { "vector": "Hardware Implant", "description": "Insert malicious chip during manufacturing (Bloomberg Supermicro allegations)" }
+  ],
+  "keyFacts": [
+    "SolarWinds: attackers had access for 9 months before discovery",
+    "npm has 2M+ packages — impossible to audit all dependencies",
+    "Average enterprise uses 500+ open source components",
+    "SBOM (Software Bill of Materials): inventory of all components — US Executive Order 14028 mandates it",
+    "Sigstore: cryptographically sign and verify software artifacts",
+    "Dependency confusion: internal package names leaked via error messages",
+    "Left-pad incident (2016): 11-line package removal broke thousands of builds"
+  ],
+  "defenses": [
+    { "name": "SBOM", "description": "Software Bill of Materials — know every component and version in your software" },
+    { "name": "Dependency Pinning", "description": "Pin exact versions and verify checksums — prevent unexpected updates" },
+    { "name": "Code Signing", "description": "Verify signatures on all software updates and packages" },
+    { "name": "Private Package Registry", "description": "Mirror dependencies internally — prevent dependency confusion" },
+    { "name": "Vendor Security Assessment", "description": "Audit security practices of critical software vendors" },
+    { "name": "Network Monitoring", "description": "Detect unusual outbound connections from trusted software" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["ransomware", "mitm", "ids-ips", "zero-trust"],
+  "visualization": { "color": "#ff3366", "icon": "⛓️", "nodeType": "leaf" }
+}

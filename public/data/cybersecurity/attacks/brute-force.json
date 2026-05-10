@@ -1,0 +1,40 @@
+{
+  "id": "brute-force",
+  "title": "Brute Force & Password Attacks",
+  "shortName": "Brute Force",
+  "type": "attack",
+  "category": "credential_attack",
+  "severity": "high",
+  "description": "Systematically trying all possible passwords or using wordlists to gain unauthorized access.",
+  "fullExplanation": "Brute force attacks try every possible password combination until the correct one is found. Pure brute force is slow — modern attacks use wordlists (dictionary attacks), rules (l33tspeak substitutions), and credential stuffing (reusing leaked passwords). Offline attacks against stolen password hashes are extremely fast — modern GPUs crack billions of hashes per second.",
+  "types": [
+    { "name": "Pure Brute Force", "description": "Try every combination — aaaa, aaab, aaac... Slow but exhaustive." },
+    { "name": "Dictionary Attack", "description": "Try words from a wordlist (rockyou.txt has 14M passwords). Fast and effective." },
+    { "name": "Rule-based Attack", "description": "Apply rules to wordlist: Password → P@ssw0rd, password123, PASSWORD. Hashcat rules." },
+    { "name": "Credential Stuffing", "description": "Use leaked username:password pairs from other breaches. Works because of password reuse." },
+    { "name": "Password Spraying", "description": "Try one common password (Password1!) against many accounts. Avoids lockout." },
+    { "name": "Rainbow Table", "description": "Precomputed hash→password lookup table. Defeated by salting." }
+  ],
+  "keyFacts": [
+    "rockyou.txt: 14 million real passwords from 2009 RockYou breach — still most used wordlist",
+    "RTX 4090 cracks MD5 at 164 billion hashes/second",
+    "bcrypt/Argon2 designed to be slow — 100 hashes/second on same GPU",
+    "Password spraying: 1 attempt per account per 30 min avoids lockout",
+    "HaveIBeenPwned: check if your email is in known breaches",
+    "Credential stuffing success rate: ~0.1-2% but millions of accounts tried",
+    "8-char MD5 password cracked in seconds; bcrypt takes years"
+  ],
+  "tools": ["Hashcat", "John the Ripper", "Hydra", "Medusa", "CrackStation", "THC-Hydra"],
+  "defenses": [
+    { "name": "Account Lockout", "description": "Lock account after N failed attempts — stops online brute force" },
+    { "name": "MFA", "description": "Password alone isn't enough — second factor required" },
+    { "name": "Strong Password Policy", "description": "Minimum 12 chars, complexity, check against breach databases" },
+    { "name": "Rate Limiting", "description": "Limit login attempts per IP per time window" },
+    { "name": "CAPTCHA", "description": "Prevent automated login attempts" },
+    { "name": "Password Manager", "description": "Unique random passwords per site — eliminates credential stuffing" },
+    { "name": "Bcrypt / Argon2", "description": "Slow hash functions — make offline cracking impractical" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["phishing", "credential-stuffing", "ids-ips"],
+  "visualization": { "color": "#ff3366", "icon": "🔨", "nodeType": "leaf" }
+}

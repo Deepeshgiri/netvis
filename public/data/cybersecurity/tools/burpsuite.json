@@ -1,0 +1,32 @@
+{
+  "id": "burpsuite",
+  "title": "Burp Suite",
+  "shortName": "Burp Suite",
+  "type": "tool",
+  "category": "web_security_testing",
+  "description": "The industry-standard web application security testing platform — intercept, modify, and replay HTTP traffic.",
+  "fullExplanation": "Burp Suite is the most widely used web application security testing tool. It acts as an HTTP/HTTPS proxy between your browser and the target, allowing you to intercept, inspect, and modify every request and response. The Pro version adds an automated scanner, Intruder for fuzzing, and Collaborator for out-of-band testing. Used by security professionals worldwide for manual and automated web app testing.",
+  "components": [
+    { "name": "Proxy", "description": "Intercept and modify HTTP/HTTPS requests and responses in real-time" },
+    { "name": "Repeater", "description": "Manually resend and modify individual requests — test parameter tampering" },
+    { "name": "Intruder", "description": "Automated fuzzer — brute force, parameter fuzzing, payload injection" },
+    { "name": "Scanner (Pro)", "description": "Automated vulnerability scanner — SQLi, XSS, SSRF, XXE, and more" },
+    { "name": "Decoder", "description": "Encode/decode Base64, URL, HTML, hex, gzip — analyze obfuscated data" },
+    { "name": "Comparer", "description": "Diff two requests/responses — spot subtle differences" },
+    { "name": "Collaborator (Pro)", "description": "Out-of-band server for detecting blind SSRF, XXE, blind SQLi" },
+    { "name": "Extensions (BApp Store)", "description": "500+ community extensions — JWT editor, Active Scan++, Autorize" }
+  ],
+  "keyFacts": [
+    "Industry standard for web app pentesting and bug bounty",
+    "Community edition is free — Pro adds scanner and Intruder throttle removal",
+    "Burp Collaborator: unique subdomain for detecting out-of-band interactions",
+    "Match and Replace rules: auto-modify requests (add headers, change values)",
+    "Scope control: only intercept/scan in-scope targets",
+    "HTTP history: full log of all proxied requests — searchable",
+    "OWASP Top 10 testing: Burp covers all 10 categories"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["xss", "sql-injection", "ssrf", "csrf", "waf"],
+  "visualization": { "color": "#ffcc00", "icon": "🕷️", "nodeType": "leaf" }
+}
