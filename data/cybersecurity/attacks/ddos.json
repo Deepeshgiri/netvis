@@ -1,0 +1,45 @@
+{
+  "id": "ddos",
+  "title": "DDoS Attack",
+  "shortName": "DDoS",
+  "type": "attack",
+  "osiLayer": 3,
+  "category": "denial_of_service",
+  "severity": "critical",
+  "description": "Overwhelming a target with traffic from thousands of sources to make it unavailable.",
+  "fullExplanation": "A Distributed Denial of Service (DDoS) attack uses thousands of compromised machines (botnet) to flood a target with traffic, exhausting bandwidth, CPU, or connection tables. Unlike DoS (single source), DDoS is distributed — blocking one IP doesn't help. Attacks range from volumetric (flood bandwidth) to protocol (exhaust state tables) to application layer (HTTP floods). Largest recorded: 3.47 Tbps (Microsoft Azure, 2021).",
+  "types": [
+    { "name": "Volumetric", "description": "Flood bandwidth with UDP/ICMP traffic. Amplification attacks multiply traffic 100x+." },
+    { "name": "Protocol / State Exhaustion", "description": "SYN flood, ACK flood — exhaust firewall/server connection state tables." },
+    { "name": "Application Layer (L7)", "description": "HTTP GET/POST floods — mimic legitimate traffic, hard to distinguish." },
+    { "name": "Amplification", "description": "Spoof victim's IP, send small request to open resolver/NTP — large response floods victim." },
+    { "name": "Slowloris", "description": "Open many HTTP connections, send headers slowly — exhaust server thread pool." }
+  ],
+  "amplificationFactors": [
+    { "protocol": "DNS", "factor": "28-54x", "port": "UDP 53" },
+    { "protocol": "NTP (monlist)", "factor": "556x", "port": "UDP 123" },
+    { "protocol": "SSDP", "factor": "30x", "port": "UDP 1900" },
+    { "protocol": "Memcached", "factor": "51,000x", "port": "UDP 11211" },
+    { "protocol": "CLDAP", "factor": "70x", "port": "UDP 389" }
+  ],
+  "keyFacts": [
+    "Largest DDoS: 3.47 Tbps against Microsoft Azure (2021)",
+    "Mirai botnet (2016): 600 Gbps — used IoT devices (cameras, routers)",
+    "Memcached amplification: 51,000x — 1 byte request → 51KB response",
+    "Cloudflare, Akamai, AWS Shield absorb DDoS at the edge",
+    "BGP anycast: route attack traffic to scrubbing centers worldwide",
+    "Application layer DDoS hardest to mitigate — looks like real traffic",
+    "Booter/stresser services sell DDoS-for-hire illegally"
+  ],
+  "defenses": [
+    { "name": "CDN / DDoS Scrubbing", "description": "Cloudflare, Akamai, AWS Shield absorb volumetric attacks at edge" },
+    { "name": "Rate Limiting", "description": "Limit requests per IP per second at network/application layer" },
+    { "name": "Anycast Diffusion", "description": "Distribute traffic across global PoPs — dilute attack volume" },
+    { "name": "BCP38 / Ingress Filtering", "description": "ISPs drop spoofed source IPs — prevents amplification attacks" },
+    { "name": "SYN Cookies", "description": "Eliminate SYN flood vulnerability in TCP stack" },
+    { "name": "CAPTCHA / JS Challenge", "description": "Cloudflare Under Attack Mode — verify humans before serving" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["syn-flood", "firewall", "ids-ips", "rate-limiting"],
+  "visualization": { "color": "#ff3366", "icon": "🌊", "nodeType": "leaf" }
+}

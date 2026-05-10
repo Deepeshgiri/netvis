@@ -1,0 +1,32 @@
+{
+  "id": "tcpdump",
+  "title": "tcpdump",
+  "shortName": "tcpdump",
+  "type": "tool",
+  "category": "network_analysis",
+  "description": "Command-line packet capture tool — the Swiss Army knife of network troubleshooting on Linux/Unix.",
+  "fullExplanation": "tcpdump is a command-line packet analyzer that captures and displays network packets in real-time. It uses libpcap for packet capture and BPF (Berkeley Packet Filter) for filtering. tcpdump is pre-installed on most Unix/Linux systems and is essential for network troubleshooting, security analysis, and capturing traffic for offline analysis in Wireshark. It can save captures to pcap files.",
+  "commonCommands": [
+    { "command": "tcpdump -i eth0", "description": "Capture all traffic on eth0" },
+    { "command": "tcpdump -i eth0 -w capture.pcap", "description": "Save capture to file for Wireshark analysis" },
+    { "command": "tcpdump -r capture.pcap", "description": "Read and display saved pcap file" },
+    { "command": "tcpdump -i eth0 port 443", "description": "Capture only HTTPS traffic" },
+    { "command": "tcpdump -i eth0 host 8.8.8.8", "description": "Capture traffic to/from specific host" },
+    { "command": "tcpdump -i eth0 'tcp[tcpflags] & tcp-syn != 0'", "description": "Capture only SYN packets" },
+    { "command": "tcpdump -i eth0 -n -v -X port 80", "description": "Verbose with hex+ASCII dump of HTTP" },
+    { "command": "tcpdump -i any -s 0 -w - | ssh user@host 'wireshark -k -i -'", "description": "Remote capture piped to local Wireshark" }
+  ],
+  "keyFacts": [
+    "Pre-installed on Linux, macOS, BSD — no installation needed",
+    "Requires root/sudo for live capture (raw socket access)",
+    "BPF filters: same syntax as Wireshark capture filters",
+    "-s 0: capture full packet (default truncates at 262144 bytes)",
+    "-n: don't resolve hostnames — faster, avoids DNS leakage",
+    "-v/-vv/-vvv: increasing verbosity levels",
+    "Remote capture: ssh + tcpdump + Wireshark pipeline is very powerful"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["wireshark", "tshark", "nmap", "ids-ips"],
+  "visualization": { "color": "#ffcc00", "icon": "📡", "nodeType": "leaf" }
+}

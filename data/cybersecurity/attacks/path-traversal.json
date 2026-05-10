@@ -1,0 +1,36 @@
+{
+  "id": "path-traversal",
+  "title": "Path Traversal",
+  "shortName": "Path Traversal",
+  "type": "attack",
+  "osiLayer": 7,
+  "category": "web_attack",
+  "severity": "high",
+  "description": "Using ../ sequences to access files outside the intended directory on a web server.",
+  "fullExplanation": "Path traversal (directory traversal) exploits insufficient input validation to access files outside the web root. By injecting ../ sequences into file path parameters, attackers can read sensitive files like /etc/passwd, private keys, config files with credentials, or application source code. Also called dot-dot-slash attack.",
+  "examples": [
+    { "payload": "../../../../etc/passwd", "description": "Read Unix password file" },
+    { "payload": "..\\..\\..\\windows\\win.ini", "description": "Read Windows system file" },
+    { "payload": "....//....//etc/passwd", "description": "Bypass simple ../ filter" },
+    { "payload": "%2e%2e%2f%2e%2e%2fetc%2fpasswd", "description": "URL-encoded bypass" },
+    { "payload": "..%252f..%252fetc%252fpasswd", "description": "Double URL-encoded bypass" }
+  ],
+  "keyFacts": [
+    "CVE-2021-41773: Apache HTTP Server path traversal — actively exploited in the wild",
+    "Zip Slip: malicious zip with ../ in filenames — extract outside target directory",
+    "Canonicalize paths before validation — resolve symlinks and ../ first",
+    "Chroot jail / container isolation limits damage even if exploited",
+    "Log4Shell used JNDI path traversal for RCE",
+    "Windows: both / and \\ work as path separators — test both"
+  ],
+  "defenses": [
+    { "name": "Input Validation", "description": "Reject ../, ..\\ and encoded variants in file path parameters" },
+    { "name": "Canonicalization", "description": "Resolve full path, verify it starts with allowed base directory" },
+    { "name": "Chroot / Containers", "description": "Isolate application filesystem — limit accessible files" },
+    { "name": "Least Privilege", "description": "Web server runs as low-privilege user — can't read sensitive files" },
+    { "name": "WAF", "description": "Block ../ patterns in requests" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["ssrf", "xss", "sql-injection", "waf"],
+  "visualization": { "color": "#ff3366", "icon": "📂", "nodeType": "leaf" }
+}

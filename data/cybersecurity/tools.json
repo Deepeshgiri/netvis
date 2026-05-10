@@ -5,7 +5,7 @@
   "category": "cybersecurity",
   "description": "Essential tools for network analysis, security testing, and monitoring",
   "fullExplanation": "Security tools help network administrators and security professionals analyze traffic, detect vulnerabilities, and monitor for threats. These tools are essential for both offensive security testing and defensive monitoring.",
-  "children": ["wireshark", "nmap"],
+  "children": ["wireshark", "nmap", "sqlmap", "hashcat", "netcat", "tcpdump", "aircrack-ng", "burpsuite", "metasploit", "hydra"],
   "keyFacts": [
     "Wireshark captures and analyzes network packets in real-time",
     "Nmap scans networks to discover hosts and services",

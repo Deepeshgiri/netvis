@@ -5,7 +5,7 @@
   "category": "cybersecurity",
   "description": "Common attack vectors used to compromise networks and systems",
   "fullExplanation": "Attack techniques are methods used by malicious actors to exploit vulnerabilities in networks, systems, and applications. Understanding these attacks is crucial for implementing effective defenses.",
-  "children": ["arp-spoofing", "syn-flood", "dns-poisoning", "xss", "csrf", "mitm", "ssl-stripping"],
+  "children": ["arp-spoofing", "syn-flood", "dns-poisoning", "xss", "csrf", "mitm", "ssl-stripping", "phishing", "buffer-overflow", "ransomware", "brute-force", "ssrf", "ddos", "sql-injection", "session-hijacking", "supply-chain-attack", "path-traversal"],
   "keyFacts": [
     "Most attacks exploit human error or misconfiguration",
     "Defense in depth requires understanding attack techniques",

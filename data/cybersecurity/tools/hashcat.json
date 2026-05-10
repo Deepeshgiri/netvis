@@ -1,0 +1,45 @@
+{
+  "id": "hashcat",
+  "title": "Hashcat",
+  "shortName": "Hashcat",
+  "type": "tool",
+  "category": "password_cracking",
+  "description": "The world's fastest password recovery tool — GPU-accelerated hash cracking with advanced attack modes.",
+  "fullExplanation": "Hashcat is the world's fastest and most advanced password recovery utility. It uses GPU acceleration to crack password hashes at billions of attempts per second. Supports 300+ hash types including MD5, SHA-1, bcrypt, NTLM, WPA2, and more. Multiple attack modes allow cracking from wordlists, brute force, rule-based mutations, and combination attacks.",
+  "attackModes": [
+    { "mode": "0 - Straight (Dictionary)", "description": "Try each word in wordlist as-is. Fast, effective for common passwords." },
+    { "mode": "1 - Combination", "description": "Combine words from two wordlists: password + 123 = password123" },
+    { "mode": "3 - Brute Force (Mask)", "description": "Try all combinations matching a mask: ?u?l?l?l?d?d = Abcd12" },
+    { "mode": "6 - Hybrid Wordlist+Mask", "description": "Wordlist word + mask suffix: password?d?d = password12" },
+    { "mode": "7 - Hybrid Mask+Wordlist", "description": "Mask prefix + wordlist word: ?d?dpassword = 12password" }
+  ],
+  "commonCommands": [
+    { "command": "hashcat -m 0 -a 0 hashes.txt rockyou.txt", "description": "MD5 dictionary attack with rockyou.txt" },
+    { "command": "hashcat -m 1000 -a 0 ntlm.txt rockyou.txt -r rules/best64.rule", "description": "NTLM with rules" },
+    { "command": "hashcat -m 2500 -a 0 capture.hccapx rockyou.txt", "description": "WPA2 handshake crack" },
+    { "command": "hashcat -m 3200 -a 0 bcrypt.txt rockyou.txt", "description": "bcrypt (slow — GPU barely helps)" },
+    { "command": "hashcat -m 0 -a 3 hashes.txt ?u?l?l?l?d?d?d?s", "description": "Mask attack: Abcd123!" }
+  ],
+  "hashTypes": [
+    { "mode": 0,    "name": "MD5",    "speed": "164 GH/s (RTX 4090)" },
+    { "mode": 100,  "name": "SHA-1",  "speed": "55 GH/s" },
+    { "mode": 1000, "name": "NTLM",   "speed": "340 GH/s" },
+    { "mode": 1800, "name": "sha512crypt", "speed": "2.8 MH/s" },
+    { "mode": 3200, "name": "bcrypt", "speed": "184 kH/s" },
+    { "mode": 13400,"name": "KeePass","speed": "3.6 MH/s" },
+    { "mode": 22000,"name": "WPA2",   "speed": "1.6 MH/s" }
+  ],
+  "keyFacts": [
+    "RTX 4090: 164 billion MD5 hashes/second — 8-char MD5 cracked in seconds",
+    "bcrypt/Argon2 designed to be slow — 184k/s on RTX 4090 vs 164G/s for MD5",
+    "rockyou.txt: 14M real passwords — most effective starting wordlist",
+    "Rules transform wordlist: password → P@ssw0rd, Password1, PASSWORD",
+    "Hashcat potfile: remembers cracked hashes — don't re-crack",
+    "Distributed cracking: hashcat.net, hashtopolis for cluster cracking",
+    "Always use on hashes you own or have authorization to crack"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["brute-force", "john-the-ripper", "ids-ips"],
+  "visualization": { "color": "#ffcc00", "icon": "⚡", "nodeType": "leaf" }
+}

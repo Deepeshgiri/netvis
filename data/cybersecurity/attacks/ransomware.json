@@ -1,0 +1,45 @@
+{
+  "id": "ransomware",
+  "title": "Ransomware",
+  "shortName": "Ransomware",
+  "type": "attack",
+  "category": "malware",
+  "severity": "critical",
+  "description": "Malware that encrypts victim's files and demands payment for the decryption key.",
+  "fullExplanation": "Ransomware encrypts files on infected systems and demands cryptocurrency payment for the decryption key. Modern ransomware uses asymmetric encryption (RSA) to encrypt a symmetric key (AES), making decryption impossible without the attacker's private key. Ransomware-as-a-Service (RaaS) allows non-technical criminals to deploy ransomware. Double extortion adds data theft — pay or we publish your data.",
+  "notableExamples": [
+    { "name": "WannaCry (2017)", "description": "Used EternalBlue SMB exploit — infected 200,000+ systems in 150 countries in 3 days" },
+    { "name": "NotPetya (2017)", "description": "Disguised as ransomware, actually a wiper — $10B in damages, most destructive cyberattack ever" },
+    { "name": "REvil / Sodinokibi", "description": "RaaS group — Kaseya attack (2021) hit 1,500 businesses via MSP supply chain" },
+    { "name": "LockBit", "description": "Most prolific RaaS 2022-2024 — automated, fast encryption, double extortion" },
+    { "name": "Colonial Pipeline (2021)", "description": "DarkSide ransomware — shut down US East Coast fuel supply for 5 days" }
+  ],
+  "attackChain": [
+    { "step": 1, "action": "Initial Access", "description": "Phishing email, RDP brute force, VPN vulnerability, supply chain" },
+    { "step": 2, "action": "Persistence", "description": "Install backdoor, create admin accounts, disable security tools" },
+    { "step": 3, "action": "Lateral Movement", "description": "Spread across network using stolen credentials, PsExec, WMI" },
+    { "step": 4, "action": "Data Exfiltration", "description": "Steal sensitive data for double extortion leverage" },
+    { "step": 5, "action": "Encryption", "description": "Deploy ransomware payload — encrypt files with AES+RSA" },
+    { "step": 6, "action": "Ransom Note", "description": "Display ransom demand with payment instructions (Bitcoin/Monero)" }
+  ],
+  "keyFacts": [
+    "Average ransom payment: $1.54 million (2023)",
+    "Average downtime after ransomware: 21 days",
+    "RaaS: developers take 20-30%, affiliates keep 70-80% of ransom",
+    "Offline backups are the most effective defense",
+    "Paying ransom doesn't guarantee decryption — 20% never recover data",
+    "Double extortion: encrypt + threaten to publish stolen data",
+    "Triple extortion adds DDoS attack on victim's infrastructure"
+  ],
+  "defenses": [
+    { "name": "Offline Backups (3-2-1)", "description": "3 copies, 2 media types, 1 offsite — test restores regularly" },
+    { "name": "EDR / Antivirus", "description": "Behavioral detection stops encryption before it completes" },
+    { "name": "Network Segmentation", "description": "Limit lateral movement — ransomware can't reach all systems" },
+    { "name": "Patch Management", "description": "EternalBlue, Log4Shell — patch critical vulns immediately" },
+    { "name": "Disable RDP / MFA on RDP", "description": "RDP is #1 ransomware entry point — restrict or require MFA" },
+    { "name": "Least Privilege", "description": "Limit user permissions — ransomware can only encrypt accessible files" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["phishing", "buffer-overflow", "ids-ips", "zero-trust"],
+  "visualization": { "color": "#ff3366", "icon": "🔒", "nodeType": "leaf" }
+}

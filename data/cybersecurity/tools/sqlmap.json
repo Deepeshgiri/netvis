@@ -1,0 +1,31 @@
+{
+  "id": "sqlmap",
+  "title": "sqlmap",
+  "shortName": "sqlmap",
+  "type": "tool",
+  "category": "web_security_testing",
+  "description": "Automated SQL injection detection and exploitation tool.",
+  "fullExplanation": "sqlmap is an open-source penetration testing tool that automates the detection and exploitation of SQL injection vulnerabilities. It supports all major databases (MySQL, PostgreSQL, MSSQL, Oracle, SQLite) and all SQLi techniques (error-based, blind boolean, time-based, union, stacked queries). It can dump databases, read/write files, and execute OS commands.",
+  "commonCommands": [
+    { "command": "sqlmap -u 'http://site.com/page?id=1'", "description": "Basic scan of URL parameter" },
+    { "command": "sqlmap -u 'http://site.com/page?id=1' --dbs", "description": "Enumerate databases" },
+    { "command": "sqlmap -u 'http://site.com/page?id=1' -D mydb --tables", "description": "List tables in database" },
+    { "command": "sqlmap -u 'http://site.com/page?id=1' -D mydb -T users --dump", "description": "Dump users table" },
+    { "command": "sqlmap -u 'http://site.com/login' --data='user=a&pass=b' --level=5 --risk=3", "description": "POST form, aggressive scan" },
+    { "command": "sqlmap -r request.txt", "description": "Use saved Burp Suite request file" },
+    { "command": "sqlmap -u 'http://site.com/?id=1' --os-shell", "description": "Get OS shell via SQLi (if DB allows)" }
+  ],
+  "keyFacts": [
+    "Supports MySQL, PostgreSQL, MSSQL, Oracle, SQLite, DB2, Firebird",
+    "All SQLi techniques: error-based, union, blind boolean, time-based, stacked",
+    "--level (1-5): test more parameters. --risk (1-3): use more dangerous payloads",
+    "--tamper scripts: bypass WAF with encoding/obfuscation",
+    "--tor: route through Tor for anonymity",
+    "--batch: non-interactive mode for automation",
+    "Always get written authorization before running sqlmap"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["sql-injection", "burpsuite", "waf"],
+  "visualization": { "color": "#ffcc00", "icon": "💉", "nodeType": "leaf" }
+}

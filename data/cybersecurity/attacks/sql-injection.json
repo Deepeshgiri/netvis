@@ -1,0 +1,47 @@
+{
+  "id": "sql-injection",
+  "title": "SQL Injection (SQLi)",
+  "shortName": "SQLi",
+  "type": "attack",
+  "osiLayer": 7,
+  "category": "web_attack",
+  "severity": "critical",
+  "description": "Injecting malicious SQL code into input fields to manipulate database queries.",
+  "fullExplanation": "SQL Injection occurs when user-supplied input is incorporated into SQL queries without proper sanitization. An attacker can manipulate the query to bypass authentication, extract data, modify records, or execute OS commands. It remains the #1 web vulnerability for decades. Types include Classic (error-based), Blind (boolean/time-based), and Out-of-band SQLi.",
+  "types": [
+    { "name": "Classic / Error-based", "description": "Database error messages reveal schema info. ' OR 1=1-- bypasses login." },
+    { "name": "Blind Boolean-based", "description": "No visible output — infer data from true/false responses. ' AND 1=1-- vs ' AND 1=2--" },
+    { "name": "Blind Time-based", "description": "Use SLEEP() or WAITFOR DELAY to infer data from response timing." },
+    { "name": "Union-based", "description": "UNION SELECT to append attacker's query results to legitimate results." },
+    { "name": "Out-of-band", "description": "Exfiltrate data via DNS or HTTP requests triggered by the database." },
+    { "name": "Second-order", "description": "Payload stored in DB, executed later when retrieved by another query." }
+  ],
+  "attackSteps": [
+    { "step": 1, "action": "Find injection point", "description": "Test inputs with ' or \" — look for SQL errors or behavior changes" },
+    { "step": 2, "action": "Determine DB type", "description": "Error messages, version functions: @@version (MSSQL), version() (MySQL)" },
+    { "step": 3, "action": "Extract schema", "description": "Query information_schema.tables to enumerate databases and tables" },
+    { "step": 4, "action": "Dump data", "description": "SELECT username, password FROM users — extract credentials" },
+    { "step": 5, "action": "Escalate", "description": "xp_cmdshell (MSSQL), INTO OUTFILE (MySQL) for OS command execution" }
+  ],
+  "tools": ["sqlmap", "Burp Suite", "Havij", "SQLNinja", "manual testing"],
+  "keyFacts": [
+    "OWASP Top 10 #3 (Injection) — most critical web vulnerability category",
+    "sqlmap automates detection and exploitation completely",
+    "Parameterized queries / prepared statements completely prevent SQLi",
+    "Stored procedures don't prevent SQLi unless they use parameterized queries",
+    "WAF bypass: encoding, comments, case variation (SeLeCt, /*!SELECT*/)",
+    "Time-based blind SQLi works even when no output is returned",
+    "Second-order SQLi bypasses input validation at storage time"
+  ],
+  "defenses": [
+    { "name": "Parameterized Queries", "description": "Use prepared statements — user input never interpreted as SQL code" },
+    { "name": "ORM Frameworks", "description": "SQLAlchemy, Hibernate, ActiveRecord use parameterized queries by default" },
+    { "name": "Input Validation", "description": "Whitelist allowed characters, reject suspicious patterns" },
+    { "name": "Least Privilege DB", "description": "App DB user should only have SELECT/INSERT — not DROP or xp_cmdshell" },
+    { "name": "WAF", "description": "Web Application Firewall blocks common SQLi patterns" },
+    { "name": "Error Handling", "description": "Never expose DB error messages to users — log internally only" }
+  ],
+  "parent": "attacks",
+  "relatedConcepts": ["xss", "csrf", "waf", "input-validation"],
+  "visualization": { "color": "#ff3366", "icon": "💉", "nodeType": "leaf" }
+}

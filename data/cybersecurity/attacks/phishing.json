@@ -1,0 +1,47 @@
+{
+  "id": "phishing",
+  "title": "Phishing",
+  "shortName": "Phishing",
+  "type": "attack",
+  "osiLayer": 7,
+  "category": "social_engineering",
+  "severity": "high",
+  "description": "Deceiving users into revealing credentials or installing malware via fraudulent emails, websites, or messages.",
+  "fullExplanation": "Phishing is a social engineering attack that tricks victims into believing they're interacting with a legitimate entity. Email phishing sends mass fraudulent emails impersonating banks, services, or colleagues. Spear phishing targets specific individuals with personalized content. Vishing uses voice calls. Smishing uses SMS. The goal is credential theft, malware installation, or financial fraud. Phishing is the #1 initial access vector in breaches.",
+  "types": [
+    { "name": "Email Phishing", "description": "Mass emails impersonating legitimate services — fake login pages, malicious attachments" },
+    { "name": "Spear Phishing", "description": "Targeted attack on specific individual — personalized with victim's name, role, colleagues" },
+    { "name": "Whaling", "description": "Spear phishing targeting executives (CEO, CFO) — high-value targets" },
+    { "name": "Vishing", "description": "Voice phishing — phone calls impersonating IT support, banks, government" },
+    { "name": "Smishing", "description": "SMS phishing — fake package delivery, bank alerts with malicious links" },
+    { "name": "Clone Phishing", "description": "Duplicate legitimate email with malicious link/attachment replacing original" },
+    { "name": "Business Email Compromise (BEC)", "description": "Compromise or spoof executive email to authorize fraudulent wire transfers" }
+  ],
+  "attackSteps": [
+    { "step": 1, "action": "Reconnaissance", "description": "Research target via LinkedIn, company website, social media" },
+    { "step": 2, "action": "Create lure", "description": "Clone legitimate website, craft convincing email with urgency/fear" },
+    { "step": 3, "action": "Deliver payload", "description": "Send email with malicious link or attachment" },
+    { "step": 4, "action": "Capture credentials", "description": "Victim enters credentials on fake site — attacker captures them" },
+    { "step": 5, "action": "Exploit access", "description": "Use stolen credentials for account takeover, lateral movement" }
+  ],
+  "keyFacts": [
+    "91% of cyberattacks start with a phishing email",
+    "Average cost of phishing attack: $4.65 million (IBM 2023)",
+    "DMARC/DKIM/SPF prevent email spoofing from your domain",
+    "MFA stops credential phishing — stolen password alone isn't enough",
+    "FIDO2/WebAuthn is phishing-resistant — key bound to legitimate domain",
+    "Typosquatting: register similar domains (paypa1.com, g00gle.com)",
+    "Homograph attacks: use Unicode lookalike characters in domain names"
+  ],
+  "defenses": [
+    { "name": "MFA / FIDO2", "description": "Even if credentials stolen, MFA prevents account takeover" },
+    { "name": "Email Filtering", "description": "Spam filters, sandboxing attachments, link scanning" },
+    { "name": "DMARC + DKIM + SPF", "description": "Prevent spoofing of your domain in phishing emails" },
+    { "name": "Security Awareness Training", "description": "Regular phishing simulations and training for employees" },
+    { "name": "Browser Warnings", "description": "Google Safe Browsing, SmartScreen flag known phishing sites" }
+  ],
+  "tools": ["GoPhish", "SET (Social Engineering Toolkit)", "Evilginx2", "Modlishka"],
+  "parent": "attacks",
+  "relatedConcepts": ["mitm", "dns-poisoning", "ssl-stripping"],
+  "visualization": { "color": "#ff3366", "icon": "🎣", "nodeType": "leaf" }
+}
