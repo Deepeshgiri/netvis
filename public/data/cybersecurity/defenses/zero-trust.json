@@ -31,7 +31,7 @@
     "Continuous verification: re-authenticate based on risk signals",
     "US Executive Order 14028 (2021): mandates ZTA for federal agencies"
   ],
-  "children": ["microsegmentation","ztna","identity-verification","device-trust"],
+  "children": ["microsegmentation", "ztna", "identity-verification", "device-trust"],
   "parent": "defenses",
   "relatedConcepts": ["firewall","vpn-security","segmentation","ids","siem"],
   "visualization": { "color": "#ff3366", "icon": "🚫", "nodeType": "expandable" }

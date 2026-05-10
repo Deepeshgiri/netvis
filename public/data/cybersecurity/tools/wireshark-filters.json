@@ -1,0 +1,43 @@
+{
+  "id": "wireshark-filters",
+  "title": "Wireshark Filters",
+  "shortName": "WS Filters",
+  "type": "concept",
+  "category": "network_analysis",
+  "description": "Display and capture filters for isolating specific traffic in Wireshark.",
+  "fullExplanation": "Wireshark has two filter types: Capture filters (BPF syntax, applied during capture — reduces file size) and Display filters (Wireshark syntax, applied after capture — doesn't discard packets). Display filters are more powerful and flexible. They support protocol fields, comparison operators, logical operators, and functions. Mastering filters is essential for efficient packet analysis.",
+  "displayFilters": [
+    { "filter": "tcp.port == 443",                "description": "HTTPS traffic (either direction)" },
+    { "filter": "ip.addr == 192.168.1.1",         "description": "Traffic to or from specific IP" },
+    { "filter": "ip.src == 10.0.0.1",             "description": "Traffic from specific source IP" },
+    { "filter": "http.request.method == \"GET\"", "description": "HTTP GET requests only" },
+    { "filter": "dns.qry.name contains \"google\"","description": "DNS queries containing 'google'" },
+    { "filter": "tcp.flags.syn == 1 && tcp.flags.ack == 0", "description": "TCP SYN packets (connection initiations)" },
+    { "filter": "tcp.analysis.retransmission",    "description": "TCP retransmissions — indicates packet loss" },
+    { "filter": "!(arp || dns || icmp)",           "description": "Hide noisy protocols" },
+    { "filter": "frame contains \"password\"",    "description": "Packets containing the string 'password'" },
+    { "filter": "http.response.code == 200",      "description": "Successful HTTP responses" },
+    { "filter": "tls.handshake.type == 1",        "description": "TLS ClientHello messages" },
+    { "filter": "tcp.stream eq 5",                "description": "Show only TCP stream number 5" }
+  ],
+  "captureFilters": [
+    { "filter": "port 80",              "description": "Capture only HTTP traffic" },
+    { "filter": "host 8.8.8.8",         "description": "Traffic to/from Google DNS" },
+    { "filter": "net 192.168.0.0/16",   "description": "Entire 192.168.x.x subnet" },
+    { "filter": "tcp and port 443",     "description": "HTTPS only" },
+    { "filter": "not port 22",          "description": "Exclude SSH (avoid capturing your own session)" },
+    { "filter": "icmp",                 "description": "ICMP only (ping, traceroute)" }
+  ],
+  "keyFacts": [
+    "Display filters: use after capture, don't discard packets, very powerful",
+    "Capture filters: BPF syntax, applied during capture, reduces file size",
+    "Follow Stream: right-click packet → Follow → TCP/UDP/TLS Stream — see full conversation",
+    "Colorize: View → Coloring Rules — customize colors for different traffic types",
+    "Export Objects: File → Export Objects → HTTP — extract files transferred over HTTP",
+    "Statistics → Protocol Hierarchy: see breakdown of all protocols in capture"
+  ],
+  "children": [],
+  "parent": "wireshark",
+  "relatedConcepts": ["wireshark", "tshark", "tcp", "dns"],
+  "visualization": { "color": "#00d4ff", "icon": "🔍", "nodeType": "leaf" }
+}

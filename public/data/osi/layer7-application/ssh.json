@@ -41,7 +41,7 @@
     "Known_hosts file: prevents MITM by storing host fingerprints",
     "Port 22 is heavily scanned — consider changing to non-standard port"
   ],
-  "children": ["ssh-key-auth","ssh-tunneling","ssh-hardening"],
+  "children": ["ssh-key-auth", "ssh-tunneling", "ssh-hardening"],
   "parent": "layer7-application",
   "dependsOn": ["tcp","aes","ecdh","ed25519"],
   "relatedConcepts": ["tls","vpn","sftp","telnet"],

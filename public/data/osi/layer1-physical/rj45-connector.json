@@ -1,0 +1,33 @@
+{
+  "id": "rj45-connector",
+  "title": "RJ45 Connector & Wiring Standards",
+  "shortName": "RJ45",
+  "type": "hardware",
+  "osiLayer": 1,
+  "category": "physical_media",
+  "description": "The 8-pin modular connector used for Ethernet — defines pin assignments for T568A and T568B wiring.",
+  "fullExplanation": "RJ45 (Registered Jack 45) is the standard connector for Ethernet cables. It has 8 pins (positions) that connect to the 4 twisted pairs in UTP cable. Two wiring standards exist: T568A and T568B — they differ only in which pairs connect to pins 1/2 and 3/6. T568B is more common in North America. A straight-through cable uses the same standard on both ends. A crossover cable uses T568A on one end and T568B on the other (needed to connect like devices — now obsolete due to Auto-MDIX).",
+  "pinAssignments": [
+    { "pin": 1, "t568a": "White/Green",  "t568b": "White/Orange", "pair": "Pair 3 / Pair 2", "function": "TX+ (Gigabit: BI_DA+)" },
+    { "pin": 2, "t568a": "Green",        "t568b": "Orange",       "pair": "Pair 3 / Pair 2", "function": "TX- (Gigabit: BI_DA-)" },
+    { "pin": 3, "t568a": "White/Orange", "t568b": "White/Green",  "pair": "Pair 2 / Pair 3", "function": "RX+ (Gigabit: BI_DB+)" },
+    { "pin": 4, "t568a": "Blue",         "t568b": "Blue",         "pair": "Pair 1",           "function": "Unused 10/100 (Gigabit: BI_DC+)" },
+    { "pin": 5, "t568a": "White/Blue",   "t568b": "White/Blue",   "pair": "Pair 1",           "function": "Unused 10/100 (Gigabit: BI_DC-)" },
+    { "pin": 6, "t568a": "Orange",       "t568b": "Green",        "pair": "Pair 2 / Pair 3", "function": "RX- (Gigabit: BI_DB-)" },
+    { "pin": 7, "t568a": "White/Brown",  "t568b": "White/Brown",  "pair": "Pair 4",           "function": "Unused 10/100 (Gigabit: BI_DD+)" },
+    { "pin": 8, "t568a": "Brown",        "t568b": "Brown",        "pair": "Pair 4",           "function": "Unused 10/100 (Gigabit: BI_DD-)" }
+  ],
+  "keyFacts": [
+    "T568B is the most common wiring standard in North America",
+    "T568A is required by US government (TIA-568) and common in Europe",
+    "Straight-through: same standard both ends — connects different device types (PC to switch)",
+    "Crossover: T568A one end, T568B other — connects same device types (PC to PC)",
+    "Auto-MDIX: modern switches/NICs auto-detect and swap TX/RX — crossover cables obsolete",
+    "Gigabit Ethernet uses all 4 pairs bidirectionally (1000BASE-T)",
+    "PoE uses spare pairs (4,5 and 7,8) or data pairs for power delivery"
+  ],
+  "children": [],
+  "parent": "cables",
+  "relatedConcepts": ["cables", "poe", "ethernet"],
+  "visualization": { "color": "#ff6b35", "icon": "🔌", "nodeType": "leaf" }
+}

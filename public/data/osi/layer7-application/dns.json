@@ -39,7 +39,7 @@
     "DoT (DNS over TLS) encrypts DNS on port 853",
     "Negative caching: NXDOMAIN responses also cached"
   ],
-  "children": ["dns-resolution-flow","dns-security","dnssec","doh-dot"],
+  "children": ["dns-resolution-flow", "dns-security", "dnssec", "doh-dot"],
   "parent": "layer7-application",
   "dependsOn": ["udp","tcp","ip"],
   "usedBy": ["browser","email","cdn","load-balancer"],

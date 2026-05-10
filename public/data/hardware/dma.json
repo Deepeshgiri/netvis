@@ -1,0 +1,29 @@
+{
+  "id": "dma",
+  "title": "DMA (Direct Memory Access)",
+  "shortName": "DMA",
+  "type": "concept",
+  "category": "network_hardware",
+  "description": "Hardware mechanism allowing the NIC to transfer data directly to/from RAM without CPU involvement.",
+  "fullExplanation": "DMA allows the NIC to write received packets directly into system RAM and read transmit packets from RAM without involving the CPU for each byte transfer. Without DMA, the CPU would need to copy every byte from the NIC's buffer to RAM — at 10Gbps, that's 1.25 GB/s of CPU-intensive copying. With DMA, the NIC's DMA engine handles the transfer autonomously, generating an interrupt (or using NAPI polling) only when done. This is fundamental to achieving high network throughput without saturating the CPU.",
+  "howItWorks": [
+    { "step": 1, "description": "OS allocates DMA-capable memory regions (ring buffers) and tells NIC their physical addresses" },
+    { "step": 2, "description": "NIC receives packet from wire — DMA engine writes directly to pre-allocated RX ring buffer in RAM" },
+    { "step": 3, "description": "NIC raises hardware interrupt (IRQ) or NAPI poll triggers" },
+    { "step": 4, "description": "CPU reads packet from ring buffer — no copying needed (zero-copy)" },
+    { "step": 5, "description": "For TX: CPU writes packet to TX ring buffer, NIC DMA engine reads it and sends to wire" }
+  ],
+  "keyFacts": [
+    "DMA requires physically contiguous memory — OS uses special DMA allocators",
+    "IOMMU: protects against DMA attacks — NIC can only access its own memory regions",
+    "Zero-copy networking: data moves from NIC to application without CPU copying",
+    "RDMA (Remote DMA): NIC can read/write remote server's RAM directly — used in HPC/storage",
+    "DMA attack: malicious PCIe device can read/write all RAM — IOMMU prevents this",
+    "NAPI (New API): polling instead of interrupts at high packet rates — reduces interrupt overhead",
+    "Ring buffer: circular queue of DMA descriptors — NIC and CPU share it"
+  ],
+  "children": [],
+  "parent": "nic",
+  "relatedConcepts": ["nic", "ring-buffer", "interrupts", "pcie"],
+  "visualization": { "color": "#ffcc00", "icon": "⚡", "nodeType": "leaf" }
+}

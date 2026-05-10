@@ -46,7 +46,7 @@
     "SYN cookies prevent SYN flood without storing state",
     "TCP Fast Open reduces latency for repeat connections"
   ],
-  "children": ["tcp-handshake","tcp-flags","tcp-flow-control","tcp-congestion-control","retransmission","sockets"],
+  "children": ["tcp-handshake", "tcp-flags", "tcp-flow-control", "tcp-congestion-control", "retransmission", "sockets"],
   "parent": "layer4-transport",
   "usedBy": ["http","https","smtp","ftp","ssh","rdp"],
   "dependsOn": ["ip","ethernet"],

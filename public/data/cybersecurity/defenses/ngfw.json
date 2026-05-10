@@ -1,0 +1,37 @@
+{
+  "id": "ngfw",
+  "title": "Next-Generation Firewall (NGFW)",
+  "shortName": "NGFW",
+  "type": "defense",
+  "category": "network_defense",
+  "description": "Advanced firewall with deep packet inspection, application awareness, user identity, and integrated IPS.",
+  "fullExplanation": "Next-Generation Firewalls go beyond traditional stateful inspection by identifying applications regardless of port, enforcing policies based on user identity, performing SSL/TLS inspection, and integrating intrusion prevention. Traditional firewalls block by IP/port — NGFWs block by application (e.g. allow LinkedIn but block Facebook), user (e.g. allow IT team to use SSH), and content (e.g. block malware signatures in traffic).",
+  "capabilities": [
+    { "capability": "Application Identification (App-ID)", "description": "Identify applications regardless of port or protocol. Block BitTorrent on any port." },
+    { "capability": "User Identity (User-ID)",             "description": "Map IP addresses to usernames via AD/LDAP. Enforce per-user policies." },
+    { "capability": "SSL/TLS Inspection",                  "description": "Decrypt, inspect, re-encrypt HTTPS traffic. Detect malware in encrypted streams." },
+    { "capability": "Intrusion Prevention (IPS)",          "description": "Inline signature-based and anomaly-based threat detection and blocking." },
+    { "capability": "URL Filtering",                       "description": "Block websites by category (gambling, malware, social media)." },
+    { "capability": "Threat Intelligence",                 "description": "Block known malicious IPs, domains, and file hashes in real-time." },
+    { "capability": "Sandboxing",                          "description": "Execute suspicious files in isolated environment to detect zero-day malware." }
+  ],
+  "vendors": [
+    { "vendor": "Palo Alto Networks", "product": "PA Series / Prisma",  "notes": "App-ID pioneer, market leader" },
+    { "vendor": "Fortinet",           "product": "FortiGate",           "notes": "High performance, custom ASICs" },
+    { "vendor": "Cisco",              "product": "Firepower / ASA",     "notes": "Enterprise standard, Talos threat intel" },
+    { "vendor": "Check Point",        "product": "Quantum",             "notes": "Unified management, strong IPS" },
+    { "vendor": "Sophos",             "product": "XG Firewall",         "notes": "SMB-focused, synchronized security" }
+  ],
+  "keyFacts": [
+    "SSL inspection: NGFW acts as MITM for HTTPS — privacy implications, requires CA cert on clients",
+    "App-ID: identifies 3000+ applications by behavior, not just port number",
+    "Zero-day protection: sandboxing detonates suspicious files before allowing through",
+    "Performance: SSL inspection adds 30-70% latency — size hardware accordingly",
+    "NGFW vs UTM: UTM (Unified Threat Management) is similar but typically for SMB",
+    "Cloud NGFW: Palo Alto Prisma, AWS Network Firewall, Azure Firewall Premium"
+  ],
+  "children": [],
+  "parent": "firewall",
+  "relatedConcepts": ["firewall", "ids-ips", "waf", "zero-trust"],
+  "visualization": { "color": "#ff6b35", "icon": "🔥", "nodeType": "leaf" }
+}

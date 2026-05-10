@@ -22,7 +22,7 @@
     "WPA3 uses SAE (Simultaneous Authentication of Equals)",
     "Hidden SSID provides no real security — easily discovered"
   ],
-  "children": ["wifi-security","ofdm-modulation","wifi-channels","wifi-hardware"],
+  "children": ["wifi-security", "ofdm-modulation", "wifi-channels", "wifi-hardware"],
   "parent": "layer1-physical",
   "cybersecurity": {
     "attacks": ["evil-twin","deauth-attack","wpa2-cracking","krack"],

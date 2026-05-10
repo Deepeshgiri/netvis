@@ -39,7 +39,7 @@
     "tshark: command-line version of Wireshark",
     "pcapng: next-gen capture format with metadata"
   ],
-  "children": ["wireshark-filters","wireshark-tls-decrypt","tshark"],
+  "children": ["wireshark-filters", "wireshark-tls-decrypt", "tshark"],
   "parent": "tools",
   "relatedConcepts": ["tcpdump","nmap","packet-structures","tcp","dns"],
   "visualization": { "color": "#00d4ff", "icon": "🦈", "nodeType": "expandable" }

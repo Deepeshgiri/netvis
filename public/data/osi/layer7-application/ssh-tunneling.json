@@ -1,0 +1,49 @@
+{
+  "id": "ssh-tunneling",
+  "title": "SSH Tunneling & Port Forwarding",
+  "shortName": "SSH Tunneling",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Using SSH to create encrypted tunnels that forward TCP connections through a secure channel.",
+  "fullExplanation": "SSH tunneling encapsulates other protocols inside an SSH connection, providing encryption and bypassing firewalls. Local forwarding makes a remote service accessible locally. Remote forwarding exposes a local service to the remote server. Dynamic forwarding creates a SOCKS proxy. Jump hosts (ProxyJump) chain SSH connections through bastion hosts. SSH tunneling is used for secure database access, bypassing firewalls, and accessing internal services.",
+  "types": [
+    {
+      "type": "Local Port Forwarding (-L)",
+      "command": "ssh -L 8080:internal-db:5432 user@bastion",
+      "description": "Forward local port 8080 to internal-db:5432 through bastion. Connect to localhost:8080 to reach the database.",
+      "useCase": "Access internal database through bastion host"
+    },
+    {
+      "type": "Remote Port Forwarding (-R)",
+      "command": "ssh -R 8080:localhost:3000 user@public-server",
+      "description": "Forward public-server:8080 to localhost:3000. Expose local dev server to internet.",
+      "useCase": "Expose local service for demos or webhooks"
+    },
+    {
+      "type": "Dynamic Port Forwarding (-D)",
+      "command": "ssh -D 1080 user@server",
+      "description": "Create SOCKS5 proxy on local port 1080. All traffic routed through SSH server.",
+      "useCase": "Browse internet through SSH server, bypass censorship"
+    },
+    {
+      "type": "Jump Host / ProxyJump (-J)",
+      "command": "ssh -J bastion user@internal-server",
+      "description": "Connect to internal-server through bastion in one command. Replaces old ProxyCommand.",
+      "useCase": "Access servers only reachable through bastion host"
+    }
+  ],
+  "keyFacts": [
+    "SSH tunnels encrypt all forwarded traffic — even non-encrypted protocols become secure",
+    "GatewayPorts: allow remote forwarding to bind on all interfaces (not just localhost)",
+    "AllowTcpForwarding no: disable tunneling in sshd_config for restricted servers",
+    "SSH tunneling can bypass firewalls — security teams monitor for unauthorized tunnels",
+    "autossh: automatically restart SSH tunnels if they drop",
+    "~/.ssh/config: define tunnel shortcuts to avoid long command lines",
+    "VPN vs SSH tunnel: VPN routes all traffic, SSH tunnel routes specific ports"
+  ],
+  "children": [],
+  "parent": "ssh",
+  "relatedConcepts": ["ssh", "ssh-key-auth", "vpn", "firewall"],
+  "visualization": { "color": "#00ff88", "icon": "🚇", "nodeType": "leaf" }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "ofdm-modulation",
+  "title": "OFDM / OFDMA",
+  "shortName": "OFDM",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "wireless_technology",
+  "description": "Orthogonal Frequency Division Multiplexing — splits a channel into many narrow subcarriers for robust high-speed wireless transmission.",
+  "fullExplanation": "OFDM divides a wide channel into hundreds of narrow orthogonal subcarriers (e.g. 52 subcarriers in 20MHz WiFi 4, 256 in WiFi 6). Each subcarrier is independently modulated with QAM. Orthogonality means subcarriers don't interfere with each other even though they overlap in frequency. A cyclic prefix (guard interval) is prepended to each symbol to absorb multipath reflections. OFDMA (used in WiFi 6 and LTE) extends OFDM by assigning different subcarriers to different users simultaneously — dramatically improving efficiency in dense environments.",
+  "keyComponents": [
+    { "component": "Subcarriers",      "description": "Narrow frequency channels (e.g. 312.5 kHz wide in WiFi). Each carries independent QAM data." },
+    { "component": "Cyclic Prefix",    "description": "Copy of end of symbol prepended to start. Absorbs multipath delay spread. Wastes ~7-25% of time." },
+    { "component": "FFT/IFFT",         "description": "Fast Fourier Transform converts between time domain (transmission) and frequency domain (subcarriers)." },
+    { "component": "Pilot Subcarriers","description": "Known reference signals for channel estimation and phase tracking." },
+    { "component": "Guard Subcarriers","description": "Unused subcarriers at band edges to prevent adjacent channel interference." }
+  ],
+  "ofdmVsOfdma": [
+    { "aspect": "Multiple access",  "ofdm": "One user per channel at a time",          "ofdma": "Multiple users share subcarriers simultaneously" },
+    { "aspect": "Efficiency",       "ofdm": "Wastes capacity for small packets",        "ofdma": "Efficient for mixed traffic sizes" },
+    { "aspect": "Latency",          "ofdm": "Higher — must wait for channel",           "ofdma": "Lower — parallel transmissions" },
+    { "aspect": "Used in",          "ofdm": "WiFi 4/5, DSL",                            "ofdma": "WiFi 6/6E/7, LTE, 5G" }
+  ],
+  "keyFacts": [
+    "WiFi 4 (802.11n): 52 data subcarriers per 20MHz channel",
+    "WiFi 6 (802.11ax): 234 data subcarriers per 20MHz — 4× more than WiFi 5",
+    "OFDMA in WiFi 6 allows 9 users to transmit simultaneously in one channel",
+    "MU-MIMO + OFDMA: spatial and frequency multiplexing combined",
+    "Cyclic prefix overhead: 800ns (normal) or 400ns (short guard interval)",
+    "PAPR (Peak-to-Average Power Ratio): OFDM has high PAPR — requires linear amplifiers"
+  ],
+  "children": [],
+  "parent": "wireless",
+  "relatedConcepts": ["modulation", "wireless", "wifi-channels"],
+  "visualization": { "color": "#ff5533", "icon": "📡", "nodeType": "leaf" }
+}

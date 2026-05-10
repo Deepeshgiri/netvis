@@ -18,7 +18,7 @@
     "FTP/SFTP for file transfer"
   ],
   "devices": ["Application Gateway", "Proxy Server", "Load Balancer"],
-  "children": ["http", "https", "dns", "ssh", "dhcp"],
+  "children": ["http", "https", "dns", "ssh", "dhcp", "smtp", "ftp", "snmp", "ntp"],
   "parent": "osi-model",
   "relatedConcepts": ["layer6-presentation", "tcp", "udp", "tls"],
   "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "expandable" }

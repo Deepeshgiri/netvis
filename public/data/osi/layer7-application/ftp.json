@@ -1,0 +1,74 @@
+{
+  "id": "ftp",
+  "title": "File Transfer Protocol",
+  "shortName": "FTP",
+  "type": "protocol",
+  "osiLayer": 7,
+  "tcpIpLayer": "Application",
+  "category": "application_protocol",
+  "port": 21,
+  "transport": "TCP",
+  "description": "Protocol for transferring files between client and server over a network.",
+  "fullExplanation": "FTP uses two separate TCP connections: a control connection (port 21) for commands and a data connection (port 20 or ephemeral) for file transfers. This dual-channel design causes problems with firewalls and NAT. FTP has two modes: Active (server connects back to client on port 20 — blocked by most firewalls) and Passive (client connects to server on a random high port — firewall-friendly). FTP sends credentials in plaintext — use SFTP or FTPS instead.",
+  "ports": {
+    "usedBy": [
+      { "port": 21,  "protocol": "FTP Control (commands)" },
+      { "port": 20,  "protocol": "FTP Data (active mode)" },
+      { "port": 990, "protocol": "FTPS Control (implicit TLS)" },
+      { "port": 989, "protocol": "FTPS Data (implicit TLS)" },
+      { "port": 22,  "protocol": "SFTP (SSH File Transfer Protocol)" }
+    ]
+  },
+  "modes": [
+    {
+      "name": "Active Mode",
+      "description": "Client sends PORT command with its IP:port. Server connects back to client on port 20.",
+      "problem": "Client firewall blocks incoming connection from server. Rarely works through NAT."
+    },
+    {
+      "name": "Passive Mode (PASV)",
+      "description": "Client sends PASV command. Server opens random high port and tells client to connect to it.",
+      "benefit": "Client initiates both connections — works through NAT and firewalls."
+    }
+  ],
+  "commands": [
+    { "command": "USER", "description": "Send username" },
+    { "command": "PASS", "description": "Send password (plaintext!)" },
+    { "command": "LIST", "description": "List directory contents" },
+    { "command": "RETR", "description": "Download (retrieve) a file" },
+    { "command": "STOR", "description": "Upload (store) a file" },
+    { "command": "DELE", "description": "Delete a file" },
+    { "command": "MKD",  "description": "Make directory" },
+    { "command": "PASV", "description": "Enter passive mode" },
+    { "command": "QUIT", "description": "Close session" }
+  ],
+  "secureAlternatives": [
+    { "name": "SFTP",  "port": 22,  "description": "SSH File Transfer Protocol — encrypted, single connection, most recommended" },
+    { "name": "FTPS",  "port": 990, "description": "FTP over TLS — adds TLS encryption to FTP (implicit or explicit)" },
+    { "name": "SCP",   "port": 22,  "description": "Secure Copy Protocol — simple file copy over SSH" },
+    { "name": "HTTPS", "port": 443, "description": "File download/upload via web (REST APIs, presigned URLs)" }
+  ],
+  "keyFacts": [
+    "FTP sends username and password in plaintext — never use on untrusted networks",
+    "Two connections: control (port 21) + data (port 20 or random)",
+    "Passive mode is firewall-friendly — client initiates both connections",
+    "Anonymous FTP: login with username 'anonymous', any email as password",
+    "SFTP (port 22) is completely different from FTP — it's SSH-based",
+    "FTPS adds TLS to FTP — two variants: explicit (STARTTLS on 21) and implicit (port 990)",
+    "FTP is still widely used in legacy systems and web hosting"
+  ],
+  "versions": [
+    { "version": "FTP (RFC 959)",  "year": 1985, "feature": "Current FTP standard" },
+    { "version": "FTPS (RFC 4217)","year": 2005, "feature": "FTP over TLS (explicit mode)" },
+    { "version": "SFTP (SSH-2)",   "year": 2006, "feature": "SSH File Transfer Protocol (not related to FTP)" }
+  ],
+  "children": [],
+  "parent": "layer7-application",
+  "dependsOn": ["tcp", "tls"],
+  "relatedConcepts": ["ssh", "tls", "sftp"],
+  "cybersecurity": {
+    "attacks": ["ftp-bounce-attack", "credential-sniffing", "anonymous-ftp-abuse"],
+    "defenses": ["sftp", "ftps", "firewall", "disable-anonymous-ftp"]
+  },
+  "visualization": { "color": "#00ff88", "icon": "📁", "nodeType": "leaf" }
+}

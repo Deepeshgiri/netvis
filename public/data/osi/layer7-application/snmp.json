@@ -1,0 +1,51 @@
+{
+  "id": "snmp",
+  "title": "Simple Network Management Protocol",
+  "shortName": "SNMP",
+  "type": "protocol",
+  "osiLayer": 7,
+  "tcpIpLayer": "Application",
+  "category": "application_protocol",
+  "port": 161,
+  "transport": "UDP",
+  "description": "Protocol for monitoring and managing network devices like routers, switches, and servers.",
+  "fullExplanation": "SNMP allows network administrators to monitor and manage network devices remotely. An SNMP Manager (NMS) queries SNMP Agents running on devices. Each managed device exposes a MIB (Management Information Base) — a hierarchical database of variables (OIDs) describing device state. SNMPv1/v2c use community strings (plaintext passwords). SNMPv3 adds authentication (MD5/SHA) and encryption (DES/AES) — always use v3 in production.",
+  "ports": {
+    "usedBy": [
+      { "port": 161, "protocol": "SNMP Agent (queries)" },
+      { "port": 162, "protocol": "SNMP Trap (unsolicited alerts)" }
+    ]
+  },
+  "operations": [
+    { "operation": "GET",      "description": "Manager requests value of a specific OID from agent" },
+    { "operation": "GET-NEXT", "description": "Get next OID in MIB tree (used for MIB walking)" },
+    { "operation": "GET-BULK", "description": "Retrieve large blocks of data efficiently (SNMPv2+)" },
+    { "operation": "SET",      "description": "Manager changes a value on the agent (e.g., disable interface)" },
+    { "operation": "TRAP",     "description": "Agent sends unsolicited alert to manager (e.g., link down)" },
+    { "operation": "INFORM",   "description": "Like TRAP but requires acknowledgement (SNMPv2+)" }
+  ],
+  "versions": [
+    { "version": "SNMPv1 (RFC 1157)", "year": 1988, "feature": "Original. Community string auth. No encryption. Avoid." },
+    { "version": "SNMPv2c",           "year": 1996, "feature": "Adds GET-BULK, 64-bit counters. Still plaintext community strings." },
+    { "version": "SNMPv3 (RFC 3411)", "year": 2002, "feature": "Adds authentication (SHA) and encryption (AES). Use this." }
+  ],
+  "keyFacts": [
+    "MIB (Management Information Base): hierarchical database of OIDs on each device",
+    "OID (Object Identifier): dotted notation like 1.3.6.1.2.1.1.1 (sysDescr)",
+    "Community string 'public' (read) and 'private' (write) are default — change them!",
+    "SNMPv1/v2c community strings sent in plaintext — easily sniffed",
+    "SNMPv3 USM: User-based Security Model with auth + privacy",
+    "SNMP Trap: device proactively alerts manager (link down, high CPU, etc.)",
+    "Common uses: bandwidth monitoring, CPU/memory alerts, interface status",
+    "Tools: Nagios, Zabbix, PRTG, Cacti, LibreNMS all use SNMP"
+  ],
+  "children": [],
+  "parent": "layer7-application",
+  "dependsOn": ["udp", "ipv4"],
+  "relatedConcepts": ["network-monitoring", "syslog", "netflow"],
+  "cybersecurity": {
+    "attacks": ["snmp-community-string-brute-force", "snmp-amplification-ddos", "snmp-set-attack"],
+    "defenses": ["snmpv3", "firewall", "acl-restrict-snmp", "change-default-community-strings"]
+  },
+  "visualization": { "color": "#00ff88", "icon": "📊", "nodeType": "leaf" }
+}

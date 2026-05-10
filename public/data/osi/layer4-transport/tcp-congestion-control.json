@@ -1,0 +1,36 @@
+{
+  "id": "tcp-congestion-control",
+  "title": "TCP Congestion Control",
+  "shortName": "Congestion Control",
+  "type": "concept",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "description": "Algorithms that prevent TCP senders from overwhelming the network by dynamically adjusting transmission rate.",
+  "fullExplanation": "TCP congestion control prevents network collapse by limiting how fast senders inject data. The sender maintains a congestion window (cwnd) — the maximum bytes in flight. cwnd starts small and grows until congestion is detected (packet loss or ECN). Classic algorithms (Reno, CUBIC) treat packet loss as a congestion signal. Modern algorithms (BBR) model bandwidth and RTT directly. The effective send rate = min(cwnd, rwnd) / RTT.",
+  "phases": [
+    { "phase": "Slow Start",          "description": "cwnd starts at 1-10 MSS. Doubles every RTT (exponential growth) until ssthresh reached." },
+    { "phase": "Congestion Avoidance","description": "cwnd grows by 1 MSS per RTT (linear growth) after ssthresh. Probes for more bandwidth carefully." },
+    { "phase": "Fast Retransmit",     "description": "3 duplicate ACKs = packet loss detected. Retransmit immediately without waiting for timeout." },
+    { "phase": "Fast Recovery",       "description": "After fast retransmit: ssthresh = cwnd/2, cwnd = ssthresh. Resume congestion avoidance." }
+  ],
+  "algorithms": [
+    { "name": "TCP Tahoe",  "year": 1988, "description": "Original. On loss: ssthresh=cwnd/2, cwnd=1, restart slow start." },
+    { "name": "TCP Reno",   "year": 1990, "description": "Adds fast recovery. On 3 dup ACKs: ssthresh=cwnd/2, cwnd=ssthresh (not 1)." },
+    { "name": "TCP CUBIC",  "year": 2008, "description": "Default in Linux. Uses cubic function for cwnd growth — better for high-BDP networks." },
+    { "name": "TCP BBR",    "year": 2016, "description": "Google's model-based algorithm. Measures bottleneck bandwidth and RTT directly. Ignores loss as signal." },
+    { "name": "QUIC/BBR",   "year": 2018, "description": "BBR running over QUIC/UDP — used by Google, YouTube, Chrome." }
+  ],
+  "keyFacts": [
+    "cwnd (congestion window): sender-side limit on bytes in flight",
+    "rwnd (receive window): receiver-side limit — flow control",
+    "Effective window = min(cwnd, rwnd)",
+    "ssthresh (slow start threshold): boundary between slow start and congestion avoidance",
+    "CUBIC: default in Linux since kernel 2.6.19. Optimized for high-bandwidth, high-latency links.",
+    "BBR: doesn't treat packet loss as congestion signal — better on lossy links (WiFi, cellular)",
+    "ECN (Explicit Congestion Notification): routers signal congestion without dropping packets"
+  ],
+  "children": [],
+  "parent": "tcp",
+  "relatedConcepts": ["tcp", "tcp-flow-control", "tcp-flags", "quic"],
+  "visualization": { "color": "#00ff88", "icon": "📈", "nodeType": "leaf" }
+}

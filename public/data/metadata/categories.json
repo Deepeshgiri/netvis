@@ -30,7 +30,7 @@
       "icon": "📡",
       "color": "#00ff88",
       "description": "All major networking protocols",
-      "children": ["http", "https", "dns", "ssh", "dhcp", "tcp", "udp", "tls", "ipv4", "icmp", "arp", "bgp", "ospf", "ethernet"]
+      "children": ["http", "https", "dns", "ssh", "dhcp", "smtp", "ftp", "snmp", "ntp", "tcp", "udp", "tls", "ipv4", "ipv6", "icmp", "arp", "bgp", "ospf", "ethernet", "netbios", "smb", "pptp", "rpc"]
     },
     {
       "id": "hardware",

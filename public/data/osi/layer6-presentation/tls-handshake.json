@@ -1,0 +1,41 @@
+{
+  "id": "tls-handshake",
+  "title": "TLS Handshake",
+  "shortName": "TLS Handshake",
+  "type": "process",
+  "osiLayer": 6,
+  "category": "security_protocol",
+  "description": "The negotiation process that establishes a TLS session — agreeing on cipher suite, exchanging keys, and authenticating the server.",
+  "fullExplanation": "The TLS handshake establishes a secure channel before any application data is sent. TLS 1.3 reduced this to 1 RTT (from 2 RTT in TLS 1.2) by sending the key share in the first message. The handshake authenticates the server (via certificate), negotiates cipher suite, and derives session keys using ECDHE key exchange. All subsequent data is encrypted with the negotiated symmetric key.",
+  "tls13Steps": [
+    { "step": 1, "name": "ClientHello",     "direction": "Client → Server", "description": "Supported TLS versions, cipher suites, key share (X25519 public key), random nonce, SNI (server name)" },
+    { "step": 2, "name": "ServerHello",     "direction": "Server → Client", "description": "Chosen cipher suite, server's key share (X25519 public key), random nonce" },
+    { "step": 3, "name": "Server {Encrypted Extensions}", "direction": "Server → Client", "description": "Additional extensions (ALPN, etc.) — now encrypted" },
+    { "step": 4, "name": "Server Certificate", "direction": "Server → Client", "description": "X.509 certificate chain — encrypted" },
+    { "step": 5, "name": "CertificateVerify", "direction": "Server → Client", "description": "Signature over handshake transcript — proves server owns private key" },
+    { "step": 6, "name": "Server Finished",   "direction": "Server → Client", "description": "HMAC over entire handshake — integrity check" },
+    { "step": 7, "name": "Client Finished",   "direction": "Client → Server", "description": "Client verifies cert, sends Finished MAC. Keys derived. 1 RTT total." },
+    { "step": 8, "name": "Application Data",  "direction": "Both",            "description": "Encrypted data flows using negotiated keys" }
+  ],
+  "keyDerivation": {
+    "description": "TLS 1.3 uses HKDF (HMAC-based Key Derivation Function) to derive multiple keys",
+    "keys": [
+      "Handshake traffic keys (encrypt handshake messages after ServerHello)",
+      "Application traffic keys (encrypt application data)",
+      "Resumption master secret (for 0-RTT session resumption)"
+    ]
+  },
+  "keyFacts": [
+    "TLS 1.3: 1 RTT handshake (TLS 1.2 needed 2 RTT)",
+    "0-RTT: client sends data in first message using resumption key — replay attack risk",
+    "SNI (Server Name Indication): client sends hostname in ClientHello — allows virtual hosting",
+    "ESNI/ECH: encrypts SNI to prevent ISP/firewall from seeing which site you're visiting",
+    "ALPN (Application-Layer Protocol Negotiation): negotiate HTTP/2 vs HTTP/1.1 in handshake",
+    "Session tickets: server sends encrypted session state to client for fast resumption",
+    "Certificate pinning: client only accepts specific certificate or public key"
+  ],
+  "children": [],
+  "parent": "tls",
+  "relatedConcepts": ["tls", "certificates", "cipher-suites"],
+  "visualization": { "color": "#ff3366", "icon": "🤝", "nodeType": "leaf" }
+}

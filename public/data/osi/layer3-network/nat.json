@@ -1,0 +1,37 @@
+{
+  "id": "nat",
+  "title": "Network Address Translation (NAT)",
+  "shortName": "NAT",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "ip_addressing",
+  "description": "Translates private IP addresses to public IPs — extends IPv4 address space and provides implicit firewall.",
+  "fullExplanation": "NAT allows multiple devices with private IP addresses to share a single public IP address. The NAT router maintains a translation table mapping (private IP, private port) → (public IP, public port). When a packet leaves, NAT rewrites the source IP/port. When a reply arrives, NAT rewrites the destination IP/port back to the private address. PAT (Port Address Translation), also called NAPT or 'NAT overload', is the most common form — it uses port numbers to distinguish connections from different private hosts.",
+  "types": [
+    { "type": "Static NAT",   "description": "One-to-one mapping: one private IP always maps to one public IP. Used for servers." },
+    { "type": "Dynamic NAT",  "description": "Pool of public IPs assigned dynamically to private hosts. Less common." },
+    { "type": "PAT / NAPT",   "description": "Many private IPs share one public IP using port numbers. Most common (home routers)." },
+    { "type": "NAT64",        "description": "Translates IPv6 addresses to IPv4 — enables IPv6-only hosts to reach IPv4 internet." }
+  ],
+  "natTable": {
+    "description": "Example PAT translation table",
+    "entries": [
+      { "privateIP": "192.168.1.10", "privatePort": 54321, "publicIP": "203.0.113.1", "publicPort": 10001, "protocol": "TCP" },
+      { "privateIP": "192.168.1.11", "privatePort": 54322, "publicIP": "203.0.113.1", "publicPort": 10002, "protocol": "TCP" },
+      { "privateIP": "192.168.1.10", "privatePort": 54323, "publicIP": "203.0.113.1", "publicPort": 10003, "protocol": "UDP" }
+    ]
+  },
+  "keyFacts": [
+    "PAT allows ~65,535 simultaneous connections per public IP (one per port)",
+    "NAT breaks end-to-end connectivity — inbound connections require port forwarding",
+    "NAT is NOT a security feature — it's a side effect that some treat as one",
+    "NAT traversal: STUN/TURN/ICE protocols help P2P apps (VoIP, WebRTC) punch through NAT",
+    "Double NAT: two NAT layers (ISP + home router) — causes issues with gaming, VPN",
+    "IPv6 eliminates need for NAT — every device gets a public IP",
+    "NAT64 + DNS64: enables IPv6-only networks to reach IPv4 servers"
+  ],
+  "children": [],
+  "parent": "ipv4",
+  "relatedConcepts": ["ipv4", "subnetting", "ipv6", "firewall"],
+  "visualization": { "color": "#00d4ff", "icon": "🔄", "nodeType": "leaf" }
+}

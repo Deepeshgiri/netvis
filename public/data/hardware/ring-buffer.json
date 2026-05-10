@@ -1,0 +1,29 @@
+{
+  "id": "ring-buffer",
+  "title": "NIC Ring Buffers",
+  "shortName": "Ring Buffer",
+  "type": "concept",
+  "category": "network_hardware",
+  "description": "Circular queues in RAM shared between the NIC and OS kernel for efficient packet transfer.",
+  "fullExplanation": "A ring buffer (circular buffer) is a fixed-size queue where the NIC and OS kernel share packet descriptors. The RX (receive) ring contains descriptors pointing to pre-allocated memory regions where the NIC will DMA incoming packets. The TX (transmit) ring contains descriptors pointing to packets the OS wants to send. The NIC and kernel each maintain head/tail pointers — the NIC advances the head as it fills buffers, the kernel advances the tail as it processes them.",
+  "rxPath": [
+    { "step": 1, "description": "Kernel allocates RX ring with N descriptors, each pointing to a pre-allocated sk_buff" },
+    { "step": 2, "description": "NIC receives packet — DMA engine writes to next available descriptor's buffer" },
+    { "step": 3, "description": "NIC updates descriptor status (packet length, checksum result) and advances head pointer" },
+    { "step": 4, "description": "Interrupt or NAPI poll wakes kernel — kernel reads descriptor, processes sk_buff" },
+    { "step": 5, "description": "Kernel allocates new sk_buff, replaces consumed descriptor, advances tail pointer" }
+  ],
+  "keyFacts": [
+    "Default RX ring size: 256-4096 descriptors (ethtool -g eth0 to check)",
+    "Ring full = packet drop: if kernel can't process fast enough, NIC drops incoming packets",
+    "ethtool -G eth0 rx 4096: increase ring size to reduce drops under burst traffic",
+    "ethtool -S eth0: show NIC statistics including rx_dropped, tx_dropped",
+    "NAPI: process multiple packets per interrupt — reduces interrupt overhead at high rates",
+    "XDP (eXpress Data Path): process packets in ring buffer before sk_buff allocation — ultra-fast",
+    "Jumbo frames: larger ring buffers needed for 9000-byte MTU"
+  ],
+  "children": [],
+  "parent": "nic",
+  "relatedConcepts": ["nic", "dma", "interrupts", "pcie"],
+  "visualization": { "color": "#ffcc00", "icon": "🔄", "nodeType": "leaf" }
+}

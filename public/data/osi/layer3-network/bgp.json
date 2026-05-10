@@ -38,7 +38,7 @@
     "BGP communities: 32-bit tags for policy control",
     "Route reflectors eliminate iBGP full mesh requirement"
   ],
-  "children": ["bgp-routing","bgp-security","rpki","as-numbers"],
+  "children": ["bgp-routing", "bgp-security"],
   "parent": "layer3-network",
   "dependsOn": ["tcp","ip"],
   "relatedConcepts": ["ospf","routing","internet-backbone","isp-architecture"],

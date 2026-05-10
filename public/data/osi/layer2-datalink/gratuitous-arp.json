@@ -1,0 +1,33 @@
+{
+  "id": "gratuitous-arp",
+  "title": "Gratuitous ARP",
+  "shortName": "GARP",
+  "type": "concept",
+  "osiLayer": 2,
+  "category": "address_resolution",
+  "description": "An ARP reply sent without a prior request — used to announce or update IP-to-MAC mappings on the network.",
+  "fullExplanation": "A Gratuitous ARP (GARP) is an ARP reply where the sender IP and target IP are both set to the sender's own IP address. It's sent without any prior ARP request. Devices use GARPs to: announce their presence when they come online, update ARP caches after a MAC address change (e.g. NIC replacement), and facilitate failover in high-availability setups (HSRP, VRRP, CARP). Because ARP has no authentication, GARPs can also be abused for ARP poisoning attacks.",
+  "useCases": [
+    { "use": "IP Conflict Detection",  "description": "Device sends GARP on startup. If another device replies, there's an IP conflict." },
+    { "use": "MAC Address Update",     "description": "After NIC replacement, GARP updates all neighbors' ARP caches with new MAC." },
+    { "use": "HSRP/VRRP Failover",    "description": "When standby router becomes active, it sends GARP to redirect traffic to its MAC." },
+    { "use": "Live VM Migration",      "description": "After VM moves to new host, GARP updates switches and neighbors with new MAC." },
+    { "use": "ARP Poisoning (Attack)", "description": "Attacker sends GARP claiming to be the gateway — poisons ARP caches for MITM." }
+  ],
+  "keyFacts": [
+    "GARP: sender IP = target IP = own IP address",
+    "Sent to broadcast (FF:FF:FF:FF:FF:FF) — all devices update their ARP cache",
+    "No authentication — any device can send a GARP claiming any IP",
+    "HSRP uses GARPs when active router changes",
+    "Dynamic ARP Inspection (DAI) can validate GARPs against DHCP snooping table",
+    "Windows sends 3 GARPs on startup; Linux sends 1 by default"
+  ],
+  "children": [],
+  "parent": "arp",
+  "relatedConcepts": ["arp", "arp-spoofing", "hsrp", "vrrp"],
+  "cybersecurity": {
+    "attacks": ["arp-spoofing", "mitm"],
+    "defenses": ["dynamic-arp-inspection", "dhcp-snooping"]
+  },
+  "visualization": { "color": "#ffee44", "icon": "📢", "nodeType": "leaf" }
+}

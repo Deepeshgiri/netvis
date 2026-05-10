@@ -39,7 +39,7 @@
     "IPv6 uses NDP (Neighbor Discovery Protocol) instead of ARP",
     "ARP only works within a single broadcast domain (subnet)"
   ],
-  "children": ["arp-spoofing","gratuitous-arp","proxy-arp"],
+  "children": ["arp-spoofing", "gratuitous-arp", "proxy-arp"],
   "parent": "layer2-datalink",
   "dependsOn": ["ethernet","mac-addresses"],
   "usedBy": ["ipv4","switching"],

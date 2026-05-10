@@ -1,0 +1,33 @@
+{
+  "id": "dns-resolution-flow",
+  "title": "DNS Resolution Flow",
+  "shortName": "DNS Resolution",
+  "type": "process",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Step-by-step walkthrough of how a domain name is resolved to an IP address.",
+  "fullExplanation": "DNS resolution is a hierarchical lookup process. When you type google.com, your browser checks multiple caches before making any network requests. If not cached, a recursive resolver (your ISP or 8.8.8.8) does the heavy lifting — querying root servers, TLD servers, and authoritative servers on your behalf. The entire process typically takes 20-120ms for a cold lookup, but cached responses are instant.",
+  "steps": [
+    { "step": 1, "name": "Browser Cache",        "description": "Browser checks its own DNS cache. Chrome: chrome://net-internals/#dns. TTL-based expiry." },
+    { "step": 2, "name": "OS Cache",             "description": "OS checks its DNS cache (nscd, systemd-resolved on Linux; DNS Client service on Windows)." },
+    { "step": 3, "name": "/etc/hosts",           "description": "OS checks local hosts file (/etc/hosts on Linux/Mac, C:\\Windows\\System32\\drivers\\etc\\hosts on Windows)." },
+    { "step": 4, "name": "Recursive Resolver",   "description": "Query sent to configured DNS server (ISP resolver, 8.8.8.8, 1.1.1.1). Resolver checks its own cache." },
+    { "step": 5, "name": "Root Nameserver",      "description": "Resolver queries a root server (13 clusters: a-m.root-servers.net). Root returns TLD nameserver address." },
+    { "step": 6, "name": "TLD Nameserver",       "description": "Resolver queries .com TLD server. Returns authoritative nameserver for google.com." },
+    { "step": 7, "name": "Authoritative NS",     "description": "Resolver queries google.com's authoritative nameserver. Returns actual A/AAAA record." },
+    { "step": 8, "name": "Response Cached",      "description": "Resolver caches response per TTL. Returns IP to client. Client caches per TTL." }
+  ],
+  "keyFacts": [
+    "13 root server clusters (a-m.root-servers.net) — each is anycast with hundreds of nodes worldwide",
+    "Recursive resolver does all the work — client only talks to resolver",
+    "TTL (Time To Live): how long to cache the record. Low TTL = frequent lookups but faster propagation.",
+    "Negative caching: NXDOMAIN (non-existent domain) responses also cached",
+    "dig +trace google.com: shows full resolution chain step by step",
+    "nslookup / dig: tools to manually query DNS",
+    "DNS over HTTPS (DoH) / DNS over TLS (DoT): encrypt DNS queries for privacy"
+  ],
+  "children": [],
+  "parent": "dns",
+  "relatedConcepts": ["dns", "dns-security", "dnssec"],
+  "visualization": { "color": "#00ddff", "icon": "🔍", "nodeType": "leaf" }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "nmap-os-detection",
+  "title": "Nmap OS Detection",
+  "shortName": "OS Detection",
+  "type": "concept",
+  "category": "network_scanning",
+  "description": "Nmap's technique for identifying the operating system of a target by analyzing TCP/IP stack behavior.",
+  "fullExplanation": "Nmap OS detection (-O flag) sends a series of specially crafted TCP, UDP, and ICMP probes to the target and analyzes the responses. Different operating systems implement the TCP/IP stack differently — initial TTL values, TCP window sizes, IP ID sequences, TCP options, and ICMP response behavior all vary. Nmap compares the observed fingerprint against a database of 2600+ known OS fingerprints to identify the OS and version.",
+  "techniques": [
+    { "technique": "TCP ISN Sampling",      "description": "Analyze Initial Sequence Number patterns — different OSes use different ISN generation algorithms" },
+    { "technique": "IP ID Sequence",        "description": "How IP ID field increments — sequential, random, or zero (Linux)" },
+    { "technique": "TCP Timestamp",         "description": "Frequency and behavior of TCP timestamp option" },
+    { "technique": "TCP Window Size",       "description": "Initial window size varies by OS (Linux: 29200, Windows: 8192, macOS: 65535)" },
+    { "technique": "TCP Options",           "description": "Order and values of TCP options in SYN packets" },
+    { "technique": "ICMP Response",         "description": "How OS responds to various ICMP types and codes" },
+    { "technique": "TTL Values",            "description": "Initial TTL: Linux=64, Windows=128, Cisco=255" }
+  ],
+  "commonFingerprints": [
+    { "os": "Linux 5.x",      "ttl": 64,  "windowSize": 29200, "notes": "Random IP ID, SACK+timestamps" },
+    { "os": "Windows 10/11",  "ttl": 128, "windowSize": 8192,  "notes": "Sequential IP ID, no timestamps by default" },
+    { "os": "macOS",          "ttl": 64,  "windowSize": 65535, "notes": "Random IP ID, SACK+timestamps" },
+    { "os": "Cisco IOS",      "ttl": 255, "windowSize": 4128,  "notes": "Incremental IP ID" }
+  ],
+  "keyFacts": [
+    "Requires root/admin — needs to send raw packets",
+    "Needs at least one open and one closed port for accurate detection",
+    "Accuracy: ~95% for common OSes, lower for embedded/custom stacks",
+    "Firewall/IDS can detect OS detection probes — unusual packet combinations",
+    "OS fingerprint database: /usr/share/nmap/nmap-os-db",
+    "nmap -O --osscan-guess: show best guess even if confidence is low",
+    "Passive OS fingerprinting: p0f analyzes traffic without sending probes"
+  ],
+  "children": [],
+  "parent": "nmap",
+  "relatedConcepts": ["nmap", "tcp", "tcp-flags", "icmp"],
+  "visualization": { "color": "#ffcc00", "icon": "🖥️", "nodeType": "leaf" }
+}

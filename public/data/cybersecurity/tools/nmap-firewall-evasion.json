@@ -1,0 +1,59 @@
+{
+  "id": "nmap-firewall-evasion",
+  "title": "Nmap Firewall Evasion Techniques",
+  "shortName": "Nmap Evasion",
+  "type": "concept",
+  "category": "network_scanning",
+  "description": "Nmap techniques for scanning through firewalls and IDS without detection.",
+  "fullExplanation": "Firewalls and IDS systems can detect and block Nmap scans. Nmap provides several techniques to evade detection: fragmentation (split packets into tiny fragments), decoys (mix real scan with fake source IPs), source port spoofing (use trusted ports like 53 or 80), timing manipulation (slow scans to avoid rate-based detection), and idle scanning (use a zombie host to hide the scanner's IP).",
+  "techniques": [
+    {
+      "technique": "Fragmentation (-f)",
+      "command": "nmap -f target",
+      "description": "Split TCP header across multiple tiny IP fragments. Some firewalls can't reassemble and inspect fragmented packets.",
+      "detection": "Modern firewalls reassemble fragments before inspection — less effective now"
+    },
+    {
+      "technique": "Decoy Scan (-D)",
+      "command": "nmap -D RND:10 target",
+      "description": "Mix real scan packets with packets from random decoy IPs. Defender sees many source IPs — hard to identify real scanner.",
+      "detection": "Decoy IPs must be reachable or SYN-ACKs go nowhere — detectable by asymmetric traffic"
+    },
+    {
+      "technique": "Source Port Spoofing (--source-port)",
+      "command": "nmap --source-port 53 target",
+      "description": "Use trusted source port (DNS=53, HTTP=80). Some firewalls allow traffic from these ports.",
+      "detection": "Stateful firewalls track connections — source port alone doesn't bypass them"
+    },
+    {
+      "technique": "Idle/Zombie Scan (-sI)",
+      "command": "nmap -sI zombie_host target",
+      "description": "Use a third-party 'zombie' host with predictable IP ID. Scan appears to come from zombie, not attacker.",
+      "detection": "Requires zombie with predictable IP ID (rare on modern OSes). Very stealthy if zombie found."
+    },
+    {
+      "technique": "Slow Timing (-T0, -T1)",
+      "command": "nmap -T0 target",
+      "description": "T0 (paranoid): one probe every 5 minutes. T1 (sneaky): one probe every 15 seconds. Evades rate-based IDS.",
+      "detection": "Behavioral analysis can still detect slow scans over time"
+    },
+    {
+      "technique": "Randomize Hosts (--randomize-hosts)",
+      "command": "nmap --randomize-hosts 192.168.1.0/24",
+      "description": "Scan hosts in random order instead of sequential — avoids sequential scan detection.",
+      "detection": "Still detectable by volume of probes from single source"
+    }
+  ],
+  "keyFacts": [
+    "Always get written permission before scanning — unauthorized scanning is illegal",
+    "Modern NGFWs and IDS/IPS detect most evasion techniques",
+    "Idle scan is the most stealthy — scanner's IP never appears in target logs",
+    "Timing: T3 (normal) is default. T5 (insane) is fastest but very detectable.",
+    "MTU manipulation (--mtu): set custom MTU for fragmentation",
+    "Data length (--data-length): append random data to packets to change packet size"
+  ],
+  "children": [],
+  "parent": "nmap",
+  "relatedConcepts": ["nmap", "firewall", "ids-ips", "tcp-flags"],
+  "visualization": { "color": "#ffcc00", "icon": "🥷", "nodeType": "leaf" }
+}

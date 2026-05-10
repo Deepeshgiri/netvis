@@ -40,5 +40,5 @@
     "attacks": ["xss", "csrf"],
     "defenses": ["firewall"]
   },
-  "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "expandable" }
+  "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "leaf" }
 }

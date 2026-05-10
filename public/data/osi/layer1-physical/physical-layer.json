@@ -17,7 +17,7 @@
     "Signal travels at ~2/3 speed of light in copper"
   ],
   "devices": ["Hub","Repeater","Modem","NIC (physical part)","Cable","Antenna"],
-  "children": ["signals","cables","fiber","wireless","modulation","repeaters","hubs"],
+  "children": ["signals", "cables", "fiber", "wireless", "modulation", "repeaters", "hubs"],
   "parent": "osi-model",
   "relatedConcepts": ["layer2-datalink","ethernet-cable","fiber-optics","wifi-hardware"],
   "attacks": ["jamming","cable-tapping","signal-interference"],

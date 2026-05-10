@@ -1,0 +1,38 @@
+{
+  "id": "ssh-key-auth",
+  "title": "SSH Public Key Authentication",
+  "shortName": "SSH Key Auth",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Passwordless SSH authentication using asymmetric cryptography — more secure than passwords.",
+  "fullExplanation": "SSH public key authentication uses an asymmetric key pair: a private key (kept secret on the client) and a public key (placed on the server in ~/.ssh/authorized_keys). During authentication, the server sends a challenge encrypted with the client's public key. Only the holder of the private key can decrypt it and prove identity. This is immune to password brute-force attacks and phishing.",
+  "process": [
+    { "step": 1, "description": "Client generates key pair: ssh-keygen -t ed25519 -C 'comment'" },
+    { "step": 2, "description": "Client copies public key to server: ssh-copy-id user@server (appends to ~/.ssh/authorized_keys)" },
+    { "step": 3, "description": "Client connects: ssh user@server" },
+    { "step": 4, "description": "Server sends challenge: random data encrypted with client's public key" },
+    { "step": 5, "description": "Client decrypts challenge with private key, sends back signed response" },
+    { "step": 6, "description": "Server verifies signature — authentication successful, no password needed" }
+  ],
+  "keyTypes": [
+    { "type": "Ed25519",    "bits": 256,  "security": "Highest",  "speed": "Fastest",  "recommendation": "Use this — modern, secure, compact" },
+    { "type": "ECDSA P-256","bits": 256,  "security": "High",     "speed": "Fast",     "recommendation": "Good alternative to Ed25519" },
+    { "type": "RSA-4096",   "bits": 4096, "security": "High",     "speed": "Slower",   "recommendation": "Use if Ed25519 not supported" },
+    { "type": "RSA-2048",   "bits": 2048, "security": "Adequate", "speed": "Medium",   "recommendation": "Minimum acceptable RSA size" },
+    { "type": "DSA",        "bits": 1024, "security": "Broken",   "speed": "N/A",      "recommendation": "Never use — deprecated" }
+  ],
+  "keyFacts": [
+    "Private key never leaves the client — server only has public key",
+    "Passphrase: encrypt private key at rest — required if key file is stolen",
+    "ssh-agent: caches decrypted private key in memory — type passphrase once per session",
+    "Authorized keys: ~/.ssh/authorized_keys on server — one public key per line",
+    "Certificate-based auth: SSH CA signs user keys — scales better than individual authorized_keys",
+    "Disable password auth: PasswordAuthentication no in /etc/ssh/sshd_config",
+    "Ed25519 keys are 68 bytes — much smaller than RSA-4096 (3.3KB)"
+  ],
+  "children": [],
+  "parent": "ssh",
+  "relatedConcepts": ["ssh", "ssh-tunneling", "tls", "certificates"],
+  "visualization": { "color": "#00ff88", "icon": "🗝️", "nodeType": "leaf" }
+}

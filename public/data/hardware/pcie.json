@@ -1,0 +1,30 @@
+{
+  "id": "pcie",
+  "title": "PCIe (PCI Express)",
+  "shortName": "PCIe",
+  "type": "concept",
+  "category": "network_hardware",
+  "description": "The high-speed serial bus that connects NICs, GPUs, and storage devices to the CPU and RAM.",
+  "fullExplanation": "PCIe (PCI Express) is the standard interface connecting expansion cards (NICs, GPUs, NVMe SSDs) to the CPU and memory. PCIe uses serial lanes — each lane provides ~1 GB/s bidirectional bandwidth. NICs use x1, x4, or x8 slots. A 100GbE NIC requires ~12.5 GB/s — needs PCIe 3.0 x8 or PCIe 4.0 x4. PCIe also provides the DMA path — the NIC uses PCIe to read/write system RAM directly.",
+  "generations": [
+    { "gen": "PCIe 1.0", "year": 2003, "bandwidthPerLane": "250 MB/s",  "x16Bandwidth": "4 GB/s" },
+    { "gen": "PCIe 2.0", "year": 2007, "bandwidthPerLane": "500 MB/s",  "x16Bandwidth": "8 GB/s" },
+    { "gen": "PCIe 3.0", "year": 2010, "bandwidthPerLane": "985 MB/s",  "x16Bandwidth": "15.75 GB/s" },
+    { "gen": "PCIe 4.0", "year": 2017, "bandwidthPerLane": "1.97 GB/s", "x16Bandwidth": "31.5 GB/s" },
+    { "gen": "PCIe 5.0", "year": 2019, "bandwidthPerLane": "3.94 GB/s", "x16Bandwidth": "63 GB/s" },
+    { "gen": "PCIe 6.0", "year": 2022, "bandwidthPerLane": "7.88 GB/s", "x16Bandwidth": "126 GB/s" }
+  ],
+  "keyFacts": [
+    "PCIe is full-duplex — bandwidth is per direction",
+    "10GbE NIC: needs PCIe 2.0 x4 (2 GB/s) — 10Gbps = 1.25 GB/s",
+    "100GbE NIC: needs PCIe 3.0 x8 (7.88 GB/s) — 100Gbps = 12.5 GB/s",
+    "SR-IOV: NIC presents multiple virtual PCIe functions — VMs get direct hardware access",
+    "IOMMU: maps NIC's DMA addresses — prevents NIC from accessing unauthorized memory",
+    "PCIe hot-plug: add/remove cards without rebooting (server feature)",
+    "NVMe SSDs also use PCIe — same bus as NICs, competing for bandwidth"
+  ],
+  "children": [],
+  "parent": "nic",
+  "relatedConcepts": ["nic", "dma", "ring-buffer", "interrupts"],
+  "visualization": { "color": "#ffcc00", "icon": "🔌", "nodeType": "leaf" }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "dnssec",
+  "title": "DNSSEC",
+  "shortName": "DNSSEC",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "DNS Security Extensions — adds cryptographic signatures to DNS records to prevent cache poisoning and spoofing.",
+  "fullExplanation": "DNSSEC adds digital signatures to DNS records. Each zone has a Zone Signing Key (ZSK) that signs all records, and a Key Signing Key (KSK) that signs the ZSK. The chain of trust starts at the root zone (signed by ICANN) and extends down through TLDs to individual domains. Resolvers verify the signature chain before accepting records. DNSSEC prevents cache poisoning but does NOT encrypt DNS queries — use DoH or DoT for privacy.",
+  "recordTypes": [
+    { "type": "RRSIG",  "description": "Resource Record Signature — digital signature over a set of DNS records" },
+    { "type": "DNSKEY", "description": "Public key used to verify RRSIG signatures (ZSK and KSK)" },
+    { "type": "DS",     "description": "Delegation Signer — hash of child zone's KSK, stored in parent zone" },
+    { "type": "NSEC",   "description": "Next Secure — proves non-existence of a name (enables authenticated denial)" },
+    { "type": "NSEC3",  "description": "Hashed NSEC — prevents zone enumeration by hashing owner names" }
+  ],
+  "chainOfTrust": [
+    "Root zone (.) signed by ICANN — trust anchor in all resolvers",
+    "Root zone DS record points to .com KSK",
+    ".com zone signed — DS record points to example.com KSK",
+    "example.com zone signed — RRSIG on all records",
+    "Resolver verifies chain from root to leaf"
+  ],
+  "keyFacts": [
+    "DNSSEC prevents cache poisoning — signatures can't be forged",
+    "DNSSEC does NOT encrypt queries — use DoH/DoT for privacy",
+    "~90% of TLDs are DNSSEC-signed. ~30% of domains have DNSSEC enabled.",
+    "Key rollover: ZSK rotated monthly, KSK annually (best practice)",
+    "DNSSEC amplification: large DNSKEY/RRSIG responses used in DDoS amplification",
+    "Validating resolver: checks DNSSEC signatures. Most public resolvers (8.8.8.8, 1.1.1.1) validate.",
+    "DANE (DNS-based Authentication of Named Entities): use DNSSEC to pin TLS certificates"
+  ],
+  "children": [],
+  "parent": "dns",
+  "relatedConcepts": ["dns", "dns-resolution-flow", "dns-security", "tls"],
+  "visualization": { "color": "#00ddff", "icon": "🔐", "nodeType": "leaf" }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "wifi-channels",
+  "title": "WiFi Channels & Frequency Bands",
+  "shortName": "WiFi Channels",
+  "type": "concept",
+  "osiLayer": 1,
+  "category": "wireless_technology",
+  "description": "The frequency channels used by WiFi across 2.4GHz, 5GHz, and 6GHz bands.",
+  "fullExplanation": "WiFi operates in unlicensed frequency bands. The 2.4GHz band has 14 channels (20MHz wide) but only 3 are non-overlapping (1, 6, 11). The 5GHz band has 24+ non-overlapping 20MHz channels and supports channel bonding (40/80/160MHz). The 6GHz band (WiFi 6E) adds 59 non-overlapping 20MHz channels with minimal interference. Wider channels = more throughput but more interference and shorter range.",
+  "bands": [
+    {
+      "band": "2.4 GHz",
+      "channels": "14 total (1-14), only 3 non-overlapping (1, 6, 11)",
+      "channelWidth": "20 MHz",
+      "range": "~150m indoors",
+      "pros": "Better wall penetration, longer range",
+      "cons": "Congested (microwaves, Bluetooth, baby monitors), only 3 usable channels",
+      "maxThroughput": "600 Mbps (WiFi 4)"
+    },
+    {
+      "band": "5 GHz",
+      "channels": "24+ non-overlapping 20MHz channels (varies by country)",
+      "channelWidth": "20/40/80/160 MHz",
+      "range": "~50m indoors",
+      "pros": "Less congested, more channels, supports 80/160MHz bonding",
+      "cons": "Shorter range, worse wall penetration, DFS channels require radar detection",
+      "maxThroughput": "3.5 Gbps (WiFi 5), 9.6 Gbps (WiFi 6)"
+    },
+    {
+      "band": "6 GHz",
+      "channels": "59 non-overlapping 20MHz channels (US), 24 in EU",
+      "channelWidth": "20/40/80/160/320 MHz",
+      "range": "~30m indoors",
+      "pros": "Minimal interference, 320MHz channels in WiFi 7, very high throughput",
+      "cons": "Shortest range, requires WiFi 6E/7 devices, limited legacy device support",
+      "maxThroughput": "9.6 Gbps (WiFi 6E), 46 Gbps (WiFi 7)"
+    }
+  ],
+  "channelBonding": [
+    { "width": "20 MHz",  "subcarriers": 234,  "maxRate": "~300 Mbps per stream",  "use": "Congested environments" },
+    { "width": "40 MHz",  "subcarriers": 468,  "maxRate": "~600 Mbps per stream",  "use": "Home networks" },
+    { "width": "80 MHz",  "subcarriers": 980,  "maxRate": "~1.2 Gbps per stream",  "use": "Modern home/office" },
+    { "width": "160 MHz", "subcarriers": 1960, "maxRate": "~2.4 Gbps per stream",  "use": "High-performance, low-density" },
+    { "width": "320 MHz", "subcarriers": 3920, "maxRate": "~5.8 Gbps per stream",  "use": "WiFi 7, 6GHz only" }
+  ],
+  "keyFacts": [
+    "2.4GHz channels 1, 6, 11 are the only non-overlapping ones — use these",
+    "DFS (Dynamic Frequency Selection): 5GHz channels must yield to radar",
+    "TPC (Transmit Power Control): reduce power to avoid interfering with radar",
+    "Channel bonding doubles/quadruples throughput but increases interference risk",
+    "WiFi 7 MLO (Multi-Link Operation): use multiple bands simultaneously",
+    "Regulatory domains: channel availability varies by country (FCC, ETSI, etc.)"
+  ],
+  "children": [],
+  "parent": "wireless",
+  "relatedConcepts": ["wireless", "ofdm-modulation", "wifi-security"],
+  "visualization": { "color": "#ff5533", "icon": "📻", "nodeType": "leaf" }
+}

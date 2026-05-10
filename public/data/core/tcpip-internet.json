@@ -1,0 +1,32 @@
+{
+  "id": "tcpip-internet",
+  "title": "TCP/IP Internet Layer",
+  "shortName": "Internet",
+  "type": "concept",
+  "category": "tcpip_layer",
+  "description": "Routes packets across networks using IP addresses — the layer that makes the global internet possible.",
+  "fullExplanation": "The TCP/IP Internet layer maps directly to OSI Layer 3 (Network). It is responsible for logical addressing (IP addresses), routing packets across multiple networks, and delivering packets from source to destination regardless of the underlying physical network. IPv4 and IPv6 are the core protocols. ICMP handles error reporting and diagnostics. IPsec provides encryption at the network layer. Routing protocols (BGP, OSPF) determine the best path.",
+  "osiEquivalent": "OSI Layer 3 (Network)",
+  "protocols": [
+    { "name": "IPv4",   "description": "32-bit addressing, 4.3 billion addresses, most internet traffic today" },
+    { "name": "IPv6",   "description": "128-bit addressing, 340 undecillion addresses, growing adoption" },
+    { "name": "ICMP",   "description": "Error reporting and diagnostics — ping, traceroute" },
+    { "name": "ICMPv6", "description": "IPv6 error reporting + Neighbor Discovery (replaces ARP)" },
+    { "name": "IPsec",  "description": "Network-layer encryption and authentication — used in VPNs" },
+    { "name": "IGMP",   "description": "Internet Group Management Protocol — IPv4 multicast group membership" },
+    { "name": "BGP",    "description": "Border Gateway Protocol — routes between autonomous systems (internet backbone)" },
+    { "name": "OSPF",   "description": "Open Shortest Path First — routes within an organization" }
+  ],
+  "keyFacts": [
+    "IP is connectionless and unreliable — no delivery guarantee (Transport layer handles that)",
+    "Every packet routed independently — may take different paths",
+    "TTL (IPv4) / Hop Limit (IPv6): prevents infinite routing loops",
+    "Fragmentation: IPv4 routers can fragment; IPv6 only source host fragments",
+    "Internet layer PDU is called a 'Packet'",
+    "NAT operates at this layer — translates private IPs to public IPs"
+  ],
+  "children": ["ipv4", "ipv6", "icmp", "bgp", "ospf"],
+  "parent": "tcp-ip-model",
+  "relatedConcepts": ["layer3-network", "subnetting", "nat", "routing"],
+  "visualization": { "color": "#8b5cf6", "icon": "🗺️", "nodeType": "expandable" }
+}

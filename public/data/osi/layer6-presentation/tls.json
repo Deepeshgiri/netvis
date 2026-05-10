@@ -38,7 +38,7 @@
     "Certificate Transparency: all certs must be publicly logged",
     "HSTS: forces HTTPS for up to 2 years"
   ],
-  "children": ["certificates","cipher-suites","tls-handshake","hsts","certificate-transparency"],
+  "children": ["certificates", "cipher-suites", "tls-handshake", "hsts", "certificate-transparency"],
   "parent": "layer6-presentation",
   "dependsOn": ["tcp","x509-certificates","aes","ecdhe"],
   "usedBy": ["https","smtp-tls","imap-tls","ftps","wss"],

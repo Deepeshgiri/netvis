@@ -1,0 +1,38 @@
+{
+  "id": "quic",
+  "title": "QUIC Protocol",
+  "shortName": "QUIC",
+  "type": "protocol",
+  "osiLayer": 4,
+  "category": "transport_protocol",
+  "port": 443,
+  "transport": "UDP",
+  "description": "Google's modern transport protocol over UDP — eliminates TCP head-of-line blocking and reduces connection latency.",
+  "fullExplanation": "QUIC (Quick UDP Internet Connections) is a transport protocol built on UDP that provides TCP-like reliability with better performance. It was developed by Google in 2012, standardized as RFC 9000 in 2021, and is the foundation of HTTP/3. QUIC multiplexes multiple streams over a single connection — unlike TCP, a lost packet only blocks the stream it belongs to, not all streams (no head-of-line blocking). QUIC also integrates TLS 1.3 — the handshake establishes both transport and security in 1 RTT (0-RTT for repeat connections).",
+  "advantages": [
+    { "advantage": "No head-of-line blocking", "description": "Each stream is independent — lost packet blocks only that stream, not others" },
+    { "advantage": "1-RTT connection setup",   "description": "QUIC + TLS 1.3 handshake combined — connection ready in 1 RTT vs TCP's 3 RTT (TCP + TLS 1.3)" },
+    { "advantage": "0-RTT resumption",         "description": "Repeat connections can send data immediately — 0 RTT overhead" },
+    { "advantage": "Connection migration",     "description": "Connection ID survives IP/port changes — seamless WiFi to cellular handoff" },
+    { "advantage": "Built-in encryption",      "description": "TLS 1.3 mandatory — no unencrypted QUIC" },
+    { "advantage": "Improved loss recovery",   "description": "Better ACK handling, packet number spaces per encryption level" }
+  ],
+  "versions": [
+    { "version": "gQUIC",        "year": 2012, "feature": "Google's original QUIC — proprietary, used in Chrome/YouTube" },
+    { "version": "IETF QUIC v1 (RFC 9000)", "year": 2021, "feature": "Standardized QUIC — basis for HTTP/3" },
+    { "version": "HTTP/3 (RFC 9114)", "year": 2022, "feature": "HTTP over QUIC — replaces HTTP/2 over TCP" }
+  ],
+  "keyFacts": [
+    "QUIC runs over UDP port 443 — same as HTTPS",
+    "HTTP/3 uses QUIC — ~25% of web traffic as of 2024",
+    "QUIC header is encrypted — middleboxes can't inspect or modify it",
+    "Connection ID: 64-bit identifier survives IP address changes",
+    "QUIC streams: independent byte streams within one connection",
+    "Firewall issue: some networks block UDP 443 — QUIC falls back to TCP",
+    "QUIC is implemented in userspace — faster iteration than kernel TCP"
+  ],
+  "children": [],
+  "parent": "udp",
+  "relatedConcepts": ["udp", "tcp", "tls", "http"],
+  "visualization": { "color": "#00ddaa", "icon": "⚡", "nodeType": "leaf" }
+}

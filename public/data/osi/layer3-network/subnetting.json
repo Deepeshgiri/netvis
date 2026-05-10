@@ -29,8 +29,8 @@
     "Supernetting: combine multiple networks into one larger prefix",
     "Route summarization reduces BGP/OSPF table size"
   ],
-  "children": ["cidr","vlsm","ipv4-addressing","nat"],
+  "children": [],
   "parent": "layer3-network",
   "relatedConcepts": ["ipv4","nat","routing","cidr"],
-  "visualization": { "color": "#00d4ff", "icon": "✂️", "nodeType": "expandable" }
+  "visualization": { "color": "#00d4ff", "icon": "✂️", "nodeType": "leaf" }
 }

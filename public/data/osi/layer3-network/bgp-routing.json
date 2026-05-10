@@ -1,0 +1,32 @@
+{
+  "id": "bgp-routing",
+  "title": "BGP Routing & Path Selection",
+  "shortName": "BGP Routing",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "routing_protocol",
+  "description": "How BGP selects the best path among multiple routes to the same destination using a multi-step decision process.",
+  "fullExplanation": "BGP is a path-vector protocol — it advertises complete AS paths to destinations, not just metrics. When multiple paths exist to the same prefix, BGP applies a 13-step decision process in order. The first attribute that differs between paths determines the winner. Network operators use BGP attributes (Local Preference, MED, AS Path prepending, Communities) to implement traffic engineering policies — controlling which paths are preferred for inbound and outbound traffic.",
+  "attributes": [
+    { "attribute": "Weight",           "scope": "Local to router (Cisco)",  "description": "Higher is better. Set with route-map. Not advertised to peers." },
+    { "attribute": "Local Preference", "scope": "Within AS",                "description": "Higher is better. Default 100. Controls outbound path preference." },
+    { "attribute": "AS Path",          "scope": "Between ASes",             "description": "Shorter is better. List of ASes the route has traversed. Prevents loops." },
+    { "attribute": "Origin",           "scope": "Between ASes",             "description": "IGP (i) < EGP (e) < Incomplete (?). Lower is better." },
+    { "attribute": "MED",              "scope": "Between adjacent ASes",    "description": "Lower is better. Hint to neighbor about preferred entry point." },
+    { "attribute": "Next-Hop",         "scope": "Between ASes",             "description": "IP address of next router. Must be reachable." },
+    { "attribute": "Communities",      "scope": "Configurable",             "description": "32-bit tags for policy grouping. e.g. 65000:100 = 'customer route'." }
+  ],
+  "keyFacts": [
+    "eBGP: between different ASes. iBGP: within same AS.",
+    "iBGP full mesh: every iBGP router must peer with every other (n(n-1)/2 sessions)",
+    "Route Reflector: eliminates iBGP full mesh — reflects routes to clients",
+    "AS Path prepending: artificially lengthen AS path to make route less preferred",
+    "BGP convergence: minutes (slow by design — stability over speed)",
+    "BGP table: ~900,000 routes in global internet routing table (2024)",
+    "Soft reconfiguration: update routing policy without resetting BGP session"
+  ],
+  "children": [],
+  "parent": "bgp",
+  "relatedConcepts": ["bgp", "bgp-security", "ospf", "as-numbers"],
+  "visualization": { "color": "#0088cc", "icon": "🗺️", "nodeType": "leaf" }
+}

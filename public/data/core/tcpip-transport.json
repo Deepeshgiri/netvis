@@ -1,0 +1,29 @@
+{
+  "id": "tcpip-transport",
+  "title": "TCP/IP Transport Layer",
+  "shortName": "Transport",
+  "type": "concept",
+  "category": "tcpip_layer",
+  "description": "Provides end-to-end communication between applications using port numbers — TCP for reliability, UDP for speed.",
+  "fullExplanation": "The TCP/IP Transport layer maps directly to OSI Layer 4. It provides end-to-end communication between applications on different hosts using port numbers to identify which application should receive data. TCP (Transmission Control Protocol) provides reliable, ordered, error-checked delivery with flow control and congestion control. UDP (User Datagram Protocol) provides fast, connectionless delivery with minimal overhead. SCTP combines features of both for telephony signaling.",
+  "osiEquivalent": "OSI Layer 4 (Transport)",
+  "protocols": [
+    { "name": "TCP",  "port": "N/A", "description": "Reliable, ordered, connection-oriented. 3-way handshake. Used by HTTP, SSH, SMTP." },
+    { "name": "UDP",  "port": "N/A", "description": "Fast, connectionless, no guarantees. Used by DNS, DHCP, NTP, VoIP." },
+    { "name": "SCTP", "port": "N/A", "description": "Stream Control Transmission Protocol — multi-homing, multi-streaming. Used in telecom." },
+    { "name": "DCCP", "port": "N/A", "description": "Datagram Congestion Control Protocol — UDP with congestion control." },
+    { "name": "QUIC", "port": "443", "description": "Quick UDP Internet Connections — reliable streams over UDP. Used by HTTP/3." }
+  ],
+  "keyFacts": [
+    "Port numbers (0-65535) identify applications — multiplexing multiple apps over one IP",
+    "TCP: reliable, ordered, connection-oriented — 3-way handshake before data",
+    "UDP: connectionless, no guarantees — 8-byte header, minimal overhead",
+    "QUIC: modern replacement for TCP in HTTP/3 — runs over UDP",
+    "Transport layer PDU: Segment (TCP) or Datagram (UDP)",
+    "Well-known ports 0-1023 reserved for standard services (root required to bind)"
+  ],
+  "children": ["tcp", "udp", "quic"],
+  "parent": "tcp-ip-model",
+  "relatedConcepts": ["layer4-transport", "tcp-handshake", "sockets"],
+  "visualization": { "color": "#00d4ff", "icon": "📦", "nodeType": "expandable" }
+}

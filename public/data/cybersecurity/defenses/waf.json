@@ -1,0 +1,43 @@
+{
+  "id": "waf",
+  "title": "Web Application Firewall (WAF)",
+  "shortName": "WAF",
+  "type": "defense",
+  "category": "network_defense",
+  "description": "Filters HTTP/HTTPS traffic to protect web applications from OWASP Top 10 attacks.",
+  "fullExplanation": "A WAF sits in front of web applications and inspects HTTP/HTTPS requests and responses. It blocks attacks like SQL injection, XSS, CSRF, and path traversal by matching request patterns against rule sets. WAFs can operate in detection mode (log only) or prevention mode (block). Cloud WAFs (Cloudflare, AWS WAF) are deployed at the edge. On-premise WAFs (ModSecurity, F5 ASM) run on dedicated hardware or as reverse proxies.",
+  "protectedAttacks": [
+    { "attack": "SQL Injection",          "description": "Detect SQL keywords in parameters — block or sanitize" },
+    { "attack": "Cross-Site Scripting (XSS)", "description": "Detect script tags and event handlers in input" },
+    { "attack": "CSRF",                   "description": "Validate CSRF tokens, check Referer/Origin headers" },
+    { "attack": "Path Traversal",         "description": "Block ../../../etc/passwd patterns in URLs" },
+    { "attack": "Command Injection",      "description": "Detect shell metacharacters in parameters" },
+    { "attack": "DDoS / Rate Limiting",   "description": "Limit requests per IP, detect bot patterns" },
+    { "attack": "OWASP Top 10",           "description": "Comprehensive coverage of most common web vulnerabilities" }
+  ],
+  "deploymentModes": [
+    { "mode": "Reverse Proxy",    "description": "WAF sits in front of web server — all traffic passes through it" },
+    { "mode": "Transparent Bridge","description": "Inline without IP change — transparent to clients and servers" },
+    { "mode": "Cloud/CDN",        "description": "DNS points to WAF provider (Cloudflare, Akamai) — traffic scrubbed at edge" },
+    { "mode": "Agent-based",      "description": "Module on web server (ModSecurity for Apache/Nginx)" }
+  ],
+  "vendors": [
+    { "vendor": "Cloudflare WAF",  "type": "Cloud",       "notes": "Easy setup, global CDN, free tier available" },
+    { "vendor": "AWS WAF",         "type": "Cloud",       "notes": "Integrates with CloudFront, ALB, API Gateway" },
+    { "vendor": "ModSecurity",     "type": "Open Source", "notes": "Apache/Nginx module, OWASP Core Rule Set" },
+    { "vendor": "F5 Advanced WAF", "type": "Enterprise",  "notes": "Bot protection, credential stuffing defense" },
+    { "vendor": "Imperva",         "type": "Enterprise",  "notes": "DDoS + WAF, strong bot management" }
+  ],
+  "keyFacts": [
+    "WAF is not a substitute for secure coding — it's a last line of defense",
+    "False positives: legitimate requests blocked — requires tuning",
+    "Virtual patching: WAF blocks known vulnerability before code is patched",
+    "OWASP ModSecurity Core Rule Set (CRS): free, comprehensive rule set",
+    "WAF bypass: attackers encode payloads to evade signature matching",
+    "API WAF: protect REST/GraphQL APIs — validate JSON/XML schemas"
+  ],
+  "children": [],
+  "parent": "firewall",
+  "relatedConcepts": ["firewall", "ngfw", "ids-ips", "xss", "csrf"],
+  "visualization": { "color": "#ff6b35", "icon": "🌐", "nodeType": "leaf" }
+}

@@ -105,7 +105,7 @@
     { "layer": "Network Access", "action": "Ethernet adds MAC addresses", "pdu": "Frame" },
     { "layer": "Physical", "action": "Converted to bits and transmitted", "pdu": "Bits" }
   ],
-  "children": [],
+  "children": ["tcpip-application", "tcpip-transport", "tcpip-internet", "tcpip-link"],
   "relatedConcepts": ["osi-model", "encapsulation", "protocol-stack"],
-  "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "leaf" }
+  "visualization": { "color": "#00ff88", "icon": "🌐", "nodeType": "expandable" }
 }

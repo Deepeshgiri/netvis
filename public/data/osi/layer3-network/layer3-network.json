@@ -19,7 +19,7 @@
     "Fragmentation splits large packets"
   ],
   "devices": ["Router", "Layer 3 Switch", "Firewall (L3)"],
-  "children": ["ipv4", "bgp", "ospf", "subnetting", "icmp"],
+  "children": ["ipv4", "bgp", "ospf", "subnetting", "icmp", "ipv6"],
   "parent": "osi-model",
   "relatedConcepts": ["layer2-datalink", "layer4-transport", "routing"],
   "visualization": { "color": "#00d4ff", "icon": "🗺️", "nodeType": "expandable" }

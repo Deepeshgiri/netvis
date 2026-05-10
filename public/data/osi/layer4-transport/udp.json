@@ -39,7 +39,7 @@
     "QUIC builds reliability on top of UDP",
     "RTP (Real-time Transport Protocol) uses UDP for VoIP/video"
   ],
-  "children": ["quic","rtp","dns","dhcp"],
+  "children": ["quic", "rtp"],
   "parent": "layer4-transport",
   "usedBy": ["dns","dhcp","ntp","snmp","voip","gaming","quic"],
   "dependsOn": ["ip"],

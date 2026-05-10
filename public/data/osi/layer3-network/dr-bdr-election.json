@@ -1,0 +1,34 @@
+{
+  "id": "dr-bdr-election",
+  "title": "OSPF DR/BDR Election",
+  "shortName": "DR/BDR",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "routing_protocol",
+  "description": "Election of Designated Router and Backup DR on multi-access networks to reduce OSPF adjacency overhead.",
+  "fullExplanation": "On multi-access networks (Ethernet), if every OSPF router formed a full adjacency with every other router, the number of adjacencies would be n(n-1)/2 — unscalable. The DR (Designated Router) and BDR (Backup Designated Router) solve this: all routers form full adjacency only with the DR and BDR. The DR generates Type 2 Network LSAs and manages LSDB synchronization for the segment. The BDR monitors the DR and takes over immediately if it fails.",
+  "electionProcess": [
+    { "step": 1, "description": "Routers send Hello packets and wait for the dead interval to expire" },
+    { "step": 2, "description": "Router with highest OSPF priority becomes DR (default priority = 1)" },
+    { "step": 3, "description": "Router with second-highest priority becomes BDR" },
+    { "step": 4, "description": "Tie-break: highest Router ID wins (highest loopback or interface IP)" },
+    { "step": 5, "description": "All other routers become DROther — form Full adjacency only with DR and BDR" },
+    { "step": 6, "description": "DROther routers stay in 2-Way state with each other" }
+  ],
+  "multicastAddresses": [
+    { "address": "224.0.0.5", "name": "AllSPFRouters", "description": "All OSPF routers listen here. DROthers send LSUs to this address." },
+    { "address": "224.0.0.6", "name": "AllDRouters",   "description": "Only DR and BDR listen here. DROthers send updates to DR/BDR via this address." }
+  ],
+  "keyFacts": [
+    "Priority 0: router will never become DR or BDR",
+    "Election is non-preemptive: existing DR keeps role even if higher-priority router joins",
+    "To force re-election: clear ip ospf process (resets all OSPF adjacencies)",
+    "Point-to-point links: no DR/BDR election needed — only 2 routers",
+    "DR failure: BDR immediately becomes DR, new BDR election held",
+    "DR/BDR are per-segment, not per-router — a router can be DR on one segment and DROther on another"
+  ],
+  "children": [],
+  "parent": "ospf",
+  "relatedConcepts": ["ospf", "ospf-adjacency", "ospf-areas"],
+  "visualization": { "color": "#00d4ff", "icon": "🗳️", "nodeType": "leaf" }
+}

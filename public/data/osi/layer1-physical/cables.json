@@ -22,7 +22,7 @@
     "PoE (Power over Ethernet) delivers up to 90W over Cat5e+",
     "Plenum-rated cables required in air ducts (fire safety)"
   ],
-  "children": ["rj45-connector","signal-encoding","poe"],
+  "children": ["rj45-connector", "signal-encoding", "poe"],
   "parent": "layer1-physical",
   "relatedConcepts": ["signals","ethernet","nic"],
   "visualization": { "color": "#ff6b35", "icon": "🔌", "nodeType": "expandable" }

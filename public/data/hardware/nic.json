@@ -39,7 +39,7 @@
     "SR-IOV allows VMs to directly access NIC hardware",
     "Wake-on-LAN (WoL): NIC can power on computer from network"
   ],
-  "children": ["dma","interrupts","pcie","ring-buffer"],
+  "children": ["dma", "interrupts", "pcie", "ring-buffer"],
   "parent": "hardware",
   "relatedConcepts": ["dma","pcie","ethernet","mac-addresses","linux-network-stack"],
   "visualization": { "color": "#ffcc00", "icon": "🔌", "nodeType": "expandable" }

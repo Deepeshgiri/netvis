@@ -38,7 +38,7 @@
     "Full-duplex: simultaneous send and receive, no collisions",
     "CSMA/CD: collision detection (legacy half-duplex only)"
   ],
-  "children": ["ethernet-frame","mac-addresses","vlans","switching","stp"],
+  "children": ["ethernet-frame", "mac-addresses", "vlans", "switching", "stp"],
   "parent": "layer2-datalink",
   "dependsOn": ["cables","fiber","wireless"],
   "usedBy": ["ipv4","ipv6","arp"],

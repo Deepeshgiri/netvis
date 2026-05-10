@@ -32,7 +32,7 @@
     "OSPF areas reduce LSA flooding and SPF computation",
     "Stub area: no external LSAs. Totally stubby: no external or inter-area LSAs"
   ],
-  "children": ["ospf-areas","ospf-adjacency","ospf-lsa","dr-bdr-election"],
+  "children": ["ospf-areas", "ospf-adjacency", "ospf-lsa", "dr-bdr-election"],
   "parent": "layer3-network",
   "dependsOn": ["ip"],
   "relatedConcepts": ["bgp","routing","eigrp","rip"],

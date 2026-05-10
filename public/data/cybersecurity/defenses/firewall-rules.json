@@ -1,0 +1,39 @@
+{
+  "id": "firewall-rules",
+  "title": "Firewall Rule Design",
+  "shortName": "Firewall Rules",
+  "type": "defense",
+  "category": "network_defense",
+  "description": "Best practices for writing effective firewall rules — default deny, least privilege, and rule ordering.",
+  "fullExplanation": "Firewall rules define what traffic is allowed or denied. Rules are processed in order — the first matching rule wins. Good rule design follows the principle of least privilege: deny everything by default, then explicitly allow only what is needed. Rules should be specific (narrow source/destination/port), documented, and regularly reviewed. Overly permissive rules (allow any any) are a common misconfiguration.",
+  "principles": [
+    { "principle": "Default Deny",       "description": "Block all traffic by default. Explicitly allow only what is needed. 'Implicit deny' at end of rule list." },
+    { "principle": "Least Privilege",    "description": "Allow only the minimum necessary traffic. Specific source IPs, destination IPs, and ports." },
+    { "principle": "Rule Ordering",      "description": "More specific rules first. General rules last. First match wins." },
+    { "principle": "Stateful Inspection","description": "Allow established/related traffic automatically — don't write rules for return traffic." },
+    { "principle": "Egress Filtering",   "description": "Filter outbound traffic too — prevent data exfiltration and C2 callbacks." },
+    { "principle": "Documentation",      "description": "Every rule should have a comment explaining why it exists and who requested it." }
+  ],
+  "commonRulePatterns": [
+    { "rule": "Allow established/related inbound", "description": "Permit return traffic for connections initiated from inside" },
+    { "rule": "Allow specific services inbound",   "description": "HTTP/HTTPS to web servers, SMTP to mail servers — specific destination IPs" },
+    { "rule": "Allow DNS outbound",                "description": "UDP/TCP 53 to specific resolvers (8.8.8.8, 1.1.1.1)" },
+    { "rule": "Allow NTP outbound",                "description": "UDP 123 to time servers" },
+    { "rule": "Block RFC 1918 from internet",      "description": "Drop packets from internet with private source IPs (anti-spoofing)" },
+    { "rule": "Block bogons",                      "description": "Drop unallocated/reserved IP ranges" },
+    { "rule": "Implicit deny all",                 "description": "Last rule: deny everything not explicitly permitted" }
+  ],
+  "keyFacts": [
+    "Rule bloat: hundreds of old, undocumented rules — review and clean up regularly",
+    "Shadow rules: rule never matches because earlier rule catches all traffic",
+    "Any/any rule: allow all traffic — common misconfiguration, defeats firewall purpose",
+    "Ingress filtering: block spoofed source IPs at network edge (BCP38)",
+    "Egress filtering: block outbound traffic to known malicious IPs/domains",
+    "Change management: all firewall changes should go through approval process",
+    "Firewall audit: tools like Tufin, AlgoSec analyze rule sets for conflicts and risks"
+  ],
+  "children": [],
+  "parent": "firewall",
+  "relatedConcepts": ["firewall", "iptables", "ngfw", "dmz"],
+  "visualization": { "color": "#ff6b35", "icon": "📋", "nodeType": "leaf" }
+}

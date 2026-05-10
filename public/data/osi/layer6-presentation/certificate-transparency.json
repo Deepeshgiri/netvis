@@ -1,0 +1,30 @@
+{
+  "id": "certificate-transparency",
+  "title": "Certificate Transparency (CT)",
+  "shortName": "Cert Transparency",
+  "type": "concept",
+  "osiLayer": 6,
+  "category": "security_protocol",
+  "description": "Public append-only logs of all issued TLS certificates — enables detection of misissued or fraudulent certificates.",
+  "fullExplanation": "Certificate Transparency (RFC 6962) requires all publicly trusted TLS certificates to be logged in public, append-only CT logs before browsers will trust them. This makes it impossible for a CA to secretly issue a certificate for your domain — any such certificate would appear in the public log. Domain owners can monitor CT logs for unauthorized certificates. Chrome has required CT since 2018. Let's Encrypt logs all certificates automatically.",
+  "howItWorks": [
+    { "step": 1, "description": "CA issues certificate and submits it to one or more CT logs" },
+    { "step": 2, "description": "CT log returns a Signed Certificate Timestamp (SCT) — proof of logging" },
+    { "step": 3, "description": "CA embeds SCT in certificate (or delivers via TLS extension / OCSP)" },
+    { "step": 4, "description": "Browser verifies SCT is present and valid — rejects certs without SCT" },
+    { "step": 5, "description": "Domain owners monitor CT logs for unauthorized certificates" }
+  ],
+  "keyFacts": [
+    "Chrome requires CT for all publicly trusted certs since April 2018",
+    "SCT (Signed Certificate Timestamp): cryptographic proof cert was logged",
+    "CT logs are append-only — cannot delete or modify entries",
+    "crt.sh: public CT log search — find all certs for any domain",
+    "Monitors: services like Facebook CT Monitor, Cert Spotter alert on new certs for your domain",
+    "Merkle tree: CT logs use cryptographic Merkle trees for efficient proof of inclusion",
+    "Google, Cloudflare, DigiCert operate major CT logs"
+  ],
+  "children": [],
+  "parent": "tls",
+  "relatedConcepts": ["tls", "certificates", "hsts"],
+  "visualization": { "color": "#ff3366", "icon": "📋", "nodeType": "leaf" }
+}

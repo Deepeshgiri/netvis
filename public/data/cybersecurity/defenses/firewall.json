@@ -41,7 +41,7 @@
     "iptables/nftables: Linux kernel firewall",
     "Windows Defender Firewall: built-in Windows firewall"
   ],
-  "children": ["iptables","ngfw","waf","firewall-rules","dmz"],
+  "children": ["iptables", "ngfw", "waf", "firewall-rules", "dmz"],
   "parent": "defenses",
   "relatedConcepts": ["ids","ips","zero-trust","segmentation","vpn-security"],
   "cybersecurity": {

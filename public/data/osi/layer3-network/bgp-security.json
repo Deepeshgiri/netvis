@@ -1,0 +1,36 @@
+{
+  "id": "bgp-security",
+  "title": "BGP Security",
+  "shortName": "BGP Security",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "routing_protocol",
+  "description": "Mechanisms to protect BGP from hijacking, route leaks, and session attacks.",
+  "fullExplanation": "BGP was designed in 1989 with no security — it trusts all peers to advertise only legitimate routes. BGP hijacking occurs when an AS announces prefixes it doesn't own, redirecting internet traffic. The 2008 Pakistan Telecom incident took YouTube offline globally for 2 hours. RPKI (Resource Public Key Infrastructure) cryptographically binds IP prefixes to their legitimate AS owners, allowing routers to reject invalid route origins.",
+  "attacks": [
+    { "attack": "BGP Hijacking",    "description": "AS announces prefixes it doesn't own. Traffic redirected to attacker. Example: Pakistan Telecom → YouTube (2008)." },
+    { "attack": "Route Leak",       "description": "AS re-advertises routes it shouldn't (e.g. customer routes to other providers). Causes traffic to flow through unintended paths." },
+    { "attack": "BGP Session Reset","description": "Attacker sends TCP RST to port 179 to tear down BGP session. Causes route withdrawal and reconvergence." },
+    { "attack": "Prefix Deaggregation","description": "Advertise more-specific /24s to attract traffic away from legitimate /16 owner." }
+  ],
+  "defenses": [
+    { "defense": "RPKI (ROA)",        "description": "Route Origin Authorization: cryptographically signed record binding prefix to authorized AS. Routers reject RPKI-invalid routes." },
+    { "defense": "BGP Prefix Filtering","description": "Only accept routes you expect from each peer. Reject bogons (private IPs, unallocated space)." },
+    { "defense": "RPKI Route Origin Validation","description": "Router checks ROA database before accepting route. Invalid = reject. Unknown = accept (for now)." },
+    { "defense": "TTL Security (GTSM)","description": "Require BGP packets to have TTL=255 — prevents off-link attackers from sending BGP packets." },
+    { "defense": "MD5 Authentication","description": "TCP MD5 signature on BGP sessions — prevents session hijacking." },
+    { "defense": "BGPsec",           "description": "Cryptographic path validation — signs entire AS path. Not yet widely deployed." }
+  ],
+  "keyFacts": [
+    "RPKI adoption: ~40% of global prefixes have ROAs (2024) — growing rapidly",
+    "Pakistan Telecom BGP hijack (2008): YouTube unreachable globally for 2 hours",
+    "Rostelecom BGP hijack (2020): redirected routes for Amazon, Google, Cloudflare",
+    "BGP session uses TCP port 179 — protect with firewall ACLs",
+    "MANRS (Mutually Agreed Norms for Routing Security): industry initiative for BGP hygiene",
+    "IRR (Internet Routing Registry): database of routing policies — used for prefix filtering"
+  ],
+  "children": [],
+  "parent": "bgp",
+  "relatedConcepts": ["bgp", "rpki", "bgp-routing"],
+  "visualization": { "color": "#0088cc", "icon": "🔐", "nodeType": "leaf" }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "proxy-arp",
+  "title": "Proxy ARP",
+  "shortName": "Proxy ARP",
+  "type": "concept",
+  "osiLayer": 2,
+  "category": "address_resolution",
+  "description": "A router responds to ARP requests on behalf of hosts on another subnet, enabling communication without a configured default gateway.",
+  "fullExplanation": "Proxy ARP allows a router to answer ARP requests for IP addresses that are not on the local subnet. When a host sends an ARP request for an IP on a different network (because it has no default gateway or uses a supernet mask), the router intercepts the request and replies with its own MAC address. The host then sends all traffic to the router, which forwards it to the correct destination. Proxy ARP is enabled by default on many routers but is generally considered a legacy feature — proper default gateway configuration is preferred.",
+  "howItWorks": [
+    { "step": 1, "description": "Host A (192.168.1.10/24) wants to reach 192.168.2.20 but has no default gateway" },
+    { "step": 2, "description": "Host A sends ARP request: 'Who has 192.168.2.20?'" },
+    { "step": 3, "description": "Router has Proxy ARP enabled and a route to 192.168.2.0/24" },
+    { "step": 4, "description": "Router replies: '192.168.2.20 is at AA:BB:CC:DD:EE:FF' (router's MAC)" },
+    { "step": 5, "description": "Host A sends all traffic to router's MAC — router forwards to 192.168.2.20" }
+  ],
+  "keyFacts": [
+    "Enabled by default on Cisco routers (ip proxy-arp)",
+    "Allows hosts without default gateway to reach other networks",
+    "Increases ARP traffic and router load",
+    "Can mask network misconfigurations — hosts don't notice missing default gateway",
+    "Security risk: attacker can use proxy ARP to intercept traffic",
+    "Disable with 'no ip proxy-arp' on Cisco interfaces",
+    "Mobile IP uses proxy ARP to redirect traffic to mobile node's new location"
+  ],
+  "children": [],
+  "parent": "arp",
+  "relatedConcepts": ["arp", "gratuitous-arp", "routing", "default-gateway"],
+  "cybersecurity": {
+    "attacks": ["arp-spoofing", "mitm"],
+    "defenses": ["disable-proxy-arp", "proper-gateway-config"]
+  },
+  "visualization": { "color": "#ffee44", "icon": "🔄", "nodeType": "leaf" }
+}

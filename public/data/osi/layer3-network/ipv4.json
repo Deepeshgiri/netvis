@@ -47,7 +47,7 @@
     "Fragmentation reassembled at destination, not intermediate routers",
     "NAT extended IPv4 life by sharing public IPs"
   ],
-  "children": ["subnetting","nat","fragmentation","icmp","ipv6"],
+  "children": ["subnetting", "nat", "fragmentation", "icmp", "ipv6"],
   "parent": "layer3-network",
   "dependsOn": ["ethernet","arp"],
   "usedBy": ["tcp","udp","icmp","ospf","bgp"],

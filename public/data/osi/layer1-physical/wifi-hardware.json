@@ -1,0 +1,36 @@
+{
+  "id": "wifi-hardware",
+  "title": "WiFi Hardware Components",
+  "shortName": "WiFi Hardware",
+  "type": "hardware",
+  "osiLayer": 1,
+  "category": "wireless_technology",
+  "description": "Physical components that make up WiFi infrastructure — radios, antennas, access points, and controllers.",
+  "fullExplanation": "WiFi hardware consists of a radio chipset (handles modulation/demodulation), antennas (transmit/receive RF signals), and a MAC controller (handles 802.11 framing, CSMA/CA, and association). Access points (APs) connect wireless clients to the wired network. Enterprise deployments use wireless LAN controllers (WLCs) to centrally manage hundreds of APs — handling roaming, RF optimization, and security policies.",
+  "components": [
+    { "name": "Radio Chipset",       "description": "Handles RF modulation/demodulation, OFDM processing, and PHY layer functions. Examples: Qualcomm QCN, Broadcom BCM, Intel AX series." },
+    { "name": "Antenna",             "description": "Converts electrical signals to/from radio waves. Omnidirectional (360°) for general use, directional (Yagi, patch) for point-to-point links." },
+    { "name": "MIMO Chains",         "description": "Multiple antennas for spatial multiplexing. 4×4 MIMO = 4 transmit, 4 receive antennas. More chains = more throughput." },
+    { "name": "MAC Controller",      "description": "Implements 802.11 MAC: CSMA/CA, association, authentication, power management, QoS (WMM)." },
+    { "name": "Access Point (AP)",   "description": "Bridges wireless clients to wired network. Can be standalone (fat AP) or controller-managed (thin AP)." },
+    { "name": "Wireless Controller", "description": "Centrally manages APs: roaming, RF planning, firmware updates, security policies. Examples: Cisco WLC, Aruba Mobility Controller." }
+  ],
+  "apTypes": [
+    { "type": "Standalone / Fat AP",  "description": "Self-contained — all intelligence on the AP. Simple home/small office use." },
+    { "type": "Controller-based / Thin AP", "description": "Minimal intelligence — tunnels traffic to WLC. Enterprise use for centralized management." },
+    { "type": "Cloud-managed AP",     "description": "Managed via cloud dashboard. Examples: Cisco Meraki, Ubiquiti UniFi, Aruba Instant On." },
+    { "type": "Mesh AP",              "description": "APs communicate wirelessly with each other. No wired backhaul needed. Examples: Eero, Google Nest WiFi." }
+  ],
+  "keyFacts": [
+    "MIMO: 2×2 = 2 spatial streams, 4×4 = 4 streams — each stream adds ~300-600 Mbps",
+    "MU-MIMO: serve multiple clients simultaneously (WiFi 5 downlink, WiFi 6 uplink+downlink)",
+    "Beamforming: focus signal toward specific client — improves range and throughput",
+    "TWT (Target Wake Time): WiFi 6 feature — schedule client wake times to save battery",
+    "BSS Coloring: WiFi 6 marks transmissions to reduce unnecessary deferrals in dense environments",
+    "PoE powers most enterprise APs — no separate power outlet needed"
+  ],
+  "children": [],
+  "parent": "wireless",
+  "relatedConcepts": ["wireless", "ofdm-modulation", "wifi-channels", "nic"],
+  "visualization": { "color": "#ff5533", "icon": "📡", "nodeType": "leaf" }
+}

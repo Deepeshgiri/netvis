@@ -1,0 +1,37 @@
+{
+  "id": "doh-dot",
+  "title": "DNS over HTTPS & DNS over TLS",
+  "shortName": "DoH / DoT",
+  "type": "concept",
+  "osiLayer": 7,
+  "category": "application_protocol",
+  "description": "Encrypted DNS protocols that prevent eavesdropping and manipulation of DNS queries.",
+  "fullExplanation": "Traditional DNS sends queries in plaintext UDP — anyone between you and the resolver can see every domain you visit. DoH (DNS over HTTPS) wraps DNS in HTTPS on port 443, making it indistinguishable from regular web traffic. DoT (DNS over TLS) wraps DNS in TLS on port 853. Both prevent ISPs, attackers, and network admins from seeing or modifying your DNS queries. The trade-off: you're trusting the DoH/DoT provider instead of your ISP.",
+  "comparison": [
+    { "aspect": "Protocol",       "doh": "HTTPS (HTTP/2 or HTTP/3)",    "dot": "TLS 1.3" },
+    { "aspect": "Port",           "doh": "443 (same as HTTPS)",          "dot": "853 (dedicated)" },
+    { "aspect": "Detectability",  "doh": "Indistinguishable from HTTPS", "dot": "Easily identified and blocked" },
+    { "aspect": "Overhead",       "doh": "Higher (HTTP framing)",        "dot": "Lower (direct TLS)" },
+    { "aspect": "Browser support","doh": "Chrome, Firefox, Edge, Safari","dot": "OS-level (Android, iOS, Windows 11)" },
+    { "aspect": "Admin control",  "doh": "Hard to block/monitor",        "dot": "Easy to block port 853" }
+  ],
+  "providers": [
+    { "provider": "Cloudflare",  "doh": "https://cloudflare-dns.com/dns-query", "dot": "1.1.1.1:853", "privacy": "No query logging" },
+    { "provider": "Google",      "doh": "https://dns.google/dns-query",         "dot": "8.8.8.8:853", "privacy": "Some logging" },
+    { "provider": "Quad9",       "doh": "https://dns.quad9.net/dns-query",      "dot": "9.9.9.9:853", "privacy": "Blocks malicious domains" },
+    { "provider": "NextDNS",     "doh": "https://dns.nextdns.io/",              "dot": "Custom",       "privacy": "Configurable filtering" }
+  ],
+  "keyFacts": [
+    "DoH enabled by default in Firefox (uses Cloudflare) and Chrome",
+    "DoH bypasses corporate DNS filtering — security concern for enterprises",
+    "IETF RFC 8484 (DoH), RFC 7858 (DoT)",
+    "DoH3: DNS over HTTP/3 (QUIC) — even lower latency",
+    "Encrypted Client Hello (ECH): hides SNI in TLS — complements DoH for full privacy",
+    "Split-horizon DNS: DoH may bypass internal DNS — use canary domains to detect",
+    "Android 9+: Private DNS setting uses DoT. iOS 14+: supports DoH/DoT profiles."
+  ],
+  "children": [],
+  "parent": "dns",
+  "relatedConcepts": ["dns", "dnssec", "tls", "https"],
+  "visualization": { "color": "#00ddff", "icon": "🔒", "nodeType": "leaf" }
+}

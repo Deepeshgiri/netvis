@@ -1,0 +1,59 @@
+{
+  "id": "ntp",
+  "title": "Network Time Protocol",
+  "shortName": "NTP",
+  "type": "protocol",
+  "osiLayer": 7,
+  "tcpIpLayer": "Application",
+  "category": "application_protocol",
+  "port": 123,
+  "transport": "UDP",
+  "description": "Synchronizes clocks of networked devices to within milliseconds of UTC.",
+  "fullExplanation": "NTP synchronizes computer clocks over a network. Accurate time is critical for security (TLS certificates, Kerberos tickets expire), logging (correlating events across systems), and distributed systems (database transactions, consensus algorithms). NTP uses a hierarchical system of time sources called strata. Stratum 0 are atomic clocks and GPS receivers. Stratum 1 servers connect directly to stratum 0. Stratum 2 servers sync from stratum 1, and so on. NTP achieves millisecond accuracy over the internet, microsecond accuracy on LANs.",
+  "ports": {
+    "usedBy": [
+      { "port": 123, "protocol": "NTP (UDP)" }
+    ]
+  },
+  "stratumLevels": [
+    { "stratum": 0, "description": "Reference clocks: atomic clocks, GPS, radio time signals. Not on network." },
+    { "stratum": 1, "description": "Primary servers: directly connected to stratum 0. Highest accuracy." },
+    { "stratum": 2, "description": "Secondary servers: sync from stratum 1. Used by most organizations." },
+    { "stratum": 3, "description": "Sync from stratum 2. Accuracy degrades slightly at each level." },
+    { "stratum": 15,"description": "Maximum stratum. Stratum 16 = unsynchronized." }
+  ],
+  "publicServers": [
+    { "server": "pool.ntp.org",    "description": "Global NTP pool — round-robin of thousands of servers" },
+    { "server": "time.google.com", "description": "Google Public NTP — uses leap smearing" },
+    { "server": "time.cloudflare.com","description": "Cloudflare NTP — supports NTS (authenticated NTP)" },
+    { "server": "time.windows.com","description": "Microsoft NTP for Windows" },
+    { "server": "time.apple.com",  "description": "Apple NTP for macOS/iOS" }
+  ],
+  "versions": [
+    { "version": "NTP v1 (RFC 1059)", "year": 1988, "feature": "Original specification" },
+    { "version": "NTP v3 (RFC 1305)", "year": 1992, "feature": "Added authentication" },
+    { "version": "NTP v4 (RFC 5905)", "year": 2010, "feature": "Current standard. IPv6 support, improved algorithms." },
+    { "version": "SNTP",              "year": 1996, "feature": "Simple NTP — simplified client-only implementation" },
+    { "version": "NTS (RFC 8915)",    "year": 2020, "feature": "NTP with TLS authentication — prevents spoofing" },
+    { "version": "PTP (IEEE 1588)",   "year": 2002, "feature": "Precision Time Protocol — sub-microsecond accuracy for industrial/financial" }
+  ],
+  "keyFacts": [
+    "NTP accuracy: ~1-50ms over internet, ~0.1ms on LAN",
+    "Kerberos authentication fails if clocks differ by more than 5 minutes",
+    "TLS certificates have validity periods — wrong time = cert errors",
+    "NTP amplification: small request → large response (DDoS vector, 556x amplification)",
+    "NTP monlist command: returns last 600 clients — used in amplification attacks (disable it)",
+    "NTS (Network Time Security) adds TLS authentication to NTP",
+    "Windows uses W32tm, Linux uses ntpd or chrony",
+    "Chrony is preferred over ntpd on modern Linux — faster sync, handles VM clock drift"
+  ],
+  "children": [],
+  "parent": "layer7-application",
+  "dependsOn": ["udp", "ipv4"],
+  "relatedConcepts": ["dns", "kerberos", "tls"],
+  "cybersecurity": {
+    "attacks": ["ntp-amplification-ddos", "ntp-spoofing", "ntp-monlist-abuse"],
+    "defenses": ["nts", "firewall", "disable-monlist", "rate-limiting"]
+  },
+  "visualization": { "color": "#00ff88", "icon": "🕐", "nodeType": "leaf" }
+}

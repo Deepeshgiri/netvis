@@ -1,0 +1,40 @@
+{
+  "id": "ospf-adjacency",
+  "title": "OSPF Neighbor Adjacency",
+  "shortName": "OSPF Adjacency",
+  "type": "concept",
+  "osiLayer": 3,
+  "category": "routing_protocol",
+  "description": "The process by which OSPF routers discover each other, exchange database information, and synchronize their LSDBs.",
+  "fullExplanation": "OSPF routers form adjacencies to exchange routing information. The process starts with Hello packets — routers discover neighbors and verify parameters match (area ID, hello/dead intervals, authentication, subnet mask). On multi-access networks (Ethernet), a DR (Designated Router) and BDR (Backup DR) are elected to reduce the number of adjacencies. Full adjacency means both routers have identical LSDBs.",
+  "neighborStates": [
+    { "state": "Down",       "description": "No Hellos received from neighbor" },
+    { "state": "Attempt",    "description": "Unicast Hello sent (NBMA networks only)" },
+    { "state": "Init",       "description": "Hello received but own Router ID not in neighbor's Hello" },
+    { "state": "2-Way",      "description": "Bidirectional communication established. DR/BDR election happens here." },
+    { "state": "ExStart",    "description": "Master/slave negotiation for DBD exchange" },
+    { "state": "Exchange",   "description": "DBD packets exchanged — summary of LSDB" },
+    { "state": "Loading",    "description": "LSR/LSU exchange — requesting missing LSAs" },
+    { "state": "Full",       "description": "LSDBs synchronized. Full adjacency achieved." }
+  ],
+  "drBdrElection": {
+    "description": "On multi-access networks, DR and BDR are elected to reduce adjacencies from O(n²) to O(n)",
+    "electionCriteria": [
+      "Highest OSPF priority (default 1, range 0-255). Priority 0 = never become DR/BDR.",
+      "Tie-break: highest Router ID (highest loopback IP, or highest interface IP)"
+    ],
+    "benefit": "Without DR: n(n-1)/2 adjacencies. With DR: n adjacencies (all form full adjacency with DR/BDR only)"
+  },
+  "keyFacts": [
+    "Hello interval: 10s (point-to-point/broadcast), 30s (NBMA)",
+    "Dead interval: 4 × hello interval — neighbor declared dead if no Hello received",
+    "Parameters must match: area ID, hello/dead intervals, authentication, subnet mask, MTU",
+    "Router ID: highest loopback IP, or highest active interface IP if no loopback",
+    "DR/BDR election is non-preemptive — existing DR keeps role even if better router joins",
+    "Point-to-point links: no DR/BDR election — both routers go directly to Full state"
+  ],
+  "children": [],
+  "parent": "ospf",
+  "relatedConcepts": ["ospf", "ospf-areas", "ospf-lsa", "dr-bdr-election"],
+  "visualization": { "color": "#00d4ff", "icon": "🤝", "nodeType": "leaf" }
+}
