@@ -13,7 +13,7 @@ interface Version { version: string; year?: number; status?: string; feature?: s
 interface StepItem { step: number; name?: string; direction?: string; description: string; action?: string }
 interface PortEntry { port: number; protocol: string }
 interface HeaderField { name: string; bits: number; description: string; example: string }
-interface LayerInfo { number: number; name: string; id: string; pdu: string; color: string; icon: string; devices: string[] }
+interface LayerInfo { number: number; name: string; id: string; pdu: string; color: string; icon: string; devices?: string[] }
 interface ComparisonRow { aspect: string; tcpip: string; osi: string }
 interface EncapsulationStep { layer: string; action: string; pdu: string }
 interface WrapperSection { id: string; title: string; icon: string; color: string; description: string; items: WrapperItem[] }
@@ -122,7 +122,7 @@ export default function NodeDetail({ node, pushNode }: Props) {
                     <td className="py-3 px-3">
                       <span className="px-2 py-1 rounded text-xs font-mono font-bold" style={{ background: layer.color + '20', color: layer.color }}>{layer.pdu}</span>
                     </td>
-                    <td className="py-3 px-3 text-xs text-gray-400">{layer.devices.join(', ')}</td>
+                    <td className="py-3 px-3 text-xs text-gray-400">{Array.isArray(layer.devices) ? layer.devices.join(', ') : '—'}</td>
                   </tr>
                 ))}
               </tbody>

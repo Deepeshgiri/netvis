@@ -61,6 +61,7 @@ export interface CategoryNode {
 }
 
 // ── File registry: id → public path ─────────────────────────────────────────
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 const FILE_MAP: Record<string, string> = {
   // core
   'osi-model':          '/data/core/osi-model.json',
@@ -208,7 +209,7 @@ export async function fetchNode(id: string): Promise<DataNode | null> {
   const path = FILE_MAP[id]
   if (!path) return null
   try {
-    const res = await fetch(path)
+    const res = await fetch(BASE + path)
     if (!res.ok) return null
     const data: DataNode = await res.json()
     cache.set(id, data)
@@ -220,7 +221,7 @@ export async function fetchNode(id: string): Promise<DataNode | null> {
 
 export async function fetchCategories(): Promise<CategoryNode[]> {
   try {
-    const res = await fetch('/data/metadata/categories.json')
+    const res = await fetch(BASE + '/data/metadata/categories.json')
     const data = await res.json()
     return data.categories as CategoryNode[]
   } catch {
@@ -231,8 +232,13 @@ export async function fetchCategories(): Promise<CategoryNode[]> {
 export function getColor(node: DataNode): string {
   if (node.visualization?.color) return node.visualization.color
   const layerColors: Record<number, string> = {
-    1: '#ff6b35', 2: '#ffcc00', 3: '#00d4ff',
-    4: '#00ff88', 5: '#8b5cf6', 6: '#ff3366', 7: '#00ff88',
+    1: '#ff6b35',
+    2: '#ffcc00',
+    3: '#00d4ff',
+    4: '#34d399',
+    5: '#8b5cf6',
+    6: '#fb7185',
+    7: '#38bdf8',
   }
   if (node.osiLayer) return layerColors[node.osiLayer] || '#00d4ff'
   const typeColors: Record<string, string> = {
@@ -257,4 +263,114 @@ export function getAllIds(): string[] {
 
 export function hasChildren(node: DataNode): boolean {
   return Array.isArray(node.children) && node.children.length > 0
+}
+
+/** Full topic map + hierarchy roots (nodes no other node lists as a child). */
+export interface TopicIndex {
+  byId: Map<string, DataNode>
+  roots: string[]
+}
+
+let topicIndexCache: TopicIndex | null = null
+
+/** Loads every JSON node once; reused for progressive graph + search reveal. */
+export async function loadTopicIndex(): Promise<TopicIndex> {
+  if (topicIndexCache) return topicIndexCache
+  const ids = getAllIds()
+  const raw = await Promise.all(ids.map(id => fetchNode(id)))
+  const byId = new Map<string, DataNode>()
+  raw.forEach(n => {
+    if (n) byId.set(n.id, n)
+  })
+  const hasParent = new Set<string>()
+  byId.forEach(n => {
+    ;(n.children as string[] | undefined)?.forEach(c => {
+      if (byId.has(c)) hasParent.add(c)
+    })
+  })
+  const roots = [...byId.keys()].filter(id => !hasParent.has(id)).sort()
+  topicIndexCache = { byId, roots }
+  return topicIndexCache
+}
+
+/** Visible topic ids: all roots plus, iteratively, children of any expanded node. */
+export function computeVisibleTopicIds(
+  index: TopicIndex,
+  expanded: ReadonlySet<string>
+): Set<string> {
+  const { byId, roots } = index
+  const V = new Set<string>(roots)
+  let added = true
+  while (added) {
+    added = false
+    for (const id of expanded) {
+      if (!V.has(id)) continue
+      const ch = (byId.get(id)?.children as string[] | undefined) ?? []
+      for (const c of ch) {
+        if (byId.has(c) && !V.has(c)) {
+          V.add(c)
+          added = true
+        }
+      }
+    }
+  }
+  return V
+}
+
+/**
+ * Ids to add to `expanded` so `targetId` becomes visible (all ancestors on a root path, excluding target).
+ * Uses BFS from roots over child edges; falls back to `parent` chain if disconnected.
+ */
+export function computeExpandedIdsForTarget(index: TopicIndex, targetId: string): string[] {
+  const { byId, roots } = index
+  if (!byId.has(targetId)) return []
+  const rootSet = new Set(roots)
+  if (rootSet.has(targetId)) return []
+
+  const prev = new Map<string, string | null>()
+  const q: string[] = []
+  for (const r of roots) {
+    if (prev.has(r)) continue
+    prev.set(r, null)
+    q.push(r)
+  }
+  let qi = 0
+  let found = false
+  while (qi < q.length) {
+    const id = q[qi++]
+    if (id === targetId) {
+      found = true
+      break
+    }
+    const ch = (byId.get(id)?.children as string[] | undefined) ?? []
+    for (const c of ch) {
+      if (!byId.has(c) || prev.has(c)) continue
+      prev.set(c, id)
+      q.push(c)
+    }
+  }
+
+  if (!found) {
+    const chain: string[] = []
+    let cur: string | undefined = targetId
+    const seen = new Set<string>()
+    while (cur && byId.has(cur) && !seen.has(cur)) {
+      seen.add(cur)
+      chain.push(cur)
+      const p = byId.get(cur)?.parent as string | undefined
+      cur = p && byId.has(p) ? p : undefined
+    }
+    chain.reverse()
+    if (chain.length <= 1) return []
+    return chain.slice(0, -1)
+  }
+
+  const path: string[] = []
+  let cur: string | null = targetId
+  while (cur !== null) {
+    path.push(cur)
+    cur = prev.get(cur) ?? null
+  }
+  path.reverse()
+  return path.slice(0, -1)
 }

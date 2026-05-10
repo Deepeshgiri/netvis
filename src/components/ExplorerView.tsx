@@ -23,6 +23,9 @@ export default function ExplorerView() {
   const [loading, setLoading] = useState(false)
   const [detailNode, setDetailNode] = useState<DataNode | null>(null)
   const [highlightId, setHighlightId] = useState<string | undefined>()
+  /** Progressive graph: which topic nodes have been drilled open (children on the board). */
+  const [graphExpanded, setGraphExpanded] = useState(() => new Set<string>())
+  const [graphRevealTarget, setGraphRevealTarget] = useState<string | null>(null)
 
   useEffect(() => { fetchCategories().then(setCategories) }, [])
 
@@ -72,6 +75,8 @@ export default function ExplorerView() {
     setHighlightId(undefined)
   }, [])
 
+  const handleGraphRevealDone = useCallback(() => setGraphRevealTarget(null), [])
+
   const isHome = current.kind === 'home'
 
   return (
@@ -79,17 +84,6 @@ export default function ExplorerView() {
       className="h-full w-full flex flex-col overflow-hidden"
       style={{ background: 'radial-gradient(ellipse at 20% 10%, #020d1a 0%, #020408 100%)' }}
     >
-      {/* Tooltip div for graph hover */}
-      <div
-        id="graph-tooltip"
-        style={{
-          position: 'fixed', pointerEvents: 'none', zIndex: 9999,
-          background: '#0a1628', border: '1.5px solid #1e3a5f',
-          borderRadius: 8, padding: '8px 12px', display: 'none',
-          fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
-        }}
-      />
-
       {/* Top bar */}
       <div className="flex-shrink-0 px-6 pt-5 pb-3 flex items-center gap-4 border-b border-[#1e3a5f]"
         style={{ background: '#020d1aee', backdropFilter: 'blur(8px)' }}>
@@ -98,6 +92,7 @@ export default function ExplorerView() {
           <SearchBox onSelect={node => {
             setHighlightId(node.id)
             setDetailNode(node)
+            setGraphRevealTarget(node.id)
           }} />
         </div>
         {!isHome && (
@@ -116,12 +111,15 @@ export default function ExplorerView() {
         {/* Graph — always visible on home, hidden when drilling into category/node grid */}
         {isHome && (
           <div className="flex-1 relative overflow-hidden">
-            <GraphView onNodeClick={handleGraphClick} highlightId={highlightId} />
+            <GraphView
+              onNodeClick={handleGraphClick}
+              highlightId={highlightId}
+              expandedIds={graphExpanded}
+              onExpandedChange={setGraphExpanded}
+              revealTargetId={graphRevealTarget}
+              onRevealComplete={handleGraphRevealDone}
+            />
 
-            {/* Home overlay hint */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[11px] text-gray-600 pointer-events-none">
-              Drag to pan · Scroll to zoom · Click any node to explore
-            </div>
           </div>
         )}
 
